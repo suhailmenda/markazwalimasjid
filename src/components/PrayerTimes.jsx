@@ -29,15 +29,13 @@ const PrayerTimes = () => {
         return timeString.split(' ')[0];
     };
 
-    // Helper to get Islamic Date (Hijri)
-    // Note: In a real app, we might want to use the date from the API response which includes Hijri date
-    // But since we are using the API for times, we can also use it for date if available, 
-    // or use Intl.DateTimeFormat for client-side approximation.
+    // Helper to get Islamic Date (Hijri) in Silvassa time
     const getIslamicDate = () => {
         return new Intl.DateTimeFormat('en-TN-u-ca-islamic', {
             day: 'numeric',
             month: 'long',
-            year: 'numeric'
+            year: 'numeric',
+            timeZone: 'Asia/Kolkata'
         }).format(currentTime);
     };
 
@@ -55,8 +53,8 @@ const PrayerTimes = () => {
                 <div className="prayer-card">
                     <div className="current-time-display">
                         <Clock className="mb-2 text-gold" size={32} />
-                        <div className="time">{currentTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</div>
-                        <div className="date">{currentTime.toLocaleDateString([], { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}</div>
+                        <div className="time">{currentTime.toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit', timeZone: 'Asia/Kolkata' })}</div>
+                        <div className="date">{currentTime.toLocaleDateString('en-IN', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', timeZone: 'Asia/Kolkata' })}</div>
                         <div className="islamic-date-display">{manualIslamicDate || getIslamicDate()}</div>
                     </div>
 
