@@ -1,5 +1,6 @@
 import React, { createContext, useState, useEffect, useContext, useCallback, useMemo } from 'react';
 import axios from 'axios';
+import { supabase } from '../supabase';
 
 const PrayerContext = createContext();
 
@@ -197,9 +198,11 @@ export const PrayerProvider = ({ children }) => {
         return formatIslamicDate(day, month, year);
     }, [prayerTimes]);
 
+    // Fetch prayer times from API first (fast), then Supabase (async)
     useEffect(() => {
-        const fetchPrayerTimes = async () => {
+        const fetchData = async () => {
             try {
+                // Fetch API prayer times first (this is fast and critical)
                 const date = new Date();
                 const response = await axios.get('https://api.aladhan.com/v1/timingsByCity', {
                     params: {
@@ -210,14 +213,85 @@ export const PrayerProvider = ({ children }) => {
                     }
                 });
                 setPrayerTimes(response.data.data.timings);
+                
+                // Load from localStorage cache immediately (instant)
+                const cachedPrayerTimes = localStorage.getItem('manualPrayerTimes');
+                if (cachedPrayerTimes) {
+                    try {
+                        setManualTimes(JSON.parse(cachedPrayerTimes));
+                    } catch (e) {
+                        console.error('Error parsing cached prayer times:', e);
+                    }
+                }
+                
+                const cachedIslamicDate = localStorage.getItem('manualIslamicDate');
+                if (cachedIslamicDate) {
+                    try {
+                        const dateData = JSON.parse(cachedIslamicDate);
+                        setIslamicDateData(dateData);
+                    } catch (e) {
+                        console.error('Error parsing cached Islamic date:', e);
+                    }
+                }
+                
+                // Mark as loaded so UI can render
                 setLoading(false);
+
+                // Fetch from Supabase in background (non-blocking)
+                // This updates the data when it arrives, but doesn't block the UI
+                Promise.all([
+                    // Fetch manual prayer times from Supabase
+                    supabase
+                        .from('prayer_times')
+                        .select('*')
+                        .then(({ data: prayerTimesData, error: prayerError }) => {
+                            if (!prayerError && prayerTimesData) {
+                                const manualTimesFromDB = {};
+                                prayerTimesData.forEach(row => {
+                                    manualTimesFromDB[row.prayer_name] = {
+                                        adhan: row.adhan_time || '',
+                                        jamat: row.jamat_time || ''
+                                    };
+                                });
+                                setManualTimes(manualTimesFromDB);
+                                // Update cache
+                                localStorage.setItem('manualPrayerTimes', JSON.stringify(manualTimesFromDB));
+                            }
+                        })
+                        .catch(err => console.error('Error fetching prayer times from Supabase:', err)),
+                    
+                    // Fetch Islamic date from Supabase
+                    supabase
+                        .from('islamic_date_config')
+                        .select('*')
+                        .order('updated_at', { ascending: false })
+                        .limit(1)
+                        .single()
+                        .then(({ data: islamicDateData, error: islamicError }) => {
+                            if (!islamicError && islamicDateData) {
+                                const dateData = {
+                                    baseDate: islamicDateData.base_date,
+                                    setDate: islamicDateData.set_date,
+                                    lastIncrement: islamicDateData.last_increment,
+                                    customMonthLengths: islamicDateData.custom_month_lengths || {}
+                                };
+                                setIslamicDateData(dateData);
+                                // Update cache
+                                localStorage.setItem('manualIslamicDate', JSON.stringify(dateData));
+                            }
+                        })
+                        .catch(err => console.error('Error fetching Islamic date from Supabase:', err))
+                ]).catch(err => {
+                    console.error('Error fetching from Supabase:', err);
+                    // Continue with cached data if Supabase fails
+                });
             } catch (error) {
-                console.error('Error fetching prayer times:', error);
+                console.error('Error fetching prayer times API:', error);
                 setLoading(false);
             }
         };
 
-        fetchPrayerTimes();
+        fetchData();
     }, []);
 
     // Calculate and update Islamic date when data or prayerTimes changes
@@ -236,7 +310,7 @@ export const PrayerProvider = ({ children }) => {
     useEffect(() => {
         if (!islamicDateData?.baseDate) return;
         
-        const updateIslamicDate = () => {
+        const updateIslamicDate = async () => {
             const newDate = calculateCurrentIslamicDate(islamicDateData);
             setManualIslamicDate(newDate);
             
@@ -246,7 +320,26 @@ export const PrayerProvider = ({ children }) => {
                 lastIncrement: new Date().toISOString()
             };
             setIslamicDateData(updatedData);
+            // Save to localStorage as cache
             localStorage.setItem('manualIslamicDate', JSON.stringify(updatedData));
+            
+            // Save to Supabase
+            try {
+                await supabase
+                    .from('islamic_date_config')
+                    .upsert({
+                        id: 1,
+                        base_date: updatedData.baseDate,
+                        set_date: updatedData.setDate,
+                        last_increment: updatedData.lastIncrement,
+                        custom_month_lengths: updatedData.customMonthLengths || {},
+                        updated_at: new Date().toISOString()
+                    }, {
+                        onConflict: 'id'
+                    });
+            } catch (err) {
+                console.error('Error updating Islamic date increment:', err);
+            }
         };
 
         // Check at Maghrib time (sunset) and every 5 minutes
@@ -280,7 +373,7 @@ export const PrayerProvider = ({ children }) => {
         return () => clearInterval(interval);
     }, [prayerTimes, islamicDateData, calculateCurrentIslamicDate]);
 
-    const updateManualTime = (prayer, type, value) => {
+    const updateManualTime = async (prayer, type, value) => {
         const newTimes = {
             ...manualTimes,
             [prayer]: {
@@ -289,14 +382,44 @@ export const PrayerProvider = ({ children }) => {
             }
         };
         setManualTimes(newTimes);
+        
+        // Save to localStorage as cache
         localStorage.setItem('manualPrayerTimes', JSON.stringify(newTimes));
+        
+        // Save to Supabase
+        try {
+            const { error } = await supabase
+                .from('prayer_times')
+                .upsert({
+                    prayer_name: prayer,
+                    adhan_time: type === 'adhan' ? value : (newTimes[prayer]?.adhan || ''),
+                    jamat_time: type === 'jamat' ? value : (newTimes[prayer]?.jamat || ''),
+                    updated_at: new Date().toISOString()
+                }, {
+                    onConflict: 'prayer_name'
+                });
+            
+            if (error) {
+                console.error('Error saving prayer time to Supabase:', error);
+            }
+        } catch (err) {
+            console.error('Error updating prayer time:', err);
+        }
     };
 
-    const updateIslamicDate = (value) => {
+    const updateIslamicDate = async (value) => {
         if (!value || value.trim() === '') {
             setManualIslamicDate('');
             setIslamicDateData(null);
             localStorage.removeItem('manualIslamicDate');
+            
+            // Also delete from Supabase
+            try {
+                await supabase.from('islamic_date_config').delete().neq('id', '00000000-0000-0000-0000-000000000000');
+            } catch (err) {
+                console.error('Error deleting Islamic date from Supabase:', err);
+            }
+            
             return { valid: true };
         }
         
@@ -362,9 +485,32 @@ export const PrayerProvider = ({ children }) => {
             customMonthLengths: customMonthLengths
         };
         
+        // Save to localStorage as cache
         localStorage.setItem('manualIslamicDate', JSON.stringify(data));
         setIslamicDateData(data);
         setManualIslamicDate(formatIslamicDate(parsed.day, parsed.month, parsed.year));
+        
+        // Save to Supabase
+        try {
+            const { error } = await supabase
+                .from('islamic_date_config')
+                .upsert({
+                    id: 1,
+                    base_date: data.baseDate,
+                    set_date: data.setDate,
+                    last_increment: data.lastIncrement,
+                    custom_month_lengths: data.customMonthLengths,
+                    updated_at: new Date().toISOString()
+                }, {
+                    onConflict: 'id'
+                });
+            
+            if (error) {
+                console.error('Error saving Islamic date to Supabase:', error);
+            }
+        } catch (err) {
+            console.error('Error updating Islamic date:', err);
+        }
         
         return { valid: true };
     };
