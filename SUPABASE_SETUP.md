@@ -17,7 +17,22 @@ Follow these steps to configure Supabase Authentication for your Mosque Website.
 3.  Under "Project URL", copy the **URL**.
 4.  Under "Project API keys", copy the **`anon`** public key.
 
-## Step 3: Configure Environment Variables
+## Step 3: Configure Redirect URLs
+**Important**: Supabase needs to know which URLs are allowed for authentication redirects. This is why invitation emails redirect to specific URLs.
+
+1.  In the Supabase dashboard, go to **Project Settings** (gear icon).
+2.  Click **Authentication** in the sidebar.
+3.  Scroll down to **URL Configuration**.
+4.  Under **Redirect URLs**, add your allowed URLs:
+   - For local development: `http://localhost:3000/**` (matches your Vite port)
+   - For production: `https://yourdomain.com/**` (add after deployment)
+5.  Under **Site URL**, set:
+   - For development: `http://localhost:3000`
+   - For production: `https://yourdomain.com` (update after deployment)
+
+**How it works**: When Supabase sends an invitation/confirmation email, the link contains a token. After clicking, Supabase redirects to one of your allowed URLs. The token is then processed by your app to complete authentication.
+
+## Step 4: Configure Environment Variables
 1.  Open the `.env` file in your project root (VS Code).
 2.  Replace the placeholder values with the keys from Step 2.
 
@@ -27,7 +42,11 @@ VITE_SUPABASE_URL=https://your-project-ref.supabase.co
 VITE_SUPABASE_ANON_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
 ```
 
-## Step 4: Create an Admin User
+## Step 5: Create an Admin User
+
+**⚠️ Important**: Users created directly in the Supabase dashboard may not be able to log in with a password immediately. Follow these steps carefully:
+
+### Method 1: Create User with Password (Recommended)
 1.  In the Supabase dashboard, go to **Authentication** (users icon in the left sidebar).
 2.  Click **Add user** (top right).
 3.  Select **Send invitation** (or "Create user" if available directly, usually "Send invitation" sends a magic link, but you can also just create a user with a password if you disable email confirmation or confirm it manually).

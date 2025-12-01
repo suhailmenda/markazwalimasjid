@@ -29,26 +29,17 @@ const Footer = () => {
                         <ul className="contact-list">
                             <li>
                                 <MapPin size={18} />
-                                <span>123 Mosque Street, Silvassa, India</span>
+                                <span>Kilvani Rd, Silvassa, Dadra and Nagar Haveli and Daman and Diu 396230, India</span>
                             </li>
                             <li>
                                 <Phone size={18} />
-                                <span>+44 20 1234 5678</span>
+                                <span>+91 1234 5678 90</span>
                             </li>
                             <li>
                                 <Mail size={18} />
-                                <span>info@nurulhuda.com</span>
+                                <span>info@markazwalimasjid.com</span>
                             </li>
                         </ul>
-                    </div>
-
-                    <div className="footer-col">
-                        <h4 className="footer-subtitle">Follow Us</h4>
-                        <div className="social-links">
-                            <a href="#" className="social-link"><Facebook size={20} /></a>
-                            <a href="#" className="social-link"><Instagram size={20} /></a>
-                            <a href="#" className="social-link"><Twitter size={20} /></a>
-                        </div>
                     </div>
                 </div>
 

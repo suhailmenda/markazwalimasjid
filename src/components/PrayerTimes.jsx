@@ -4,7 +4,7 @@ import { usePrayerTimes } from '../context/PrayerContext';
 import './PrayerTimes.css';
 
 const PrayerTimes = () => {
-    const { prayerTimes, manualTimes, loading } = usePrayerTimes();
+    const { prayerTimes, manualTimes, loading, manualIslamicDate } = usePrayerTimes();
     const [currentTime, setCurrentTime] = useState(new Date());
 
     useEffect(() => {
@@ -57,7 +57,7 @@ const PrayerTimes = () => {
                         <Clock className="mb-2 text-gold" size={32} />
                         <div className="time">{currentTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</div>
                         <div className="date">{currentTime.toLocaleDateString([], { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}</div>
-                        <div className="islamic-date-display">{getIslamicDate()}</div>
+                        <div className="islamic-date-display">{manualIslamicDate || getIslamicDate()}</div>
                     </div>
 
                     <div className="prayer-table-container">

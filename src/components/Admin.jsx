@@ -6,12 +6,14 @@ import { supabase } from '../supabase';
 import './Admin.css';
 
 const Admin = () => {
-    const { manualTimes, updateManualTime } = usePrayerTimes();
+    const { manualTimes, updateManualTime, manualIslamicDate, updateIslamicDate } = usePrayerTimes();
     const [user, setUser] = useState(null);
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(true);
+    const [islamicDateInput, setIslamicDateInput] = useState(manualIslamicDate || '');
+    const [islamicDateError, setIslamicDateError] = useState('');
 
     useEffect(() => {
         // Check active session
@@ -27,6 +29,10 @@ const Admin = () => {
 
         return () => subscription.unsubscribe();
     }, []);
+
+    useEffect(() => {
+        setIslamicDateInput(manualIslamicDate || '');
+    }, [manualIslamicDate]);
 
     const handleLogin = async (e) => {
         e.preventDefault();
@@ -111,6 +117,48 @@ const Admin = () => {
                 </div>
 
                 <div className="admin-card">
+                    <div className="mb-6 pb-6 border-b border-gray-200">
+                        <label className="block text-sm font-serif font-bold text-primary-dark mb-2">
+                            Islamic Date (Hijri)
+                        </label>
+                        <input
+                            type="text"
+                            value={islamicDateInput}
+                            onChange={(e) => {
+                                setIslamicDateInput(e.target.value);
+                                setIslamicDateError('');
+                            }}
+                            onBlur={(e) => {
+                                const result = updateIslamicDate(e.target.value);
+                                if (!result.valid) {
+                                    setIslamicDateError(result.error);
+                                } else {
+                                    setIslamicDateError('');
+                                    setIslamicDateInput(manualIslamicDate || '');
+                                }
+                            }}
+                            placeholder="e.g. Jumada II 10, 1447 AH"
+                            className={`admin-input ${islamicDateError ? 'border-red-500' : ''}`}
+                        />
+                        {islamicDateError && (
+                            <p className="text-xs text-red-500 mt-1">{islamicDateError}</p>
+                        )}
+                        <div className="text-xs text-gray-500 mt-2 space-y-1">
+                            <p>
+                                Leave empty to use automatic calculation. Date will increment automatically at sunset (Maghrib).
+                            </p>
+                            <div className="bg-blue-50 p-3 rounded border border-blue-200">
+                                <p className="font-semibold text-blue-900 mb-1">How it works:</p>
+                                <ul className="list-disc list-inside space-y-1 text-blue-800">
+                                    <li><strong>Default:</strong> All months are 30 days - system automatically goes to day 30</li>
+                                    <li><strong>Moon sighted:</strong> When moon is sighted on day 29, set the date to day 1 of NEXT month (e.g., "Shawwal 1, 1447") - system marks previous month as 29 days</li>
+                                    <li><strong>Moon not sighted:</strong> Do nothing - system continues to day 30 automatically</li>
+                                    <li><strong>Date correction:</strong> Set any date to correct/adjust (e.g., "Ramadan 15, 1447")</li>
+                                    <li><strong>Auto-increment:</strong> Date increments daily at sunset from your last set date</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
                     <div className="overflow-x-auto">
                         <table className="w-full">
                             <thead>
