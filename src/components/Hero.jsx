@@ -1,16 +1,26 @@
 import React from 'react';
-import { format } from 'date-fns';
 import './Hero.css';
 
 const Hero = () => {
     const today = new Date();
+    
+    // Format date in Asia/Kolkata timezone
+    const formatDateInIST = (date) => {
+        return date.toLocaleDateString('en-IN', {
+            weekday: 'long',
+            day: 'numeric',
+            month: 'long',
+            year: 'numeric',
+            timeZone: 'Asia/Kolkata'
+        });
+    };
 
     return (
         <section className="hero">
             <div className="hero-overlay"></div>
             <div className="container hero-content">
                 <span className="islamic-date">
-                    {format(today, 'EEEE, d MMMM yyyy')}
+                    {formatDateInIST(today)}
                 </span>
                 <h1 className="hero-title">
                     Welcome to <span className="text-gold">Markaz wali Masjid</span>
