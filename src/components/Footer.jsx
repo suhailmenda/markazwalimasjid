@@ -37,7 +37,7 @@ const Footer = () => {
                             </li>
                             <li>
                                 <Mail size={18} />
-                                <span>info@markazwalimasjid.com</span>
+                                <span>suhailmenda@gmail.com</span>
                             </li>
                         </ul>
                     </div>
