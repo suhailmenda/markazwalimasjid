@@ -1,0 +1,130 @@
+.prayer-section {
+    background-color: var(--color-bg);
+}
+
+.section-header {
+    margin-bottom: 3rem;
+}
+
+.section-title {
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.location-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background-color: var(--color-white);
+    padding: 0.5rem 1rem;
+    border-radius: 9999px;
+    box-shadow: var(--shadow-sm);
+    color: var(--color-text-light);
+    font-size: 0.9rem;
+}
+
+.prayer-card {
+    background-color: var(--color-white);
+    border-radius: 1rem;
+    box-shadow: var(--shadow-lg);
+    overflow: hidden;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.current-time-display {
+    background-color: var(--color-primary);
+    color: var(--color-white);
+    padding: 2rem;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.current-time-display .time {
+    font-size: 3rem;
+    font-weight: 700;
+    line-height: 1;
+    margin-bottom: 0.5rem;
+    font-family: var(--font-serif);
+}
+
+.current-time-display .date {
+    opacity: 0.9;
+    margin-bottom: 0.5rem;
+}
+
+.islamic-date-display {
+    font-family: var(--font-serif);
+    color: var(--color-secondary-light);
+    font-size: 1.1rem;
+    letter-spacing: 0.5px;
+}
+
+.prayer-table-container {
+    padding: 1rem;
+    overflow-x: auto;
+}
+
+.prayer-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.prayer-table th {
+    text-align: left;
+    padding: 1rem;
+    font-family: var(--font-serif);
+    color: var(--color-primary-dark);
+    border-bottom: 2px solid #f1f5f9;
+}
+
+.prayer-table td {
+    padding: 1rem;
+    border-bottom: 1px solid #f1f5f9;
+}
+
+.prayer-row:last-child td {
+    border-bottom: none;
+}
+
+.prayer-row:hover {
+    background-color: #f8fafc;
+}
+
+.prayer-name {
+    font-weight: 600;
+    color: var(--color-text);
+    font-size: 1.1rem;
+}
+
+.prayer-time {
+    font-family: var(--font-sans);
+    font-size: 1.1rem;
+}
+
+.text-muted {
+    color: var(--color-text-light);
+}
+
+.font-bold {
+    font-weight: 700;
+}
+
+.text-primary {
+    color: var(--color-primary);
+}
+
+@media (max-width: 640px) {
+
+    .prayer-table th,
+    .prayer-table td {
+        padding: 0.75rem 0.5rem;
+        font-size: 0.9rem;
+    }
+
+    .prayer-name {
+        font-size: 1rem;
+    }
+}
