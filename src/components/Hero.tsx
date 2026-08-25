@@ -1,11 +1,11 @@
 import React from 'react';
 import './Hero.css';
 
-const Hero = () => {
+const Hero: React.FC = () => {
     const today = new Date();
     
     // Format date in Asia/Kolkata timezone
-    const formatDateInIST = (date) => {
+    const formatDateInIST = (date: Date): string => {
         return date.toLocaleDateString('en-IN', {
             weekday: 'long',
             day: 'numeric',

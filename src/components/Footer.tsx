@@ -1,8 +1,8 @@
 import React from 'react';
-import { Mail, Phone, MapPin, Facebook, Instagram, Twitter } from 'lucide-react';
+import { Mail, Phone, MapPin } from 'lucide-react';
 import './Footer.css';
 
-const Footer = () => {
+const Footer: React.FC = () => {
     return (
         <footer id="contact" className="footer">
             <div className="container">
@@ -20,7 +20,6 @@ const Footer = () => {
                             <li><a href="#">Home</a></li>
                             <li><a href="#prayer-times">Prayer Times</a></li>
                             <li><a href="#about">About Us</a></li>
-                            <li><a href="#donate">Donate</a></li>
                         </ul>
                     </div>
 
@@ -28,16 +27,27 @@ const Footer = () => {
                         <h4 className="footer-subtitle">Contact Us</h4>
                         <ul className="contact-list">
                             <li>
-                                <MapPin size={18} />
-                                <span>Kilvani Rd, Silvassa, Dadra and Nagar Haveli and Daman and Diu 396230, India</span>
+                                <a
+                                    href="https://maps.app.goo.gl/ufyaAWqVv5rJ1DXQ9"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="contact-link"
+                                >
+                                    <MapPin size={18} />
+                                    <span>72G4+9WG, Kilvani Rd, near Jalaram Temple, Naka, Park City, Silvassa, Dadra and Nagar Haveli and Daman and Diu 396230</span>
+                                </a>
                             </li>
                             <li>
-                                <Phone size={18} />
-                                <span>+91 1234 5678 90</span>
+                                <a href="tel:+919510585777" className="contact-link">
+                                    <Phone size={18} />
+                                    <span>+91 9510585777</span>
+                                </a>
                             </li>
                             <li>
-                                <Mail size={18} />
-                                <span>suhailmenda@gmail.com</span>
+                                <a href="mailto:markazwalimasjid@gmail.com" className="contact-link">
+                                    <Mail size={18} />
+                                    <span>markazwalimasjid@gmail.com</span>
+                                </a>
                             </li>
                         </ul>
                     </div>
