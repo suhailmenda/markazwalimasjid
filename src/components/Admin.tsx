@@ -312,72 +312,25 @@ const Admin: React.FC<AdminProps> = ({
                 <div className="prayer-card">
                     <div className="current-time-display" style={{ position: 'relative' }}>
                         
-                        {/* Edit Icon / Save & Cancel controls embedded inside time & date card */}
-                        <div style={{ position: 'absolute', top: '1rem', right: '1rem', display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
+                        {/* Interchanging Edit (Pencil) <-> Cancel (Cross) Button in Card Top-Right */}
+                        <div style={{ position: 'absolute', top: '1rem', right: '1rem' }}>
                             {!isEditing ? (
                                 <button
                                     onClick={handleStartEdit}
                                     title="Edit Prayer Times & Islamic Date"
-                                    style={{
-                                        backgroundColor: 'rgba(255, 255, 255, 0.2)',
-                                        color: '#ffffff',
-                                        border: '1px solid rgba(255, 255, 255, 0.35)',
-                                        borderRadius: '50%',
-                                        width: '2.5rem',
-                                        height: '2.5rem',
-                                        display: 'flex',
-                                        alignItems: 'center',
-                                        justifyContent: 'center',
-                                        cursor: 'pointer',
-                                        transition: 'all 0.2s ease',
-                                    }}
+                                    className="btn-card-icon"
                                 >
                                     <Pencil size={18} />
                                 </button>
                             ) : (
-                                <>
-                                    <button
-                                        onClick={handleSaveAll}
-                                        disabled={isSaving}
-                                        title="Save Changes"
-                                        style={{
-                                            backgroundColor: '#059669',
-                                            color: '#ffffff',
-                                            border: 'none',
-                                            borderRadius: '0.5rem',
-                                            padding: '0.45rem 0.9rem',
-                                            display: 'flex',
-                                            alignItems: 'center',
-                                            gap: '0.4rem',
-                                            fontWeight: 600,
-                                            fontSize: '0.85rem',
-                                            cursor: 'pointer',
-                                            boxShadow: '0 2px 6px rgba(0,0,0,0.2)',
-                                        }}
-                                    >
-                                        {isSaving ? <RefreshCw size={15} className="animate-spin" /> : <Save size={15} />}
-                                        <span>Save</span>
-                                    </button>
-                                    <button
-                                        onClick={handleCancelEdit}
-                                        disabled={isSaving}
-                                        title="Cancel Editing"
-                                        style={{
-                                            backgroundColor: 'rgba(255, 255, 255, 0.2)',
-                                            color: '#ffffff',
-                                            border: '1px solid rgba(255, 255, 255, 0.35)',
-                                            borderRadius: '50%',
-                                            width: '2.25rem',
-                                            height: '2.25rem',
-                                            display: 'flex',
-                                            alignItems: 'center',
-                                            justifyContent: 'center',
-                                            cursor: 'pointer',
-                                        }}
-                                    >
-                                        <X size={18} />
-                                    </button>
-                                </>
+                                <button
+                                    onClick={handleCancelEdit}
+                                    disabled={isSaving}
+                                    title="Cancel Editing"
+                                    className="btn-card-icon"
+                                >
+                                    <X size={20} />
+                                </button>
                             )}
                         </div>
 
@@ -389,36 +342,22 @@ const Admin: React.FC<AdminProps> = ({
                             {currentTime.toLocaleDateString('en-IN', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', timeZone: 'Asia/Kolkata' })}
                         </div>
                         
-                        {!isEditing ? (
-                            <div className="islamic-date-display">
-                                {manualIslamicDate || calculatedIslamicDate}
-                            </div>
-                        ) : (
-                            <div style={{ marginTop: '0.75rem', width: '100%', maxWidth: '400px', backgroundColor: 'rgba(255, 255, 255, 0.15)', padding: '0.75rem', borderRadius: '0.5rem', border: '1px solid rgba(255,255,255,0.25)' }}>
-                                <label style={{ display: 'block', fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '0.05em', fontWeight: 600, color: '#ecfdf5', marginBottom: '0.35rem' }}>
-                                    Islamic Date (Hijri) - Editable
-                                </label>
-                                <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
-                                    <input
-                                        type="text"
-                                        value={draftIslamicDate}
-                                        onChange={(e) => setDraftIslamicDate(e.target.value)}
-                                        placeholder="e.g. Rabiʻ I 12, 1448 AH"
-                                        style={{ width: '100%', padding: '0.4rem 0.75rem', borderRadius: '0.375rem', color: '#0f172a', fontFamily: 'var(--font-serif)', fontSize: '0.9rem', backgroundColor: '#ffffff', border: 'none' }}
-                                    />
-                                    {draftIslamicDate && (
-                                        <button
-                                            type="button"
-                                            onClick={() => setDraftIslamicDate(calculatedIslamicDate)}
-                                            title="Reset to Auto-calculated Date"
-                                            style={{ backgroundColor: '#064e3b', color: '#ffffff', fontSize: '0.75rem', padding: '0.4rem 0.6rem', borderRadius: '0.375rem', border: 'none', cursor: 'pointer', whiteSpace: 'nowrap' }}
-                                        >
-                                            Auto
-                                        </button>
-                                    )}
-                                </div>
-                            </div>
-                        )}
+                        {/* Fixed Height Wrapper for Zero Layout Shift */}
+                        <div className="islamic-date-container">
+                            {!isEditing ? (
+                                <span className="islamic-date-display">
+                                    {manualIslamicDate || calculatedIslamicDate}
+                                </span>
+                            ) : (
+                                <input
+                                    type="text"
+                                    value={draftIslamicDate}
+                                    onChange={(e) => setDraftIslamicDate(e.target.value)}
+                                    placeholder="e.g. Rabiʻ I 12, 1448 AH"
+                                    className="islamic-date-input-inline"
+                                />
+                            )}
+                        </div>
                     </div>
 
                     <div className="prayer-table-container">
@@ -453,7 +392,7 @@ const Admin: React.FC<AdminProps> = ({
                                             {/* Adhan Column */}
                                             <td className="prayer-time">
                                                 {!isEditing ? (
-                                                    activeAdhan
+                                                    <div className="cell-content">{activeAdhan}</div>
                                                 ) : (
                                                     <input
                                                         type="text"
@@ -468,7 +407,7 @@ const Admin: React.FC<AdminProps> = ({
                                             {/* Jamat Column */}
                                             <td className="prayer-time font-bold text-primary">
                                                 {!isEditing ? (
-                                                    activeJamat
+                                                    <div className="cell-content font-bold text-primary">{activeJamat}</div>
                                                 ) : (
                                                     <input
                                                         type="text"
@@ -485,7 +424,28 @@ const Admin: React.FC<AdminProps> = ({
                             </tbody>
                         </table>
                     </div>
+
+                    {/* Reserved Footer Area so Card Height remains 100% constant across modes */}
+                    <div className="prayer-card-footer">
+                        <div style={{
+                            visibility: isEditing ? 'visible' : 'hidden',
+                            opacity: isEditing ? 1 : 0,
+                            pointerEvents: isEditing ? 'auto' : 'none',
+                            transition: 'opacity 0.2s ease, visibility 0.2s ease'
+                        }}>
+                            <button
+                                onClick={handleSaveAll}
+                                disabled={isSaving || !isEditing}
+                                className="btn-admin btn-admin-save"
+                                style={{ padding: '0.65rem 1.5rem', fontSize: '0.95rem', borderRadius: '0.5rem' }}
+                            >
+                                {isSaving ? <RefreshCw size={16} className="animate-spin" /> : <Save size={16} />}
+                                <span>Save Changes</span>
+                            </button>
+                        </div>
+                    </div>
                 </div>
+
             </div>
         </div>
     );

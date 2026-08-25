@@ -55,11 +55,24 @@
     margin-bottom: 0.5rem;
 }
 
+.islamic-date-container {
+    height: 2.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    margin-top: 0.25rem;
+}
+
 .islamic-date-display {
     font-family: var(--font-serif);
     color: var(--color-secondary-light);
     font-size: 1.1rem;
     letter-spacing: 0.5px;
+    height: 2.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .prayer-table-container {
@@ -70,19 +83,55 @@
 .prayer-table {
     width: 100%;
     border-collapse: collapse;
+    table-layout: fixed;
+}
+
+.prayer-table th:nth-child(1),
+.prayer-table td:nth-child(1) {
+    width: 38%;
+    text-align: left;
+}
+
+.prayer-table th:nth-child(2),
+.prayer-table td:nth-child(2) {
+    width: 31%;
+    text-align: center;
+}
+
+.prayer-table th:nth-child(3),
+.prayer-table td:nth-child(3) {
+    width: 31%;
+    text-align: center;
 }
 
 .prayer-table th {
-    text-align: left;
     padding: 1rem;
     font-family: var(--font-serif);
     color: var(--color-primary-dark);
     border-bottom: 2px solid #f1f5f9;
+    height: 3rem;
+    box-sizing: border-box;
 }
 
 .prayer-table td {
-    padding: 1rem;
+    padding: 0 1rem;
+    height: 3.5rem;
+    vertical-align: middle;
     border-bottom: 1px solid #f1f5f9;
+    box-sizing: border-box;
+}
+
+.cell-content {
+    height: 2.25rem;
+    display: flex;
+    align-items: center;
+    font-size: 1.1rem;
+    width: 100%;
+}
+
+.prayer-table td:nth-child(2) .cell-content,
+.prayer-table td:nth-child(3) .cell-content {
+    justify-content: center;
 }
 
 .prayer-row:last-child td {
@@ -117,10 +166,9 @@
 }
 
 @media (max-width: 640px) {
-
     .prayer-table th,
     .prayer-table td {
-        padding: 0.75rem 0.5rem;
+        padding: 0 0.5rem;
         font-size: 0.9rem;
     }
 

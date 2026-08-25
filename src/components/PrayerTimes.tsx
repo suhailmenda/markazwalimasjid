@@ -91,7 +91,9 @@ const PrayerTimes: React.FC<PrayerTimesProps> = ({
                         <div className="date">
                             {currentTime.toLocaleDateString('en-IN', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', timeZone: 'Asia/Kolkata' })}
                         </div>
-                        <div className="islamic-date-display">{manualIslamicDate || getIslamicDate()}</div>
+                        <div className="islamic-date-container">
+                            <span className="islamic-date-display">{manualIslamicDate || getIslamicDate()}</span>
+                        </div>
                     </div>
 
                     <div className="prayer-table-container">
@@ -118,8 +120,12 @@ const PrayerTimes: React.FC<PrayerTimesProps> = ({
                                         return (
                                             <tr key={prayer.key} className="prayer-row">
                                                 <td className="prayer-name">{prayer.name}</td>
-                                                <td className="prayer-time">{adhanTime}</td>
-                                                <td className="prayer-time font-bold text-primary">{jamatTime}</td>
+                                                <td className="prayer-time">
+                                                    <div className="cell-content">{adhanTime}</div>
+                                                </td>
+                                                <td className="prayer-time font-bold text-primary">
+                                                    <div className="cell-content font-bold text-primary">{jamatTime}</div>
+                                                </td>
                                             </tr>
                                         );
                                     })
