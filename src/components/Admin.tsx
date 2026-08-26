@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { auth, isFirebaseConfigured } from '../firebase';
 import { signInWithEmailAndPassword, onAuthStateChanged, type User } from 'firebase/auth';
 import type { AladhanTimings, ManualTimes, PrayerName, SaveStatus, TimeType } from '../types/prayer';
+import { getIslamicDateAtSunset } from '../utils/sunsetScheduler';
 import './Admin.css';
 import './PrayerTimes.css';
 
@@ -11,9 +12,11 @@ const DEFAULT_TIMES: ManualTimes = {
     Fajr: { adhan: '05:15', jamat: '05:45' },
     Dhuhr: { adhan: '12:45', jamat: '13:30' },
     Asr: { adhan: '16:45', jamat: '17:15' },
-    Maghrib: { adhan: '19:05', jamat: '19:15' },
+    Maghrib: { adhan: '19:05', jamat: 'After Azaan' },
     Isha: { adhan: '20:30', jamat: '21:00' },
     Jummah: { adhan: '13:00', jamat: '13:30' },
+    Ishraq: { adhan: '-', jamat: '06:45' },
+    Chast: { adhan: '-', jamat: '10:00' },
 };
 
 interface AdminProps {
@@ -21,6 +24,7 @@ interface AdminProps {
     manualTimes?: ManualTimes;
     saveAllSettings?: (newManualTimes: ManualTimes, newIslamicDate: string) => Promise<void>;
     manualIslamicDate?: string;
+    apiIslamicDate?: string;
     saveStatus?: SaveStatus;
 }
 
@@ -29,37 +33,19 @@ const Admin: React.FC<AdminProps> = ({
     manualTimes,
     saveAllSettings,
     manualIslamicDate = '',
+    apiIslamicDate = '',
 }) => {
     const [currentTime, setCurrentTime] = useState<Date>(new Date());
-
     useEffect(() => {
         const timer = setInterval(() => setCurrentTime(new Date()), 1000);
         return () => clearInterval(timer);
     }, []);
 
-    const getIslamicDate = (): string => {
-        try {
-            return new Intl.DateTimeFormat('en-TN-u-ca-islamic', {
-                day: 'numeric',
-                month: 'long',
-                year: 'numeric',
-                timeZone: 'Asia/Kolkata'
-            }).format(currentTime);
-        } catch (e) {
-            try {
-                return new Intl.DateTimeFormat('en-US-u-ca-islamic', {
-                    day: 'numeric',
-                    month: 'long',
-                    year: 'numeric',
-                }).format(currentTime);
-            } catch (err) {
-                return '';
-            }
-        }
-    };
-
-    const calculatedIslamicDate = getIslamicDate();
     const safeManual = manualTimes || DEFAULT_TIMES;
+    const maghribAdhanStr = safeManual.Maghrib?.adhan || prayerTimes?.Maghrib;
+
+    // Helper to get Islamic Date (Hijri) with auto sunset (+1 day) transition
+    const calculatedIslamicDate = apiIslamicDate || getIslamicDateAtSunset(currentTime, maghribAdhanStr);
 
     // Edit Mode State (DO NOT AUTO-SAVE)
     const [isEditing, setIsEditing] = useState<boolean>(false);
@@ -125,6 +111,7 @@ const Admin: React.FC<AdminProps> = ({
     };
 
     const handleDraftTimeChange = (prayerKey: PrayerName, type: TimeType, value: string): void => {
+        if (prayerKey === 'Maghrib') return; // Maghrib Adhan & Jamat are strictly auto-managed
         setDraftTimes((prev) => {
             const currentObj = prev || safeManual;
             const currentPrayer = currentObj[prayerKey] || { adhan: '', jamat: '' };
@@ -181,6 +168,8 @@ const Admin: React.FC<AdminProps> = ({
         { name: 'Maghrib', key: 'Maghrib' },
         { name: 'Isha', key: 'Isha' },
         { name: 'Jummah', key: 'Jummah' },
+        // { name: 'Ishraq', key: 'Ishraq' },
+        // { name: 'Chast', key: 'Chast' },
     ];
 
     if (authLoading) {
@@ -372,18 +361,27 @@ const Admin: React.FC<AdminProps> = ({
                             <tbody>
                                 {prayers.map((prayer) => {
                                     const prayerKey = prayer.key;
+                                    const isMaghrib = prayerKey === 'Maghrib';
                                     const apiTime = prayerTimes && prayerTimes[prayerKey] ? formatTime(prayerTimes[prayerKey]) : '';
                                     const defaultAdhan = DEFAULT_TIMES[prayerKey]?.adhan || apiTime || '-';
-                                    const defaultJamat = DEFAULT_TIMES[prayerKey]?.jamat || '-';
+                                    const defaultJamat = isMaghrib ? 'After Azaan' : (DEFAULT_TIMES[prayerKey]?.jamat || '-');
 
                                     // Active saved values
-                                    const activeAdhan = safeManual[prayerKey]?.adhan || defaultAdhan;
-                                    const activeJamat = safeManual[prayerKey]?.jamat || defaultJamat;
+                                    const activeAdhan = isMaghrib
+                                        ? (apiTime || safeManual.Maghrib?.adhan || '19:05')
+                                        : (safeManual[prayerKey]?.adhan || defaultAdhan);
+                                    const activeJamat = isMaghrib
+                                        ? 'After Azaan'
+                                        : (safeManual[prayerKey]?.jamat || defaultJamat);
 
                                     // Draft values during Edit Mode
                                     const currentDraftObj = draftTimes || safeManual;
-                                    const draftAdhan = currentDraftObj[prayerKey]?.adhan !== undefined ? currentDraftObj[prayerKey].adhan : activeAdhan;
-                                    const draftJamat = currentDraftObj[prayerKey]?.jamat !== undefined ? currentDraftObj[prayerKey].jamat : activeJamat;
+                                    const draftAdhan = isMaghrib
+                                        ? activeAdhan
+                                        : (currentDraftObj[prayerKey]?.adhan !== undefined ? currentDraftObj[prayerKey].adhan : activeAdhan);
+                                    const draftJamat = isMaghrib
+                                        ? 'After Azaan'
+                                        : (currentDraftObj[prayerKey]?.jamat !== undefined ? currentDraftObj[prayerKey].jamat : activeJamat);
 
                                     return (
                                         <tr key={prayerKey} className="prayer-row">
@@ -393,6 +391,14 @@ const Admin: React.FC<AdminProps> = ({
                                             <td className="prayer-time">
                                                 {!isEditing ? (
                                                     <div className="cell-content">{activeAdhan}</div>
+                                                ) : isMaghrib ? (
+                                                    <input
+                                                        type="text"
+                                                        value={draftAdhan}
+                                                        disabled
+                                                        title="Maghrib Adhan is auto-synced with Silvassa sunset time"
+                                                        className="admin-table-input admin-table-input-disabled"
+                                                    />
                                                 ) : (
                                                     <input
                                                         type="text"
@@ -408,6 +414,14 @@ const Admin: React.FC<AdminProps> = ({
                                             <td className="prayer-time font-bold text-primary">
                                                 {!isEditing ? (
                                                     <div className="cell-content font-bold text-primary">{activeJamat}</div>
+                                                ) : isMaghrib ? (
+                                                    <input
+                                                        type="text"
+                                                        value="After Azaan"
+                                                        disabled
+                                                        title="Maghrib Jamat is fixed to After Azaan"
+                                                        className="admin-table-input font-bold text-primary admin-table-input-disabled"
+                                                    />
                                                 ) : (
                                                     <input
                                                         type="text"

@@ -330,6 +330,14 @@
   color: var(--color-primary);
 }
 
+.admin-table-input-disabled {
+  background-color: #f1f5f9 !important;
+  color: #64748b !important;
+  border-color: #e2e8f0 !important;
+  cursor: not-allowed !important;
+  box-shadow: none !important;
+}
+
 /* Card Footer for Save Button (White background matching table div above it, reserved space) */
 .prayer-card-footer {
   display: flex;

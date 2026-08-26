@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Clock, MapPin } from 'lucide-react';
 import type { AladhanTimings, ManualTimes, PrayerName } from '../types/prayer';
+import { getIslamicDateAtSunset } from '../utils/sunsetScheduler';
 import './PrayerTimes.css';
 
 const DEFAULT_TIMES: ManualTimes = {
@@ -10,6 +11,8 @@ const DEFAULT_TIMES: ManualTimes = {
     Maghrib: { adhan: '19:05', jamat: '19:15' },
     Isha: { adhan: '20:30', jamat: '21:00' },
     Jummah: { adhan: '13:00', jamat: '13:30' },
+    Ishraq: { adhan: '-', jamat: '06:45' },
+    Chast: { adhan: '-', jamat: '10:00' },
 };
 
 interface PrayerTimesProps {
@@ -17,6 +20,7 @@ interface PrayerTimesProps {
     manualTimes: ManualTimes;
     loading: boolean;
     manualIslamicDate: string;
+    apiIslamicDate?: string;
 }
 
 const PrayerTimes: React.FC<PrayerTimesProps> = ({
@@ -24,6 +28,7 @@ const PrayerTimes: React.FC<PrayerTimesProps> = ({
     manualTimes,
     loading,
     manualIslamicDate,
+    apiIslamicDate = '',
 }) => {
     const [currentTime, setCurrentTime] = useState<Date>(new Date());
 
@@ -39,6 +44,8 @@ const PrayerTimes: React.FC<PrayerTimesProps> = ({
         { name: 'Maghrib', key: 'Maghrib' },
         { name: 'Isha', key: 'Isha' },
         { name: 'Jummah', key: 'Jummah' },
+        // { name: 'Ishraq', key: 'Ishraq' },
+        // { name: 'Chast', key: 'Chast' },
     ];
 
     const formatTime = (timeString: string | undefined): string => {
@@ -47,29 +54,11 @@ const PrayerTimes: React.FC<PrayerTimesProps> = ({
         return timeString.split(' ')[0];
     };
 
-    // Helper to get Islamic Date (Hijri) safely
-    const getIslamicDate = (): string => {
-        try {
-            return new Intl.DateTimeFormat('en-TN-u-ca-islamic', {
-                day: 'numeric',
-                month: 'long',
-                year: 'numeric',
-                timeZone: 'Asia/Kolkata'
-            }).format(currentTime);
-        } catch (e) {
-            try {
-                return new Intl.DateTimeFormat('en-US-u-ca-islamic', {
-                    day: 'numeric',
-                    month: 'long',
-                    year: 'numeric',
-                }).format(currentTime);
-            } catch (err) {
-                return '';
-            }
-        }
-    };
-
     const safeManual = manualTimes || DEFAULT_TIMES;
+    const maghribAdhanStr = safeManual.Maghrib?.adhan || prayerTimes?.Maghrib;
+
+    // Helper to get Islamic Date (Hijri) with auto sunset (+1 day) transition
+    const calculatedIslamicDate = apiIslamicDate || getIslamicDateAtSunset(currentTime, maghribAdhanStr);
 
     return (
         <section id="prayer-times" className="section-padding prayer-section">
@@ -92,7 +81,7 @@ const PrayerTimes: React.FC<PrayerTimesProps> = ({
                             {currentTime.toLocaleDateString('en-IN', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', timeZone: 'Asia/Kolkata' })}
                         </div>
                         <div className="islamic-date-container">
-                            <span className="islamic-date-display">{manualIslamicDate || getIslamicDate()}</span>
+                            <span className="islamic-date-display">{manualIslamicDate || calculatedIslamicDate}</span>
                         </div>
                     </div>
 

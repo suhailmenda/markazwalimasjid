@@ -9,12 +9,12 @@ export interface PrayerTimeEntry {
   jamat: string;
 }
 
-export type PrayerName = 'Fajr' | 'Dhuhr' | 'Asr' | 'Maghrib' | 'Isha' | 'Jummah';
+export type PrayerName = 'Fajr' | 'Dhuhr' | 'Asr' | 'Maghrib' | 'Isha' | 'Jummah' | 'Ishraq' | 'Chast';
 export type TimeType = 'adhan' | 'jamat';
 
 export type ManualTimes = Record<PrayerName, PrayerTimeEntry>;
 
-// ── Aladhan API response timings ───────────────────────────────────────────
+// ── Aladhan API response types ─────────────────────────────────────────────
 
 export interface AladhanTimings {
   Fajr: string;
@@ -31,12 +31,56 @@ export interface AladhanTimings {
   [key: string]: string; // allow extra keys the API may return
 }
 
+export interface AladhanHijriMonth {
+  number: number;
+  en: string;
+  ar: string;
+  days?: number;
+}
+
+export interface AladhanHijriDate {
+  date: string;
+  format: string;
+  day: string;
+  month: AladhanHijriMonth;
+  year: string;
+  designation: {
+    abbreviated: string;
+    expanded: string;
+  };
+  holidays?: string[];
+}
+
+export interface AladhanDate {
+  readable: string;
+  timestamp: string;
+  hijri: AladhanHijriDate;
+  gregorian?: {
+    date: string;
+    format: string;
+    day: string;
+    month: { number: number; en: string };
+    year: string;
+  };
+}
+
+export interface AladhanApiResponse {
+  code: number;
+  status: string;
+  data: {
+    timings: AladhanTimings;
+    date: AladhanDate;
+  };
+}
+
 // ── Hook state ─────────────────────────────────────────────────────────────
 
 export type SaveStatus = 'saved' | 'saving' | 'error' | 'local';
 
 export interface UsePrayerTimesReturn {
   prayerTimes: AladhanTimings | null;
+  apiDate: AladhanDate | null;
+  apiIslamicDate: string;
   manualTimes: ManualTimes;
   loading: boolean;
   saveStatus: SaveStatus;
@@ -44,4 +88,5 @@ export interface UsePrayerTimesReturn {
   manualIslamicDate: string;
   updateManualTime: (prayer: PrayerName, type: TimeType, value: string) => Promise<void>;
   saveAllSettings: (newManualTimes: ManualTimes, newIslamicDate: string) => Promise<void>;
+  syncApiTimesNow: () => Promise<void>;
 }
