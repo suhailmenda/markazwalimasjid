@@ -1,137 +1,351 @@
+/* ==========================================
+   Admin Dashboard & Login Styles
+   ========================================== */
+
+/* Login Container & Card */
 .admin-login-container {
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: var(--color-bg);
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--color-bg);
+  padding: 1.5rem;
 }
+
+.admin-login-card {
+  background-color: var(--color-white);
+  padding: 2.5rem;
+  border-radius: 1.25rem;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
+  width: 100%;
+  max-width: 420px;
+  margin: 0 auto;
+}
+
+.admin-login-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.admin-lock-badge {
+  width: 3.5rem;
+  height: 3.5rem;
+  background-color: #ecfdf5;
+  color: var(--color-primary);
+  border-radius: 9999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1rem auto;
+  border: 1px solid #a7f3d0;
+}
+
+.admin-login-title {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: var(--color-primary-dark);
+  margin-bottom: 0.25rem;
+  font-family: var(--font-serif);
+}
+
+.admin-login-subtitle {
+  font-size: 0.875rem;
+  color: var(--color-text-light);
+}
+
+.admin-form-group {
+  margin-bottom: 1.25rem;
+}
+
+.admin-label {
+  display: block;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #475569;
+  margin-bottom: 0.5rem;
+}
+
+.admin-input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.admin-input-icon {
+  position: absolute;
+  left: 1rem;
+  color: #94a3b8;
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.admin-input-with-icon {
+  width: 100%;
+  padding: 0.85rem 1rem 0.85rem 2.8rem;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 0.625rem;
+  font-family: var(--font-sans);
+  font-size: 0.95rem;
+  color: #0f172a;
+  background-color: #f8fafc;
+  transition: all 0.2s ease-in-out;
+}
+
+.admin-input-with-icon:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  background-color: #ffffff;
+  box-shadow: 0 0 0 4px rgba(4, 120, 87, 0.15);
+}
+
+.admin-btn-submit {
+  width: 100%;
+  background-color: var(--color-primary);
+  color: var(--color-white);
+  font-weight: 600;
+  font-size: 1rem;
+  padding: 0.875rem 1.5rem;
+  border-radius: 0.625rem;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 1.75rem;
+  transition: all 0.2s ease-in-out;
+  box-shadow: 0 4px 6px -1px rgba(4, 120, 87, 0.2);
+}
+
+.admin-btn-submit:hover {
+  background-color: var(--color-primary-dark);
+  box-shadow: 0 6px 12px -2px rgba(4, 120, 87, 0.3);
+}
+
+.admin-btn-submit:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+
+.admin-login-footer {
+  margin-top: 2rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid #f1f5f9;
+  text-align: center;
+}
+
+.admin-link-back {
+  font-size: 0.875rem;
+  color: var(--color-text-light);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+
+.admin-link-back:hover {
+  color: var(--color-primary);
+}
+
+/* Error Alert */
+.admin-alert-error {
+  background-color: #fef2f2;
+  border: 1px solid #fecaca;
+  color: #dc2626;
+  padding: 0.75rem 1rem;
+  border-radius: 0.5rem;
+  font-size: 0.875rem;
+  margin-bottom: 1.25rem;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+}
+
+/* ==========================================
+   Admin Main Dashboard View
+   ========================================== */
 
 .admin-container {
-    min-height: 100vh;
-    background-color: var(--color-bg);
+  min-height: 100vh;
+  background-color: var(--color-bg);
 }
 
-.admin-card {
-    background-color: var(--color-white);
-    padding: 2rem;
-    border-radius: 1rem;
-    box-shadow: var(--shadow-lg);
-    width: 100%;
-    max-width: 800px;
-    margin: 0 auto;
+.admin-header-bar {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
 }
 
-.admin-login-container .admin-card {
-    max-width: 400px;
+.admin-title {
+  font-size: 1.875rem;
+  font-weight: 700;
+  color: var(--color-primary-dark);
+  font-family: var(--font-serif);
 }
 
-.admin-input {
-    width: 100%;
-    padding: 0.75rem 1rem;
-    border: 1px solid #e2e8f0;
-    border-radius: 0.5rem;
-    font-family: var(--font-sans);
-    font-size: 1rem;
-    transition: border-color 0.2s;
+.admin-user-badge {
+  font-size: 0.8rem;
+  color: #64748b;
+  margin-top: 0.25rem;
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
 }
 
-.admin-input:focus {
-    outline: none;
-    border-color: var(--color-primary);
-    box-shadow: 0 0 0 3px rgba(4, 120, 87, 0.1);
+.user-dot {
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 9999px;
+  background-color: #10b981;
 }
 
-.admin-input-small {
-    width: 100%;
-    max-width: 150px;
-    padding: 0.5rem 0.75rem;
-    border: 1px solid #e2e8f0;
-    border-radius: 0.375rem;
-    font-family: var(--font-sans);
+.admin-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
 }
 
-.admin-input-small:focus {
-    outline: none;
-    border-color: var(--color-primary);
+/* Interchanging Card Icon Button (Pencil <-> Cross) */
+.btn-card-icon {
+  background-color: rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  border-radius: 50%;
+  width: 2.5rem;
+  height: 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
 }
 
-.text-primary {
-    color: var(--color-primary);
+.btn-card-icon:hover {
+  background-color: rgba(255, 255, 255, 0.35);
+  transform: scale(1.05);
 }
 
-.text-primary-dark {
-    color: var(--color-primary-dark);
+/* Inline Islamic Date Input (Zero Height Shift) */
+.islamic-date-input-inline {
+  font-family: var(--font-serif);
+  color: #ffffff;
+  font-size: 1.1rem;
+  letter-spacing: 0.5px;
+  text-align: center;
+  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: 0.375rem;
+  padding: 0 0.5rem;
+  height: 2.25rem;
+  width: 100%;
+  max-width: 300px;
+  margin: 0;
+  box-sizing: border-box;
+  transition: all 0.2s ease;
+  line-height: 2.25rem;
 }
 
-.text-red-500 {
-    color: #ef4444;
+.islamic-date-input-inline:focus {
+  outline: none;
+  background: rgba(255, 255, 255, 0.25);
+  border-color: #ffffff;
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.2);
 }
 
-.text-sm {
-    font-size: 0.875rem;
+/* Admin Control Buttons */
+.btn-admin {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.6rem 1.1rem;
+  border-radius: 0.5rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  border: 1px solid transparent;
 }
 
-.text-2xl {
-    font-size: 1.5rem;
+.btn-admin-save {
+  background-color: var(--color-primary);
+  color: #ffffff;
+  border-color: var(--color-primary);
+  box-shadow: 0 4px 6px -1px rgba(4, 120, 87, 0.3);
 }
 
-.text-3xl {
-    font-size: 1.875rem;
+.btn-admin-save:hover {
+  background-color: var(--color-primary-dark);
+  border-color: var(--color-primary-dark);
 }
 
-.font-bold {
-    font-weight: 700;
+.btn-admin-outline {
+  background-color: transparent;
+  color: var(--color-primary-dark);
+  border-color: #cbd5e1;
 }
 
-.w-full {
-    width: 100%;
+.btn-admin-outline:hover {
+  background-color: #ffffff;
+  border-color: var(--color-primary);
+  color: var(--color-primary);
 }
 
-.mb-2 {
-    margin-bottom: 0.5rem;
+/* Table Edit Inputs (Center Aligned under Column Headers) */
+.admin-table-input {
+  width: 100%;
+  max-width: 130px;
+  height: 2.25rem;
+  padding: 0 0.6rem;
+  margin: 0 auto;
+  border: 1.5px solid #cbd5e1;
+  border-radius: 0.375rem;
+  font-family: var(--font-sans);
+  font-size: 1.1rem;
+  line-height: 2.25rem;
+  background-color: #ffffff;
+  color: #0f172a;
+  text-align: center;
+  transition: all 0.2s;
+  box-sizing: border-box;
+  display: block;
 }
 
-.mb-4 {
-    margin-bottom: 1rem;
+.admin-table-input:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(4, 120, 87, 0.15);
 }
 
-.mb-6 {
-    margin-bottom: 1.5rem;
+.admin-table-input.font-bold {
+  font-weight: 700;
+  color: var(--color-primary);
 }
 
-.mb-8 {
-    margin-bottom: 2rem;
+.admin-table-input-disabled {
+  background-color: #f1f5f9 !important;
+  color: #64748b !important;
+  border-color: #e2e8f0 !important;
+  cursor: not-allowed !important;
+  box-shadow: none !important;
 }
 
-.mt-4 {
-    margin-top: 1rem;
-}
-
-.mt-6 {
-    margin-top: 1.5rem;
-}
-
-.mx-auto {
-    margin-left: auto;
-    margin-right: auto;
-}
-
-.mr-2 {
-    margin-right: 0.5rem;
-}
-
-.p-4 {
-    padding: 1rem;
-}
-
-.border-b {
-    border-bottom-width: 1px;
-}
-
-.border-b-2 {
-    border-bottom-width: 2px;
-}
-
-.border-gray-100 {
-    border-color: #f1f5f9;
+/* Card Footer for Save Button (White background matching table div above it, reserved space) */
+.prayer-card-footer {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 1rem 1.25rem;
+  border-top: 1px solid #f1f5f9;
+  background-color: #ffffff;
+  min-height: 4.25rem;
+  box-sizing: border-box;
 }

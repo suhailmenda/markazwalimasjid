@@ -5,13 +5,14 @@ import Hero from './components/Hero';
 import PrayerTimes from './components/PrayerTimes';
 import Footer from './components/Footer';
 import Admin from './components/Admin';
-import { PrayerProvider } from './context/PrayerContext';
+import { usePrayerTimes } from './usePrayerTimes';
+import type { UsePrayerTimesReturn } from './types/prayer';
 
-const Home = () => (
+const Home = (props: UsePrayerTimesReturn): React.JSX.Element => (
   <>
     <Navbar />
     <Hero />
-    <PrayerTimes />
+    <PrayerTimes {...props} />
 
     <section id="about" className="section-padding bg-white">
       <div className="container">
@@ -21,7 +22,7 @@ const Home = () => (
             Markaz wali Masjid has been serving the community since 1970s. We are dedicated to providing a welcoming space for worship, education, and community service. Our mission is to foster a strong, vibrant, and inclusive Muslim community that contributes positively to society.
           </p>
           <p className="text-lg text-gray-600" style={{ fontSize: '1.125rem', color: '#4b5563', lineHeight: '1.75' }}>
-            We offer five daily prayers, Jumu'ah prayers, educational programs for children and adults, and various community events throughout the year. Everyone is welcome to visit and learn more about our faith and traditions.
+            We offer five daily prayers, Jumu&apos;ah prayers, educational programs for children and adults, and various community events throughout the year. Everyone is welcome to visit and learn more about our faith and traditions.
           </p>
         </div>
       </div>
@@ -31,18 +32,18 @@ const Home = () => (
   </>
 );
 
-function App() {
+function App(): React.JSX.Element {
+  const prayerTimes = usePrayerTimes();
+
   return (
-    <PrayerProvider>
-      <Router>
-        <div className="app">
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/admin" element={<Admin />} />
-          </Routes>
-        </div>
-      </Router>
-    </PrayerProvider>
+    <Router>
+      <div className="app">
+        <Routes>
+          <Route path="/" element={<Home {...prayerTimes} />} />
+          <Route path="/admin" element={<Admin {...prayerTimes} />} />
+        </Routes>
+      </div>
+    </Router>
   );
 }
 

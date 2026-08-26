@@ -2,12 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { Menu, X, Moon } from 'lucide-react';
 import './Navbar.css';
 
-const Navbar = () => {
-    const [isScrolled, setIsScrolled] = useState(false);
-    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+const Navbar: React.FC = () => {
+    const [isScrolled, setIsScrolled] = useState<boolean>(false);
+    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState<boolean>(false);
 
     useEffect(() => {
-        const handleScroll = () => {
+        const handleScroll = (): void => {
             setIsScrolled(window.scrollY > 20);
         };
         window.addEventListener('scroll', handleScroll);
@@ -27,7 +27,6 @@ const Navbar = () => {
                     <a href="#prayer-times" className="nav-link">Prayer Times</a>
                     <a href="#about" className="nav-link">About</a>
                     <a href="#contact" className="nav-link">Contact</a>
-                    <button className="btn btn-primary btn-sm">Donate</button>
                 </div>
 
                 <button
@@ -43,7 +42,6 @@ const Navbar = () => {
                         <a href="#prayer-times" onClick={() => setIsMobileMenuOpen(false)}>Prayer Times</a>
                         <a href="#about" onClick={() => setIsMobileMenuOpen(false)}>About</a>
                         <a href="#contact" onClick={() => setIsMobileMenuOpen(false)}>Contact</a>
-                        <button className="btn btn-primary">Donate</button>
                     </div>
                 )}
             </div>
