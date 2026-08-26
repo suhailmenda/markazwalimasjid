@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { Menu, X, Moon } from 'lucide-react';
+import { Link, useLocation } from 'react-router-dom';
+import { Moon, Menu, X } from 'lucide-react';
 import './Navbar.css';
 
 const Navbar: React.FC = () => {
     const [isScrolled, setIsScrolled] = useState<boolean>(false);
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState<boolean>(false);
+    const location = useLocation();
+    const isHomePage = location.pathname === '/';
 
     useEffect(() => {
         const handleScroll = (): void => {
@@ -17,16 +20,26 @@ const Navbar: React.FC = () => {
     return (
         <nav className={`navbar ${isScrolled ? 'scrolled' : ''}`}>
             <div className="container navbar-content">
-                <div className="logo">
+                <Link to="/" className="logo" style={{ textDecoration: 'none' }}>
                     <Moon className="logo-icon" size={28} />
                     <span className="logo-text">Markaz wali Masjid</span>
-                </div>
+                </Link>
 
                 <div className="desktop-menu">
-                    <a href="#" className="nav-link active">Home</a>
-                    <a href="#prayer-times" className="nav-link">Prayer Times</a>
-                    <a href="#about" className="nav-link">About</a>
-                    <a href="#contact" className="nav-link">Contact</a>
+                    <Link to="/" className={`nav-link ${isHomePage ? 'active' : ''}`}>Home</Link>
+                    {isHomePage ? (
+                        <>
+                            <a href="#prayer-times" className="nav-link">Prayer Times</a>
+                            <a href="#about" className="nav-link">About</a>
+                            <a href="#contact" className="nav-link">Contact</a>
+                        </>
+                    ) : (
+                        <>
+                            <Link to="/#prayer-times" className="nav-link">Prayer Times</Link>
+                            <Link to="/#about" className="nav-link">About</Link>
+                            <Link to="/#contact" className="nav-link">Contact</Link>
+                        </>
+                    )}
                 </div>
 
                 <button
@@ -38,7 +51,7 @@ const Navbar: React.FC = () => {
 
                 {isMobileMenuOpen && (
                     <div className="mobile-menu">
-                        <a href="#" onClick={() => setIsMobileMenuOpen(false)}>Home</a>
+                        <Link to="/" onClick={() => setIsMobileMenuOpen(false)}>Home</Link>
                         <a href="#prayer-times" onClick={() => setIsMobileMenuOpen(false)}>Prayer Times</a>
                         <a href="#about" onClick={() => setIsMobileMenuOpen(false)}>About</a>
                         <a href="#contact" onClick={() => setIsMobileMenuOpen(false)}>Contact</a>

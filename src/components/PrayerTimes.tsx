@@ -2,17 +2,19 @@ import React, { useState, useEffect } from 'react';
 import { Clock, MapPin } from 'lucide-react';
 import type { AladhanTimings, ManualTimes, PrayerName } from '../types/prayer';
 import { getIslamicDateAtSunset } from '../utils/sunsetScheduler';
+import { getTodayPrayerStartEndMap } from '../utils/prayerStartEnd';
+import { formatTo12HourDisplay } from '../utils/timeFormat';
 import './PrayerTimes.css';
 
 const DEFAULT_TIMES: ManualTimes = {
-    Fajr: { adhan: '05:15', jamat: '05:45' },
-    Dhuhr: { adhan: '12:45', jamat: '13:30' },
-    Asr: { adhan: '16:45', jamat: '17:15' },
-    Maghrib: { adhan: '19:05', jamat: '19:15' },
-    Isha: { adhan: '20:30', jamat: '21:00' },
-    Jummah: { adhan: '13:00', jamat: '13:30' },
-    Ishraq: { adhan: '-', jamat: '06:45' },
-    Chast: { adhan: '-', jamat: '10:00' },
+    Fajr: { adhan: '05:15 am', jamat: '05:45 am' },
+    Ishraq: { adhan: '-', jamat: '-' },
+    Chast: { adhan: '-', jamat: '-' },
+    Dhuhr: { adhan: '12:45 pm', jamat: '01:30 pm' },
+    Asr: { adhan: '04:45 pm', jamat: '05:15 pm' },
+    Maghrib: { adhan: '07:04 pm', jamat: 'After Azaan' },
+    Isha: { adhan: '08:30 pm', jamat: '09:00 pm' },
+    Jummah: { adhan: '01:00 pm', jamat: '01:30 pm' },
 };
 
 interface PrayerTimesProps {
@@ -39,23 +41,18 @@ const PrayerTimes: React.FC<PrayerTimesProps> = ({
 
     const prayers: Array<{ name: string; key: PrayerName }> = [
         { name: 'Fajr', key: 'Fajr' },
+        { name: 'Ishraq', key: 'Ishraq' },
+        { name: 'Chasht', key: 'Chast' },
         { name: 'Dhuhr', key: 'Dhuhr' },
         { name: 'Asr', key: 'Asr' },
         { name: 'Maghrib', key: 'Maghrib' },
         { name: 'Isha', key: 'Isha' },
         { name: 'Jummah', key: 'Jummah' },
-        // { name: 'Ishraq', key: 'Ishraq' },
-        // { name: 'Chast', key: 'Chast' },
     ];
 
-    const formatTime = (timeString: string | undefined): string => {
-        if (!timeString || typeof timeString !== 'string') return '';
-        if (timeString.match(/^\d{2}:\d{2}$/)) return timeString;
-        return timeString.split(' ')[0];
-    };
-
     const safeManual = manualTimes || DEFAULT_TIMES;
-    const maghribAdhanStr = safeManual.Maghrib?.adhan || prayerTimes?.Maghrib;
+    const { map: todayStartEndMap } = getTodayPrayerStartEndMap(currentTime);
+    const maghribAdhanStr = todayStartEndMap.Maghrib.start || safeManual.Maghrib?.adhan || '7:04 pm';
 
     // Helper to get Islamic Date (Hijri) with auto sunset (+1 day) transition
     const calculatedIslamicDate = apiIslamicDate || getIslamicDateAtSunset(currentTime, maghribAdhanStr);
@@ -90,30 +87,66 @@ const PrayerTimes: React.FC<PrayerTimesProps> = ({
                             <thead>
                                 <tr>
                                     <th>Prayer</th>
-                                    <th>Adhan</th>
-                                    <th>Jamat</th>
+                                    <th>Start</th>
+                                    <th>Azaan</th>
+                                    <th>Jamaat</th>
+                                    <th>End</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 {loading ? (
-                                    <tr><td colSpan={3} className="text-center p-4">Loading prayer times...</td></tr>
+                                    <tr><td colSpan={5} className="text-center p-4">Loading prayer times...</td></tr>
                                 ) : (
                                     prayers.map((prayer) => {
-                                        const apiTime = prayerTimes && prayerTimes[prayer.key] ? formatTime(prayerTimes[prayer.key]) : '';
-                                        const defaultAdhan = DEFAULT_TIMES[prayer.key]?.adhan || apiTime || '-';
-                                        const defaultJamat = DEFAULT_TIMES[prayer.key]?.jamat || '-';
+                                        const isNafl = prayer.key === 'Ishraq' || prayer.key === 'Chast';
+                                        const startEnd = todayStartEndMap[prayer.key] || { start: '-', end: '-' };
 
-                                        const adhanTime = safeManual[prayer.key]?.adhan || defaultAdhan;
-                                        const jamatTime = safeManual[prayer.key]?.jamat || defaultJamat;
+                                        const defaultAdhan = isNafl
+                                            ? '-'
+                                            : prayer.key === 'Maghrib'
+                                                ? startEnd.start
+                                                : (DEFAULT_TIMES[prayer.key]?.adhan || '-');
+
+                                        const defaultJamat = isNafl
+                                            ? '-'
+                                            : prayer.key === 'Maghrib'
+                                                ? 'After Azaan'
+                                                : (DEFAULT_TIMES[prayer.key]?.jamat || '-');
+
+                                        const adhanTime = isNafl
+                                            ? '-'
+                                            : prayer.key === 'Maghrib'
+                                                ? startEnd.start
+                                                : formatTo12HourDisplay(safeManual[prayer.key]?.adhan || defaultAdhan);
+
+                                        const jamatTime = isNafl
+                                            ? '-'
+                                            : prayer.key === 'Maghrib'
+                                                ? 'After Azaan'
+                                                : formatTo12HourDisplay(safeManual[prayer.key]?.jamat || defaultJamat);
 
                                         return (
                                             <tr key={prayer.key} className="prayer-row">
                                                 <td className="prayer-name">{prayer.name}</td>
+
+                                                {/* Start Time Column */}
+                                                <td className="prayer-time">
+                                                    <div className="cell-content">{startEnd.start}</div>
+                                                </td>
+
+                                                {/* Adhan Column */}
                                                 <td className="prayer-time">
                                                     <div className="cell-content">{adhanTime}</div>
                                                 </td>
+
+                                                {/* Jamat Column */}
                                                 <td className="prayer-time font-bold text-primary">
                                                     <div className="cell-content font-bold text-primary">{jamatTime}</div>
+                                                </td>
+
+                                                {/* End Time Column (Moved to Last) */}
+                                                <td className="prayer-time">
+                                                    <div className="cell-content">{startEnd.end}</div>
                                                 </td>
                                             </tr>
                                         );
