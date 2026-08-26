@@ -402,6 +402,21 @@ const Admin: React.FC<AdminProps> = ({
                 <div className="prayer-card">
                     <div className="current-time-display" style={{ position: 'relative' }}>
                         
+                        {/* Save Button in Top-Left of Card during Edit Mode */}
+                        <div style={{ position: 'absolute', top: '1rem', left: '1rem' }}>
+                            {isEditing && (
+                                <button
+                                    onClick={handleSaveAll}
+                                    disabled={isSaving}
+                                    title="Save Changes"
+                                    className="btn-card-save-top"
+                                >
+                                    {isSaving ? <RefreshCw size={16} className="animate-spin" /> : <Save size={16} />}
+                                    <span>Save</span>
+                                </button>
+                            )}
+                        </div>
+
                         {/* Interchanging Edit (Pencil) <-> Cancel (Cross) Button in Card Top-Right */}
                         <div style={{ position: 'absolute', top: '1rem', right: '1rem' }}>
                             {!isEditing ? (
@@ -450,7 +465,8 @@ const Admin: React.FC<AdminProps> = ({
                         </div>
                     </div>
 
-                    <div className="prayer-table-container">
+                    {/* Desktop View: Full 5-Column Table */}
+                    <div className="prayer-table-container desktop-only-view">
                         <table className="prayer-table">
                             <thead>
                                 <tr>
@@ -514,12 +530,12 @@ const Admin: React.FC<AdminProps> = ({
                                         <tr key={prayerKey} className="prayer-row">
                                             <td className="prayer-name">{prayer.name}</td>
                                             
-                                            {/* Start Time Column (Read-Only from JSON) */}
+                                            {/* Start Time Column */}
                                             <td className="prayer-time">
                                                 <div className="cell-content text-gray-500">{startEnd.start}</div>
                                             </td>
 
-                                            {/* Adhan Column (12-Hour Box + AM/PM Select) */}
+                                            {/* Azaan Column */}
                                             <td className="prayer-time">
                                                 {!isEditing ? (
                                                     <div className="cell-content">{activeAdhan}</div>
@@ -543,22 +559,22 @@ const Admin: React.FC<AdminProps> = ({
                                                             placeholder="05:15"
                                                             className="time-box-12"
                                                         />
-                                                        <select
-                                                            value={parsedAdhan.period}
-                                                            onChange={(e) => {
-                                                                const newStored = combine12HourToStored(parsedAdhan.time12, e.target.value as 'AM' | 'PM');
+                                                        <button
+                                                            type="button"
+                                                            onClick={() => {
+                                                                const nextPeriod = parsedAdhan.period === 'AM' ? 'PM' : 'AM';
+                                                                const newStored = combine12HourToStored(parsedAdhan.time12, nextPeriod);
                                                                 handleDraftTimeChange(prayerKey, 'adhan', newStored);
                                                             }}
-                                                            className="admin-table-select-period"
+                                                            className="period-toggle-btn"
                                                         >
-                                                            <option value="AM">AM</option>
-                                                            <option value="PM">PM</option>
-                                                        </select>
+                                                            {parsedAdhan.period}
+                                                        </button>
                                                     </div>
                                                 )}
                                             </td>
 
-                                            {/* Jamat Column (12-Hour Box + AM/PM Select) */}
+                                            {/* Jamaat Column */}
                                             <td className="prayer-time font-bold text-primary">
                                                 {!isEditing ? (
                                                     <div className="cell-content font-bold text-primary">{activeJamat}</div>
@@ -582,22 +598,22 @@ const Admin: React.FC<AdminProps> = ({
                                                             placeholder="05:45"
                                                             className="time-box-12 font-bold"
                                                         />
-                                                        <select
-                                                            value={parsedJamat.period}
-                                                            onChange={(e) => {
-                                                                const newStored = combine12HourToStored(parsedJamat.time12, e.target.value as 'AM' | 'PM');
+                                                        <button
+                                                            type="button"
+                                                            onClick={() => {
+                                                                const nextPeriod = parsedJamat.period === 'AM' ? 'PM' : 'AM';
+                                                                const newStored = combine12HourToStored(parsedJamat.time12, nextPeriod);
                                                                 handleDraftTimeChange(prayerKey, 'jamat', newStored);
                                                             }}
-                                                            className="admin-table-select-period"
+                                                            className="period-toggle-btn"
                                                         >
-                                                            <option value="AM">AM</option>
-                                                            <option value="PM">PM</option>
-                                                        </select>
+                                                            {parsedJamat.period}
+                                                        </button>
                                                     </div>
                                                 )}
                                             </td>
 
-                                            {/* End Time Column (Read-Only from JSON) */}
+                                            {/* End Time Column */}
                                             <td className="prayer-time">
                                                 <div className="cell-content text-gray-500">{startEnd.end}</div>
                                             </td>
@@ -608,7 +624,181 @@ const Admin: React.FC<AdminProps> = ({
                         </table>
                     </div>
 
-                    {/* Reserved Footer Area so Card Height remains 100% constant across modes */}
+                    {/* Mobile View: Editable Stacked Mobile Cards */}
+                    <div className="prayer-mobile-list mobile-only-view">
+                        {prayers.map((prayer) => {
+                            const prayerKey = prayer.key;
+                            const isMaghrib = prayerKey === 'Maghrib';
+                            const isNafl = prayerKey === 'Ishraq' || prayerKey === 'Chast';
+                            const startEnd = todayStartEndMap[prayerKey] || { start: '-', end: '-' };
+
+                            const defaultAdhan = isNafl
+                                ? '-'
+                                : isMaghrib
+                                ? startEnd.start
+                                : (DEFAULT_TIMES[prayerKey]?.adhan || '-');
+
+                            const defaultJamat = isNafl
+                                ? '-'
+                                : isMaghrib
+                                ? 'After Azaan'
+                                : (DEFAULT_TIMES[prayerKey]?.jamat || '-');
+
+                            const activeAdhan = isNafl
+                                ? '-'
+                                : isMaghrib
+                                ? startEnd.start
+                                : formatTo12HourDisplay(safeManual[prayerKey]?.adhan || defaultAdhan);
+
+                            const activeJamat = isNafl
+                                ? '-'
+                                : isMaghrib
+                                ? 'After Azaan'
+                                : formatTo12HourDisplay(safeManual[prayerKey]?.jamat || defaultJamat);
+
+                            const currentDraftObj = draftTimes || safeManual;
+                            const draftAdhan = isNafl
+                                ? '-'
+                                : isMaghrib
+                                ? startEnd.start
+                                : (currentDraftObj[prayerKey]?.adhan !== undefined ? currentDraftObj[prayerKey].adhan : activeAdhan);
+
+                            const draftJamat = isNafl
+                                ? '-'
+                                : isMaghrib
+                                ? 'After Azaan'
+                                : (currentDraftObj[prayerKey]?.jamat !== undefined ? currentDraftObj[prayerKey].jamat : activeJamat);
+
+                            const parsedAdhan = parseStoredTimeTo12Hour(draftAdhan);
+                            const parsedJamat = parseStoredTimeTo12Hour(draftJamat);
+
+                            return (
+                                <div key={prayerKey} className="prayer-mobile-card">
+                                    <div className="prayer-mobile-card-top">
+                                        <span className="prayer-mobile-name">{prayer.name}</span>
+                                        {isNafl && <span className="nafl-badge">Nafl</span>}
+                                    </div>
+
+                                    {isNafl ? (
+                                        /* Nafl Prayers (Ishraq & Chasht): Prominently show Start and End as main time chips */
+                                        <div className="prayer-mobile-main-times">
+                                            <div className="mobile-time-chip">
+                                                <span className="chip-label">Start</span>
+                                                <div className="chip-value-container">
+                                                    <span className="chip-value">{startEnd.start}</span>
+                                                </div>
+                                            </div>
+
+                                            <div className="mobile-time-chip">
+                                                <span className="chip-label">End</span>
+                                                <div className="chip-value-container">
+                                                    <span className="chip-value">{startEnd.end}</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    ) : (
+                                        /* Obligatory Prayers: Show Azaan & Jamaat time chips (with fixed-height edit controls in Edit Mode) */
+                                        <>
+                                            <div className="prayer-mobile-main-times">
+                                                {/* Azaan Mobile Input / View */}
+                                                <div className="mobile-time-chip">
+                                                    <span className="chip-label">Azaan</span>
+                                                    <div className="chip-value-container">
+                                                        {!isEditing ? (
+                                                            <span className="chip-value">{activeAdhan}</span>
+                                                        ) : isMaghrib ? (
+                                                            <input
+                                                                type="text"
+                                                                value={draftAdhan}
+                                                                disabled
+                                                                className="admin-table-input admin-table-input-disabled"
+                                                                style={{ height: '2.25rem', fontSize: '0.9rem', width: '100%', margin: 0 }}
+                                                            />
+                                                        ) : (
+                                                            <div className="time-input-group">
+                                                                <input
+                                                                    type="text"
+                                                                    value={parsedAdhan.time12}
+                                                                    onChange={(e) => {
+                                                                        const newStored = combine12HourToStored(e.target.value, parsedAdhan.period);
+                                                                        handleDraftTimeChange(prayerKey, 'adhan', newStored);
+                                                                    }}
+                                                                    onBlur={(e) => handleInputBlur(prayerKey, 'adhan', e.target.value, parsedAdhan.period)}
+                                                                    placeholder="05:15"
+                                                                    className="time-box-12"
+                                                                />
+                                                                <button
+                                                                    type="button"
+                                                                    onClick={() => {
+                                                                        const nextPeriod = parsedAdhan.period === 'AM' ? 'PM' : 'AM';
+                                                                        const newStored = combine12HourToStored(parsedAdhan.time12, nextPeriod);
+                                                                        handleDraftTimeChange(prayerKey, 'adhan', newStored);
+                                                                    }}
+                                                                    className="period-toggle-btn"
+                                                                >
+                                                                    {parsedAdhan.period}
+                                                                </button>
+                                                            </div>
+                                                        )}
+                                                    </div>
+                                                </div>
+
+                                                {/* Jamaat Mobile Input / View */}
+                                                <div className="mobile-time-chip jamat-chip">
+                                                    <span className="chip-label">Jamaat</span>
+                                                    <div className="chip-value-container">
+                                                        {!isEditing ? (
+                                                            <span className="chip-value">{activeJamat}</span>
+                                                        ) : isMaghrib ? (
+                                                            <input
+                                                                type="text"
+                                                                value="After Azaan"
+                                                                disabled
+                                                                className="admin-table-input font-bold text-primary admin-table-input-disabled"
+                                                                style={{ height: '2.25rem', fontSize: '0.85rem', width: '100%', margin: 0 }}
+                                                            />
+                                                        ) : (
+                                                            <div className="time-input-group">
+                                                                <input
+                                                                    type="text"
+                                                                    value={parsedJamat.time12}
+                                                                    onChange={(e) => {
+                                                                        const newStored = combine12HourToStored(e.target.value, parsedJamat.period);
+                                                                        handleDraftTimeChange(prayerKey, 'jamat', newStored);
+                                                                    }}
+                                                                    onBlur={(e) => handleInputBlur(prayerKey, 'jamat', e.target.value, parsedJamat.period)}
+                                                                    placeholder="05:45"
+                                                                    className="time-box-12 font-bold"
+                                                                />
+                                                                <button
+                                                                    type="button"
+                                                                    onClick={() => {
+                                                                        const nextPeriod = parsedJamat.period === 'AM' ? 'PM' : 'AM';
+                                                                        const newStored = combine12HourToStored(parsedJamat.time12, nextPeriod);
+                                                                        handleDraftTimeChange(prayerKey, 'jamat', newStored);
+                                                                    }}
+                                                                    className="period-toggle-btn"
+                                                                >
+                                                                    {parsedJamat.period}
+                                                                </button>
+                                                            </div>
+                                                        )}
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div className="prayer-mobile-sub-times">
+                                                <span>Start: <strong>{startEnd.start}</strong></span>
+                                                <span>End: <strong>{startEnd.end}</strong></span>
+                                            </div>
+                                        </>
+                                    )}
+                                </div>
+                            );
+                        })}
+                    </div>
+
+                    {/* Reserved Footer Area for Desktop / Bottom Save Button */}
                     <div className="prayer-card-footer">
                         <div style={{
                             visibility: isEditing ? 'visible' : 'hidden',

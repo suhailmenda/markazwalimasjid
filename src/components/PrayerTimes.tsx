@@ -69,6 +69,7 @@ const PrayerTimes: React.FC<PrayerTimesProps> = ({
                 </div>
 
                 <div className="prayer-card">
+                    {/* Header Card Display */}
                     <div className="current-time-display">
                         <Clock className="mb-2 text-gold" size={32} />
                         <div className="time">
@@ -82,7 +83,8 @@ const PrayerTimes: React.FC<PrayerTimesProps> = ({
                         </div>
                     </div>
 
-                    <div className="prayer-table-container">
+                    {/* Desktop View: Full 5-Column Table */}
+                    <div className="prayer-table-container desktop-only-view">
                         <table className="prayer-table">
                             <thead>
                                 <tr>
@@ -129,22 +131,22 @@ const PrayerTimes: React.FC<PrayerTimesProps> = ({
                                             <tr key={prayer.key} className="prayer-row">
                                                 <td className="prayer-name">{prayer.name}</td>
 
-                                                {/* Start Time Column */}
+                                                {/* Start Column */}
                                                 <td className="prayer-time">
                                                     <div className="cell-content">{startEnd.start}</div>
                                                 </td>
 
-                                                {/* Adhan Column */}
+                                                {/* Azaan Column */}
                                                 <td className="prayer-time">
                                                     <div className="cell-content">{adhanTime}</div>
                                                 </td>
 
-                                                {/* Jamat Column */}
+                                                {/* Jamaat Column */}
                                                 <td className="prayer-time font-bold text-primary">
                                                     <div className="cell-content font-bold text-primary">{jamatTime}</div>
                                                 </td>
 
-                                                {/* End Time Column (Moved to Last) */}
+                                                {/* End Column */}
                                                 <td className="prayer-time">
                                                     <div className="cell-content">{startEnd.end}</div>
                                                 </td>
@@ -155,6 +157,95 @@ const PrayerTimes: React.FC<PrayerTimesProps> = ({
                             </tbody>
                         </table>
                     </div>
+
+                    {/* Mobile View: Sleek Stacked Prayer Cards */}
+                    <div className="prayer-mobile-list mobile-only-view">
+                        {loading ? (
+                            <div className="text-center p-4 text-gray-500">Loading prayer times...</div>
+                        ) : (
+                            prayers.map((prayer) => {
+                                const isNafl = prayer.key === 'Ishraq' || prayer.key === 'Chast';
+                                const startEnd = todayStartEndMap[prayer.key] || { start: '-', end: '-' };
+
+                                const defaultAdhan = isNafl
+                                    ? '-'
+                                    : prayer.key === 'Maghrib'
+                                        ? startEnd.start
+                                        : (DEFAULT_TIMES[prayer.key]?.adhan || '-');
+
+                                const defaultJamat = isNafl
+                                    ? '-'
+                                    : prayer.key === 'Maghrib'
+                                        ? 'After Azaan'
+                                        : (DEFAULT_TIMES[prayer.key]?.jamat || '-');
+
+                                const adhanTime = isNafl
+                                    ? '-'
+                                    : prayer.key === 'Maghrib'
+                                        ? startEnd.start
+                                        : formatTo12HourDisplay(safeManual[prayer.key]?.adhan || defaultAdhan);
+
+                                const jamatTime = isNafl
+                                    ? '-'
+                                    : prayer.key === 'Maghrib'
+                                        ? 'After Azaan'
+                                        : formatTo12HourDisplay(safeManual[prayer.key]?.jamat || defaultJamat);
+
+                                return (
+                                    <div key={prayer.key} className="prayer-mobile-card">
+                                        <div className="prayer-mobile-card-top">
+                                            <span className="prayer-mobile-name">{prayer.name}</span>
+                                            {isNafl && <span className="nafl-badge">Nafl</span>}
+                                        </div>
+
+                                        {isNafl ? (
+                                            /* For Nafl Prayers (Ishraq & Chasht): Show Start and End as main time chips */
+                                            <div className="prayer-mobile-main-times">
+                                                <div className="mobile-time-chip">
+                                                    <span className="chip-label">Start</span>
+                                                    <div className="chip-value-container">
+                                                        <span className="chip-value">{startEnd.start}</span>
+                                                    </div>
+                                                </div>
+
+                                                <div className="mobile-time-chip">
+                                                    <span className="chip-label">End</span>
+                                                    <div className="chip-value-container">
+                                                        <span className="chip-value">{startEnd.end}</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        ) : (
+                                            /* For Obligatory Prayers: Show Azaan & Jamaat as main time chips */
+                                            <>
+                                                <div className="prayer-mobile-main-times">
+                                                    <div className="mobile-time-chip">
+                                                        <span className="chip-label">Azaan</span>
+                                                        <div className="chip-value-container">
+                                                            <span className="chip-value">{adhanTime}</span>
+                                                        </div>
+                                                    </div>
+
+                                                    <div className="mobile-time-chip jamat-chip">
+                                                        <span className="chip-label">Jamaat</span>
+                                                        <div className="chip-value-container">
+                                                            <span className="chip-value">{jamatTime}</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div className="prayer-mobile-sub-times">
+                                                    <span>Start: <strong>{startEnd.start}</strong></span>
+                                                    <span>End: <strong>{startEnd.end}</strong></span>
+                                                </div>
+                                            </>
+                                        )}
+                                    </div>
+                                );
+                            })
+                        )}
+                    </div>
+
                 </div>
             </div>
         </section>
