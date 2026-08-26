@@ -1,5 +1,5 @@
 import React from 'react';
-import { Mail, Phone, MapPin } from 'lucide-react';
+import { Mail, MapPin } from 'lucide-react';
 import './Footer.css';
 
 const Footer: React.FC = () => {
@@ -35,12 +35,6 @@ const Footer: React.FC = () => {
                                 >
                                     <MapPin size={18} />
                                     <span>72G4+9WG, Kilvani Rd, near Jalaram Temple, Naka, Park City, Silvassa, Dadra and Nagar Haveli and Daman and Diu 396230</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="tel:+919510585777" className="contact-link">
-                                    <Phone size={18} />
-                                    <span>+91 9510585777</span>
                                 </a>
                             </li>
                             <li>
