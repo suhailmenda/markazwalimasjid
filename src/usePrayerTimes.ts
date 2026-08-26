@@ -13,6 +13,7 @@ import type {
   UsePrayerTimesReturn,
 } from './types/prayer';
 import { getMsUntilNextSunset } from './utils/sunsetScheduler';
+import { getTodayPrayerStartEndMap } from './utils/prayerStartEnd';
 
 const formatTime = (timeString: string | undefined): string => {
   if (!timeString || typeof timeString !== 'string') return '';
@@ -22,13 +23,13 @@ const formatTime = (timeString: string | undefined): string => {
 
 const DEFAULT_MANUAL_TIMES: ManualTimes = {
   Fajr: { adhan: '05:15', jamat: '05:45' },
+  Ishraq: { adhan: '-', jamat: '-' },
+  Chast: { adhan: '-', jamat: '-' },
   Dhuhr: { adhan: '12:45', jamat: '13:30' },
   Asr: { adhan: '16:45', jamat: '17:15' },
-  Maghrib: { adhan: '19:05', jamat: 'After Azaan' },
+  Maghrib: { adhan: '19:04', jamat: 'After Azaan' },
   Isha: { adhan: '20:30', jamat: '21:00' },
   Jummah: { adhan: '13:00', jamat: '13:30' },
-  Ishraq: { adhan: '-', jamat: '06:45' },
-  Chast: { adhan: '-', jamat: '10:00' },
 };
 
 export const usePrayerTimes = (): UsePrayerTimesReturn => {
@@ -83,40 +84,42 @@ export const usePrayerTimes = (): UsePrayerTimesReturn => {
   const syncApiTimesNow = useCallback(async (): Promise<void> => {
     setSaveStatus('saving');
     const res = await fetchApiTimes();
-    if (res?.timings) {
-      const apiMaghribAdhan = formatTime(res.timings.Maghrib);
-      const updatedTimes: ManualTimes = {
-        ...DEFAULT_MANUAL_TIMES,
-        ...manualTimes,
-        Maghrib: {
-          adhan: apiMaghribAdhan || manualTimes.Maghrib?.adhan || '19:05',
-          jamat: 'After Azaan',
-        },
-      };
+    const todayJsonInfo = getTodayPrayerStartEndMap();
+    const jsonMaghribTime = todayJsonInfo.map.Maghrib.start;
 
-      let syncedIslamicDate = manualIslamicDate;
-      if (res.date?.hijri) {
-        syncedIslamicDate = `${res.date.hijri.month.en} ${res.date.hijri.day}, ${res.date.hijri.year} ${res.date.hijri.designation?.abbreviated || 'AH'}`;
-      }
+    const updatedTimes: ManualTimes = {
+      ...DEFAULT_MANUAL_TIMES,
+      ...manualTimes,
+      Maghrib: {
+        adhan: jsonMaghribTime || manualTimes.Maghrib?.adhan || '19:04',
+        jamat: 'After Azaan',
+      },
+      Ishraq: { adhan: '-', jamat: '-' },
+      Chast: { adhan: '-', jamat: '-' },
+    };
 
-      setManualTimes(updatedTimes);
-      if (syncedIslamicDate) {
-        setManualIslamicDate(syncedIslamicDate);
-      }
+    let syncedIslamicDate = manualIslamicDate;
+    if (res?.date?.hijri) {
+      syncedIslamicDate = `${res.date.hijri.month.en} ${res.date.hijri.day}, ${res.date.hijri.year} ${res.date.hijri.designation?.abbreviated || 'AH'}`;
+    }
 
-      if (isFirebaseConfigured && db) {
-        try {
-          await setDoc(
-            doc(db, 'settings', 'prayerTimes'),
-            {
-              manualTimes: updatedTimes,
-              manualIslamicDate: syncedIslamicDate,
-            },
-            { merge: true },
-          );
-        } catch (err) {
-          console.error('Error syncing API times & date to Firestore:', err);
-        }
+    setManualTimes(updatedTimes);
+    if (syncedIslamicDate) {
+      setManualIslamicDate(syncedIslamicDate);
+    }
+
+    if (isFirebaseConfigured && db) {
+      try {
+        await setDoc(
+          doc(db, 'settings', 'prayerTimes'),
+          {
+            manualTimes: updatedTimes,
+            manualIslamicDate: syncedIslamicDate,
+          },
+          { merge: true },
+        );
+      } catch (err) {
+        console.error('Error syncing API times & date to Firestore:', err);
       }
     }
     setSaveStatus('saved');
@@ -140,14 +143,18 @@ export const usePrayerTimes = (): UsePrayerTimesReturn => {
                 manualIslamicDate?: string;
               };
               if (data.manualTimes) {
-                // Ensure Maghrib is always exact API sunset / After Azaan and defaults exist
+                const todayJsonInfo = getTodayPrayerStartEndMap();
+                const jsonMaghribTime = todayJsonInfo.map.Maghrib.start;
+
                 const merged: ManualTimes = {
                   ...DEFAULT_MANUAL_TIMES,
                   ...data.manualTimes,
                   Maghrib: {
-                    adhan: data.manualTimes.Maghrib?.adhan || '19:05',
+                    adhan: jsonMaghribTime || data.manualTimes.Maghrib?.adhan || '19:04',
                     jamat: 'After Azaan',
                   },
+                  Ishraq: { adhan: '-', jamat: '-' },
+                  Chast: { adhan: '-', jamat: '-' },
                 };
                 setManualTimes(merged);
               }
@@ -174,7 +181,8 @@ export const usePrayerTimes = (): UsePrayerTimesReturn => {
   // Sunset (Maghrib) Scheduler Effect
   // Triggers at sunset: fetches latest Silvassa timings and updates Firestore
   useEffect(() => {
-    const maghribTime = prayerTimes?.Maghrib || manualTimes.Maghrib?.adhan;
+    const todayJsonInfo = getTodayPrayerStartEndMap();
+    const maghribTime = todayJsonInfo.map.Maghrib.start || manualTimes.Maghrib?.adhan;
     const msUntilSunset = getMsUntilNextSunset(maghribTime);
 
     if (msUntilSunset !== null && msUntilSunset > 0) {
@@ -224,15 +232,18 @@ export const usePrayerTimes = (): UsePrayerTimesReturn => {
   ): Promise<void> => {
     const val = newIslamicDate ? newIslamicDate.trim() : '';
 
-    // Enforce Maghrib rules: exact Adhan from API or current, Jamat = 'After Azaan'
-    const maghribAdhan = prayerTimes?.Maghrib ? formatTime(prayerTimes.Maghrib) : newManualTimes.Maghrib?.adhan || '19:05';
+    const todayJsonInfo = getTodayPrayerStartEndMap();
+    const jsonMaghribTime = todayJsonInfo.map.Maghrib.start;
+
     const sanitizedTimes: ManualTimes = {
       ...DEFAULT_MANUAL_TIMES,
       ...newManualTimes,
       Maghrib: {
-        adhan: maghribAdhan,
+        adhan: jsonMaghribTime || newManualTimes.Maghrib?.adhan || '19:04',
         jamat: 'After Azaan',
       },
+      Ishraq: { adhan: '-', jamat: '-' },
+      Chast: { adhan: '-', jamat: '-' },
     };
 
     setManualTimes(sanitizedTimes);

@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import PrayerTimes from './components/PrayerTimes';
+import MonthlyTimetable from './components/MonthlyTimetable';
 import Footer from './components/Footer';
 import Admin from './components/Admin';
 import { usePrayerTimes } from './usePrayerTimes';
@@ -22,7 +23,7 @@ const Home = (props: UsePrayerTimesReturn): React.JSX.Element => (
             Markaz wali Masjid has been serving the community since 1970s. We are dedicated to providing a welcoming space for worship, education, and community service. Our mission is to foster a strong, vibrant, and inclusive Muslim community that contributes positively to society.
           </p>
           <p className="text-lg text-gray-600" style={{ fontSize: '1.125rem', color: '#4b5563', lineHeight: '1.75' }}>
-            We offer five daily prayers, Jumu&apos;ah prayers, educational programs for children and adults, and various community events throughout the year. Everyone is welcome to visit and learn more about our faith and traditions.
+            We offer five daily prayers, Jumu&apos;ah prayers, educational programs for children and adults, and various community events throughout the year. Everyone is welcome to visit and learn more about our faith traditions.
           </p>
         </div>
       </div>
@@ -30,6 +31,12 @@ const Home = (props: UsePrayerTimesReturn): React.JSX.Element => (
 
     <Footer />
   </>
+);
+
+const StandaloneMonthlyTimetablePage = (): React.JSX.Element => (
+  <div style={{ minHeight: '100vh', backgroundColor: '#f8fafc', padding: '2rem 1rem' }}>
+    <MonthlyTimetable />
+  </div>
 );
 
 function App(): React.JSX.Element {
@@ -40,6 +47,7 @@ function App(): React.JSX.Element {
       <div className="app">
         <Routes>
           <Route path="/" element={<Home {...prayerTimes} />} />
+          <Route path="/monthly-timetable" element={<StandaloneMonthlyTimetablePage />} />
           <Route path="/admin" element={<Admin {...prayerTimes} />} />
         </Routes>
       </div>

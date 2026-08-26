@@ -1,48 +1,118 @@
 import React, { useState, useEffect } from 'react';
-import { Pencil, Save, X, ArrowLeft, LogIn, Lock, Mail, ShieldAlert, RefreshCw, Clock, MapPin } from 'lucide-react';
+import { Pencil, Save, X, ArrowLeft, LogIn, Lock, Mail, ShieldAlert, RefreshCw, Clock, MapPin, Calendar } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { auth, isFirebaseConfigured } from '../firebase';
 import { signInWithEmailAndPassword, onAuthStateChanged, type User } from 'firebase/auth';
 import type { AladhanTimings, ManualTimes, PrayerName, SaveStatus, TimeType } from '../types/prayer';
 import { getIslamicDateAtSunset } from '../utils/sunsetScheduler';
+import { getTodayPrayerStartEndMap } from '../utils/prayerStartEnd';
+import { formatTo12HourDisplay } from '../utils/timeFormat';
 import './Admin.css';
 import './PrayerTimes.css';
 
 const DEFAULT_TIMES: ManualTimes = {
-    Fajr: { adhan: '05:15', jamat: '05:45' },
-    Dhuhr: { adhan: '12:45', jamat: '13:30' },
-    Asr: { adhan: '16:45', jamat: '17:15' },
-    Maghrib: { adhan: '19:05', jamat: 'After Azaan' },
-    Isha: { adhan: '20:30', jamat: '21:00' },
-    Jummah: { adhan: '13:00', jamat: '13:30' },
-    Ishraq: { adhan: '-', jamat: '06:45' },
-    Chast: { adhan: '-', jamat: '10:00' },
+    Fajr: { adhan: '05:15 am', jamat: '05:45 am' },
+    Ishraq: { adhan: '-', jamat: '-' },
+    Chast: { adhan: '-', jamat: '-' },
+    Dhuhr: { adhan: '12:45 pm', jamat: '01:30 pm' },
+    Asr: { adhan: '04:45 pm', jamat: '05:15 pm' },
+    Maghrib: { adhan: '07:04 pm', jamat: 'After Azaan' },
+    Isha: { adhan: '08:30 pm', jamat: '09:00 pm' },
+    Jummah: { adhan: '01:00 pm', jamat: '01:30 pm' },
+};
+
+export interface Time12Parts {
+    time12: string; // e.g. "05:15"
+    period: 'AM' | 'PM';
+}
+
+export const isValid12HourTime = (timeStr: string): boolean => {
+    if (!timeStr) return false;
+    const clean = timeStr.trim();
+    const match = clean.match(/^(\d{1,2}):(\d{2})$/);
+    if (!match) return false;
+
+    const hours = parseInt(match[1], 10);
+    const minutes = parseInt(match[2], 10);
+
+    if (hours < 1 || hours > 12) return false;
+    if (minutes < 0 || minutes > 59) return false;
+
+    return true;
+};
+
+export const parseStoredTimeTo12Hour = (storedStr: string): Time12Parts => {
+    if (!storedStr || storedStr === 'After Azaan' || storedStr === '-') {
+        return { time12: storedStr, period: 'AM' };
+    }
+
+    const clean = storedStr.trim();
+    if (clean.toUpperCase().includes('AM')) {
+        const timeVal = clean.toUpperCase().replace('AM', '').trim();
+        return { time12: timeVal, period: 'AM' };
+    }
+    if (clean.toUpperCase().includes('PM')) {
+        const timeVal = clean.toUpperCase().replace('PM', '').trim();
+        return { time12: timeVal, period: 'PM' };
+    }
+
+    const match = clean.match(/^(\d{1,2}):(\d{2})/);
+    if (!match) return { time12: storedStr, period: 'AM' };
+
+    let hours = parseInt(match[1], 10);
+    const minutes = match[2];
+    const period: 'AM' | 'PM' = hours >= 12 ? 'PM' : 'AM';
+
+    if (hours === 0) {
+        hours = 12;
+    } else if (hours > 12) {
+        hours = hours - 12;
+    }
+
+    const formattedHours = hours.toString().padStart(2, '0');
+    return { time12: `${formattedHours}:${minutes}`, period };
+};
+
+export const combine12HourToStored = (time12: string, period: 'AM' | 'PM'): string => {
+    if (!time12 || time12 === 'After Azaan' || time12 === '-') return time12;
+
+    const match = time12.trim().match(/^(\d{1,2}):(\d{2})/);
+    if (!match) return time12;
+
+    let hours = parseInt(match[1], 10);
+    const minutes = match[2];
+
+    const periodLower = period.toLowerCase();
+    const formattedHours = hours.toString().padStart(2, '0');
+    return `${formattedHours}:${minutes} ${periodLower}`;
 };
 
 interface AdminProps {
     prayerTimes?: AladhanTimings | null;
     manualTimes?: ManualTimes;
     saveAllSettings?: (newManualTimes: ManualTimes, newIslamicDate: string) => Promise<void>;
+    syncApiTimesNow?: () => Promise<void>;
     manualIslamicDate?: string;
     apiIslamicDate?: string;
     saveStatus?: SaveStatus;
 }
 
 const Admin: React.FC<AdminProps> = ({
-    prayerTimes,
     manualTimes,
     saveAllSettings,
     manualIslamicDate = '',
     apiIslamicDate = '',
 }) => {
     const [currentTime, setCurrentTime] = useState<Date>(new Date());
+
     useEffect(() => {
         const timer = setInterval(() => setCurrentTime(new Date()), 1000);
         return () => clearInterval(timer);
     }, []);
 
     const safeManual = manualTimes || DEFAULT_TIMES;
-    const maghribAdhanStr = safeManual.Maghrib?.adhan || prayerTimes?.Maghrib;
+    const { map: todayStartEndMap } = getTodayPrayerStartEndMap(currentTime);
+    const maghribAdhanStr = todayStartEndMap.Maghrib.start || safeManual.Maghrib?.adhan || '7:04 pm';
 
     // Helper to get Islamic Date (Hijri) with auto sunset (+1 day) transition
     const calculatedIslamicDate = apiIslamicDate || getIslamicDateAtSunset(currentTime, maghribAdhanStr);
@@ -95,12 +165,31 @@ const Admin: React.FC<AdminProps> = ({
         setIsEditing(false);
     };
 
-    // Explicit Save Button Handler
+    // Explicit Save Button Handler with validation check
     const handleSaveAll = async (): Promise<void> => {
         setIsSaving(true);
         try {
+            // Validate all draft times before saving; if any is invalid, revert to active safeManual value
+            const validatedDraftTimes: ManualTimes = { ...draftTimes };
+            (Object.keys(validatedDraftTimes) as PrayerName[]).forEach((pKey) => {
+                if (pKey !== 'Maghrib' && pKey !== 'Ishraq' && pKey !== 'Chast') {
+                    const adhanVal = validatedDraftTimes[pKey]?.adhan || '';
+                    const jamatVal = validatedDraftTimes[pKey]?.jamat || '';
+
+                    const parsedAdhan = parseStoredTimeTo12Hour(adhanVal);
+                    if (!isValid12HourTime(parsedAdhan.time12)) {
+                        validatedDraftTimes[pKey].adhan = safeManual[pKey]?.adhan || DEFAULT_TIMES[pKey].adhan;
+                    }
+
+                    const parsedJamat = parseStoredTimeTo12Hour(jamatVal);
+                    if (!isValid12HourTime(parsedJamat.time12)) {
+                        validatedDraftTimes[pKey].jamat = safeManual[pKey]?.jamat || DEFAULT_TIMES[pKey].jamat;
+                    }
+                }
+            });
+
             if (typeof saveAllSettings === 'function') {
-                await saveAllSettings(draftTimes, draftIslamicDate);
+                await saveAllSettings(validatedDraftTimes, draftIslamicDate);
             }
             setIsEditing(false);
         } catch (err) {
@@ -111,7 +200,7 @@ const Admin: React.FC<AdminProps> = ({
     };
 
     const handleDraftTimeChange = (prayerKey: PrayerName, type: TimeType, value: string): void => {
-        if (prayerKey === 'Maghrib') return; // Maghrib Adhan & Jamat are strictly auto-managed
+        if (prayerKey === 'Maghrib' || prayerKey === 'Ishraq' || prayerKey === 'Chast') return;
         setDraftTimes((prev) => {
             const currentObj = prev || safeManual;
             const currentPrayer = currentObj[prayerKey] || { adhan: '', jamat: '' };
@@ -123,6 +212,21 @@ const Admin: React.FC<AdminProps> = ({
                 },
             };
         });
+    };
+
+    // Validate on blur: if entered value is invalid, revert to old active value!
+    const handleInputBlur = (prayerKey: PrayerName, type: TimeType, currentInputValue: string, period: 'AM' | 'PM'): void => {
+        if (!isValid12HourTime(currentInputValue)) {
+            // Revert to old valid value
+            const oldStored = safeManual[prayerKey]?.[type] || DEFAULT_TIMES[prayerKey]?.[type] || '';
+            const oldParsed = parseStoredTimeTo12Hour(oldStored);
+            const revertedStored = combine12HourToStored(oldParsed.time12, oldParsed.period);
+            handleDraftTimeChange(prayerKey, type, revertedStored);
+        } else {
+            // Standardize format and commit to draft
+            const validStored = combine12HourToStored(currentInputValue, period);
+            handleDraftTimeChange(prayerKey, type, validStored);
+        }
     };
 
     const handleLogin = async (e: React.FormEvent): Promise<void> => {
@@ -155,21 +259,15 @@ const Admin: React.FC<AdminProps> = ({
         }
     };
 
-    const formatTime = (timeString: string | undefined): string => {
-        if (!timeString || typeof timeString !== 'string') return '';
-        if (timeString.match(/^\d{2}:\d{2}$/)) return timeString;
-        return timeString.split(' ')[0];
-    };
-
     const prayers: Array<{ name: string; key: PrayerName }> = [
         { name: 'Fajr', key: 'Fajr' },
+        { name: 'Ishraq', key: 'Ishraq' },
+        { name: 'Chasht', key: 'Chast' },
         { name: 'Dhuhr', key: 'Dhuhr' },
         { name: 'Asr', key: 'Asr' },
         { name: 'Maghrib', key: 'Maghrib' },
         { name: 'Isha', key: 'Isha' },
         { name: 'Jummah', key: 'Jummah' },
-        // { name: 'Ishraq', key: 'Ishraq' },
-        // { name: 'Chast', key: 'Chast' },
     ];
 
     if (authLoading) {
@@ -269,7 +367,7 @@ const Admin: React.FC<AdminProps> = ({
 
     return (
         <div className="admin-container section-padding">
-            <div className="container" style={{ maxWidth: '850px', margin: '0 auto' }}>
+            <div className="container" style={{ maxWidth: '900px', margin: '0 auto' }}>
                 
                 {/* Admin Header Bar */}
                 <div className="admin-header-bar">
@@ -284,6 +382,9 @@ const Admin: React.FC<AdminProps> = ({
                     </div>
 
                     <div className="admin-actions">
+                        <Link to="/monthly-timetable" className="btn-admin btn-admin-outline" style={{ backgroundColor: '#ffffff' }}>
+                            <Calendar size={16} /> Monthly Timetable
+                        </Link>
                         <Link to="/" className="btn-admin btn-admin-outline">
                             <ArrowLeft size={16} /> Public Site
                         </Link>
@@ -354,83 +455,151 @@ const Admin: React.FC<AdminProps> = ({
                             <thead>
                                 <tr>
                                     <th>Prayer</th>
-                                    <th>Adhan</th>
-                                    <th>Jamat</th>
+                                    <th>Start</th>
+                                    <th>Azaan</th>
+                                    <th>Jamaat</th>
+                                    <th>End</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 {prayers.map((prayer) => {
                                     const prayerKey = prayer.key;
                                     const isMaghrib = prayerKey === 'Maghrib';
-                                    const apiTime = prayerTimes && prayerTimes[prayerKey] ? formatTime(prayerTimes[prayerKey]) : '';
-                                    const defaultAdhan = DEFAULT_TIMES[prayerKey]?.adhan || apiTime || '-';
-                                    const defaultJamat = isMaghrib ? 'After Azaan' : (DEFAULT_TIMES[prayerKey]?.jamat || '-');
+                                    const isNafl = prayerKey === 'Ishraq' || prayerKey === 'Chast';
+                                    const startEnd = todayStartEndMap[prayerKey] || { start: '-', end: '-' };
+                                    
+                                    const defaultAdhan = isNafl
+                                        ? '-'
+                                        : isMaghrib
+                                        ? startEnd.start
+                                        : (DEFAULT_TIMES[prayerKey]?.adhan || '-');
+
+                                    const defaultJamat = isNafl
+                                        ? '-'
+                                        : isMaghrib
+                                        ? 'After Azaan'
+                                        : (DEFAULT_TIMES[prayerKey]?.jamat || '-');
 
                                     // Active saved values
-                                    const activeAdhan = isMaghrib
-                                        ? (apiTime || safeManual.Maghrib?.adhan || '19:05')
-                                        : (safeManual[prayerKey]?.adhan || defaultAdhan);
-                                    const activeJamat = isMaghrib
+                                    const activeAdhan = isNafl
+                                        ? '-'
+                                        : isMaghrib
+                                        ? startEnd.start
+                                        : formatTo12HourDisplay(safeManual[prayerKey]?.adhan || defaultAdhan);
+
+                                    const activeJamat = isNafl
+                                        ? '-'
+                                        : isMaghrib
                                         ? 'After Azaan'
-                                        : (safeManual[prayerKey]?.jamat || defaultJamat);
+                                        : formatTo12HourDisplay(safeManual[prayerKey]?.jamat || defaultJamat);
 
                                     // Draft values during Edit Mode
                                     const currentDraftObj = draftTimes || safeManual;
-                                    const draftAdhan = isMaghrib
-                                        ? activeAdhan
+                                    const draftAdhan = isNafl
+                                        ? '-'
+                                        : isMaghrib
+                                        ? startEnd.start
                                         : (currentDraftObj[prayerKey]?.adhan !== undefined ? currentDraftObj[prayerKey].adhan : activeAdhan);
-                                    const draftJamat = isMaghrib
+
+                                    const draftJamat = isNafl
+                                        ? '-'
+                                        : isMaghrib
                                         ? 'After Azaan'
                                         : (currentDraftObj[prayerKey]?.jamat !== undefined ? currentDraftObj[prayerKey].jamat : activeJamat);
+
+                                    const parsedAdhan = parseStoredTimeTo12Hour(draftAdhan);
+                                    const parsedJamat = parseStoredTimeTo12Hour(draftJamat);
 
                                     return (
                                         <tr key={prayerKey} className="prayer-row">
                                             <td className="prayer-name">{prayer.name}</td>
                                             
-                                            {/* Adhan Column */}
+                                            {/* Start Time Column (Read-Only from JSON) */}
+                                            <td className="prayer-time">
+                                                <div className="cell-content text-gray-500">{startEnd.start}</div>
+                                            </td>
+
+                                            {/* Adhan Column (12-Hour Box + AM/PM Select) */}
                                             <td className="prayer-time">
                                                 {!isEditing ? (
                                                     <div className="cell-content">{activeAdhan}</div>
-                                                ) : isMaghrib ? (
+                                                ) : (isMaghrib || isNafl) ? (
                                                     <input
                                                         type="text"
                                                         value={draftAdhan}
                                                         disabled
-                                                        title="Maghrib Adhan is auto-synced with Silvassa sunset time"
                                                         className="admin-table-input admin-table-input-disabled"
                                                     />
                                                 ) : (
-                                                    <input
-                                                        type="text"
-                                                        value={draftAdhan}
-                                                        onChange={(e) => handleDraftTimeChange(prayerKey, 'adhan', e.target.value)}
-                                                        placeholder="e.g. 05:15"
-                                                        className="admin-table-input"
-                                                    />
+                                                    <div className="time-input-group">
+                                                        <input
+                                                            type="text"
+                                                            value={parsedAdhan.time12}
+                                                            onChange={(e) => {
+                                                                const newStored = combine12HourToStored(e.target.value, parsedAdhan.period);
+                                                                handleDraftTimeChange(prayerKey, 'adhan', newStored);
+                                                            }}
+                                                            onBlur={(e) => handleInputBlur(prayerKey, 'adhan', e.target.value, parsedAdhan.period)}
+                                                            placeholder="05:15"
+                                                            className="time-box-12"
+                                                        />
+                                                        <select
+                                                            value={parsedAdhan.period}
+                                                            onChange={(e) => {
+                                                                const newStored = combine12HourToStored(parsedAdhan.time12, e.target.value as 'AM' | 'PM');
+                                                                handleDraftTimeChange(prayerKey, 'adhan', newStored);
+                                                            }}
+                                                            className="admin-table-select-period"
+                                                        >
+                                                            <option value="AM">AM</option>
+                                                            <option value="PM">PM</option>
+                                                        </select>
+                                                    </div>
                                                 )}
                                             </td>
 
-                                            {/* Jamat Column */}
+                                            {/* Jamat Column (12-Hour Box + AM/PM Select) */}
                                             <td className="prayer-time font-bold text-primary">
                                                 {!isEditing ? (
                                                     <div className="cell-content font-bold text-primary">{activeJamat}</div>
-                                                ) : isMaghrib ? (
-                                                    <input
-                                                        type="text"
-                                                        value="After Azaan"
-                                                        disabled
-                                                        title="Maghrib Jamat is fixed to After Azaan"
-                                                        className="admin-table-input font-bold text-primary admin-table-input-disabled"
-                                                    />
-                                                ) : (
+                                                ) : (isMaghrib || isNafl) ? (
                                                     <input
                                                         type="text"
                                                         value={draftJamat}
-                                                        onChange={(e) => handleDraftTimeChange(prayerKey, 'jamat', e.target.value)}
-                                                        placeholder="e.g. 05:45"
-                                                        className="admin-table-input font-bold"
+                                                        disabled
+                                                        className="admin-table-input font-bold text-primary admin-table-input-disabled"
                                                     />
+                                                ) : (
+                                                    <div className="time-input-group">
+                                                        <input
+                                                            type="text"
+                                                            value={parsedJamat.time12}
+                                                            onChange={(e) => {
+                                                                const newStored = combine12HourToStored(e.target.value, parsedJamat.period);
+                                                                handleDraftTimeChange(prayerKey, 'jamat', newStored);
+                                                            }}
+                                                            onBlur={(e) => handleInputBlur(prayerKey, 'jamat', e.target.value, parsedJamat.period)}
+                                                            placeholder="05:45"
+                                                            className="time-box-12 font-bold"
+                                                        />
+                                                        <select
+                                                            value={parsedJamat.period}
+                                                            onChange={(e) => {
+                                                                const newStored = combine12HourToStored(parsedJamat.time12, e.target.value as 'AM' | 'PM');
+                                                                handleDraftTimeChange(prayerKey, 'jamat', newStored);
+                                                            }}
+                                                            className="admin-table-select-period"
+                                                        >
+                                                            <option value="AM">AM</option>
+                                                            <option value="PM">PM</option>
+                                                        </select>
+                                                    </div>
                                                 )}
+                                            </td>
+
+                                            {/* End Time Column (Read-Only from JSON) */}
+                                            <td className="prayer-time">
+                                                <div className="cell-content text-gray-500">{startEnd.end}</div>
                                             </td>
                                         </tr>
                                     );

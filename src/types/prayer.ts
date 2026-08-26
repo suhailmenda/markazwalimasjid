@@ -9,7 +9,7 @@ export interface PrayerTimeEntry {
   jamat: string;
 }
 
-export type PrayerName = 'Fajr' | 'Dhuhr' | 'Asr' | 'Maghrib' | 'Isha' | 'Jummah' | 'Ishraq' | 'Chast';
+export type PrayerName = 'Fajr' | 'Ishraq' | 'Chast' | 'Dhuhr' | 'Asr' | 'Maghrib' | 'Isha' | 'Jummah';
 export type TimeType = 'adhan' | 'jamat';
 
 export type ManualTimes = Record<PrayerName, PrayerTimeEntry>;
