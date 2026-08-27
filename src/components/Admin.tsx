@@ -3,23 +3,12 @@ import { Pencil, Save, X, ArrowLeft, LogIn, Lock, Mail, ShieldAlert, RefreshCw, 
 import { Link } from 'react-router-dom';
 import { auth, isFirebaseConfigured } from '../firebase';
 import { signInWithEmailAndPassword, onAuthStateChanged, type User } from 'firebase/auth';
-import type { AladhanTimings, ManualTimes, PrayerName, SaveStatus, TimeType } from '../types/prayer';
+import { DEFAULT_TIMES, type ManualTimes, type PrayerName, type TimeType } from '../types/prayer';
 import { getIslamicDateAtSunset } from '../utils/sunsetScheduler';
 import { getTodayPrayerStartEndMap } from '../utils/prayerStartEnd';
 import { formatTo12HourDisplay } from '../utils/timeFormat';
 import './Admin.css';
 import './PrayerTimes.css';
-
-const DEFAULT_TIMES: ManualTimes = {
-    Fajr: { adhan: '05:15 am', jamat: '05:45 am' },
-    Ishraq: { adhan: '-', jamat: '-' },
-    Chast: { adhan: '-', jamat: '-' },
-    Dhuhr: { adhan: '12:45 pm', jamat: '01:30 pm' },
-    Asr: { adhan: '04:45 pm', jamat: '05:15 pm' },
-    Maghrib: { adhan: '07:04 pm', jamat: 'After Azaan' },
-    Isha: { adhan: '08:30 pm', jamat: '09:00 pm' },
-    Jummah: { adhan: '01:00 pm', jamat: '01:30 pm' },
-};
 
 export interface Time12Parts {
     time12: string; // e.g. "05:15"
@@ -88,20 +77,15 @@ export const combine12HourToStored = (time12: string, period: 'AM' | 'PM'): stri
 };
 
 interface AdminProps {
-    prayerTimes?: AladhanTimings | null;
     manualTimes?: ManualTimes;
     saveAllSettings?: (newManualTimes: ManualTimes, newIslamicDate: string) => Promise<void>;
-    syncApiTimesNow?: () => Promise<void>;
     manualIslamicDate?: string;
-    apiIslamicDate?: string;
-    saveStatus?: SaveStatus;
 }
 
 const Admin: React.FC<AdminProps> = ({
     manualTimes,
     saveAllSettings,
     manualIslamicDate = '',
-    apiIslamicDate = '',
 }) => {
     const [currentTime, setCurrentTime] = useState<Date>(new Date());
 
@@ -115,7 +99,7 @@ const Admin: React.FC<AdminProps> = ({
     const maghribAdhanStr = todayStartEndMap.Maghrib.start || safeManual.Maghrib?.adhan || '7:04 pm';
 
     // Helper to get Islamic Date (Hijri) with auto sunset (+1 day) transition
-    const calculatedIslamicDate = apiIslamicDate || getIslamicDateAtSunset(currentTime, maghribAdhanStr);
+    const calculatedIslamicDate = getIslamicDateAtSunset(currentTime, maghribAdhanStr);
 
     // Edit Mode State (DO NOT AUTO-SAVE)
     const [isEditing, setIsEditing] = useState<boolean>(false);
@@ -382,9 +366,6 @@ const Admin: React.FC<AdminProps> = ({
                     </div>
 
                     <div className="admin-actions">
-                        <Link to="/monthly-timetable" className="btn-admin btn-admin-outline" style={{ backgroundColor: '#ffffff' }}>
-                            <Calendar size={16} /> Monthly Timetable
-                        </Link>
                         <Link to="/" className="btn-admin btn-admin-outline">
                             <ArrowLeft size={16} /> Public Site
                         </Link>

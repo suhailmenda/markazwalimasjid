@@ -1,8 +1,6 @@
 /**
- * Shared TypeScript types for the Markaz Wali Masjid app.
+ * Shared TypeScript types & default constants for the Markaz Wali Masjid app.
  */
-
-// ── Prayer time entries ────────────────────────────────────────────────────
 
 export interface PrayerTimeEntry {
   adhan: string;
@@ -14,79 +12,20 @@ export type TimeType = 'adhan' | 'jamat';
 
 export type ManualTimes = Record<PrayerName, PrayerTimeEntry>;
 
-// ── Aladhan API response types ─────────────────────────────────────────────
-
-export interface AladhanTimings {
-  Fajr: string;
-  Sunrise: string;
-  Dhuhr: string;
-  Asr: string;
-  Sunset: string;
-  Maghrib: string;
-  Isha: string;
-  Imsak: string;
-  Midnight: string;
-  Firstthird: string;
-  Lastthird: string;
-  [key: string]: string; // allow extra keys the API may return
-}
-
-export interface AladhanHijriMonth {
-  number: number;
-  en: string;
-  ar: string;
-  days?: number;
-}
-
-export interface AladhanHijriDate {
-  date: string;
-  format: string;
-  day: string;
-  month: AladhanHijriMonth;
-  year: string;
-  designation: {
-    abbreviated: string;
-    expanded: string;
-  };
-  holidays?: string[];
-}
-
-export interface AladhanDate {
-  readable: string;
-  timestamp: string;
-  hijri: AladhanHijriDate;
-  gregorian?: {
-    date: string;
-    format: string;
-    day: string;
-    month: { number: number; en: string };
-    year: string;
-  };
-}
-
-export interface AladhanApiResponse {
-  code: number;
-  status: string;
-  data: {
-    timings: AladhanTimings;
-    date: AladhanDate;
-  };
-}
-
-// ── Hook state ─────────────────────────────────────────────────────────────
-
-export type SaveStatus = 'saved' | 'saving' | 'error' | 'local';
+export const DEFAULT_TIMES: ManualTimes = {
+  Fajr: { adhan: '05:15 am', jamat: '05:45 am' },
+  Ishraq: { adhan: '-', jamat: '-' },
+  Chast: { adhan: '-', jamat: '-' },
+  Dhuhr: { adhan: '12:45 pm', jamat: '01:30 pm' },
+  Asr: { adhan: '04:45 pm', jamat: '05:15 pm' },
+  Maghrib: { adhan: '07:04 pm', jamat: 'After Azaan' },
+  Isha: { adhan: '08:30 pm', jamat: '09:00 pm' },
+  Jummah: { adhan: '01:00 pm', jamat: '01:30 pm' },
+};
 
 export interface UsePrayerTimesReturn {
-  prayerTimes: AladhanTimings | null;
-  apiDate: AladhanDate | null;
-  apiIslamicDate: string;
   manualTimes: ManualTimes;
-  loading: boolean;
-  saveStatus: SaveStatus;
-  isFirebaseConfigured: boolean;
   manualIslamicDate: string;
-  updateManualTime: (prayer: PrayerName, type: TimeType, value: string) => Promise<void>;
+  loading: boolean;
   saveAllSettings: (newManualTimes: ManualTimes, newIslamicDate: string) => Promise<void>;
-  syncApiTimesNow: () => Promise<void>;
 }

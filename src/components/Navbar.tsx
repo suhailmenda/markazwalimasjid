@@ -30,12 +30,14 @@ const Navbar: React.FC = () => {
                     {isHomePage ? (
                         <>
                             <a href="#prayer-times" className="nav-link">Prayer Times</a>
+                            <a href="#monthly-schedule" className="nav-link">Monthly Timetable</a>
                             <a href="#about" className="nav-link">About</a>
                             <a href="#contact" className="nav-link">Contact</a>
                         </>
                     ) : (
                         <>
                             <Link to="/#prayer-times" className="nav-link">Prayer Times</Link>
+                            <Link to="/#monthly-schedule" className="nav-link">Monthly Timetable</Link>
                             <Link to="/#about" className="nav-link">About</Link>
                             <Link to="/#contact" className="nav-link">Contact</Link>
                         </>
@@ -53,6 +55,7 @@ const Navbar: React.FC = () => {
                     <div className="mobile-menu">
                         <Link to="/" onClick={() => setIsMobileMenuOpen(false)}>Home</Link>
                         <a href="#prayer-times" onClick={() => setIsMobileMenuOpen(false)}>Prayer Times</a>
+                        <a href="#monthly-schedule" onClick={() => setIsMobileMenuOpen(false)}>Monthly Timetable</a>
                         <a href="#about" onClick={() => setIsMobileMenuOpen(false)}>About</a>
                         <a href="#contact" onClick={() => setIsMobileMenuOpen(false)}>Contact</a>
                     </div>

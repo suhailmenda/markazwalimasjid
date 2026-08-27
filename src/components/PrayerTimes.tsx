@@ -1,36 +1,21 @@
 import React, { useState, useEffect } from 'react';
 import { Clock, MapPin } from 'lucide-react';
-import type { AladhanTimings, ManualTimes, PrayerName } from '../types/prayer';
+import { DEFAULT_TIMES, type ManualTimes, type PrayerName } from '../types/prayer';
 import { getIslamicDateAtSunset } from '../utils/sunsetScheduler';
 import { getTodayPrayerStartEndMap } from '../utils/prayerStartEnd';
 import { formatTo12HourDisplay } from '../utils/timeFormat';
 import './PrayerTimes.css';
 
-const DEFAULT_TIMES: ManualTimes = {
-    Fajr: { adhan: '05:15 am', jamat: '05:45 am' },
-    Ishraq: { adhan: '-', jamat: '-' },
-    Chast: { adhan: '-', jamat: '-' },
-    Dhuhr: { adhan: '12:45 pm', jamat: '01:30 pm' },
-    Asr: { adhan: '04:45 pm', jamat: '05:15 pm' },
-    Maghrib: { adhan: '07:04 pm', jamat: 'After Azaan' },
-    Isha: { adhan: '08:30 pm', jamat: '09:00 pm' },
-    Jummah: { adhan: '01:00 pm', jamat: '01:30 pm' },
-};
-
 interface PrayerTimesProps {
-    prayerTimes: AladhanTimings | null;
     manualTimes: ManualTimes;
     loading: boolean;
     manualIslamicDate: string;
-    apiIslamicDate?: string;
 }
 
 const PrayerTimes: React.FC<PrayerTimesProps> = ({
-    prayerTimes,
     manualTimes,
     loading,
     manualIslamicDate,
-    apiIslamicDate = '',
 }) => {
     const [currentTime, setCurrentTime] = useState<Date>(new Date());
 
@@ -55,7 +40,7 @@ const PrayerTimes: React.FC<PrayerTimesProps> = ({
     const maghribAdhanStr = todayStartEndMap.Maghrib.start || safeManual.Maghrib?.adhan || '7:04 pm';
 
     // Helper to get Islamic Date (Hijri) with auto sunset (+1 day) transition
-    const calculatedIslamicDate = apiIslamicDate || getIslamicDateAtSunset(currentTime, maghribAdhanStr);
+    const calculatedIslamicDate = getIslamicDateAtSunset(currentTime, maghribAdhanStr);
 
     return (
         <section id="prayer-times" className="section-padding prayer-section">

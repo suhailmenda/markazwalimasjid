@@ -14,6 +14,7 @@ const Home = (props: UsePrayerTimesReturn): React.JSX.Element => (
     <Navbar />
     <Hero />
     <PrayerTimes {...props} />
+    <MonthlyTimetable />
 
     <section id="about" className="section-padding bg-white">
       <div className="container">
@@ -33,12 +34,6 @@ const Home = (props: UsePrayerTimesReturn): React.JSX.Element => (
   </>
 );
 
-const StandaloneMonthlyTimetablePage = (): React.JSX.Element => (
-  <div style={{ minHeight: '100vh', backgroundColor: '#f8fafc', padding: '2rem 1rem' }}>
-    <MonthlyTimetable />
-  </div>
-);
-
 function App(): React.JSX.Element {
   const prayerTimes = usePrayerTimes();
 
@@ -47,7 +42,6 @@ function App(): React.JSX.Element {
       <div className="app">
         <Routes>
           <Route path="/" element={<Home {...prayerTimes} />} />
-          <Route path="/monthly-timetable" element={<StandaloneMonthlyTimetablePage />} />
           <Route path="/admin" element={<Admin {...prayerTimes} />} />
         </Routes>
       </div>
