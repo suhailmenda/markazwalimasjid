@@ -2,21 +2,25 @@
 
 .monthly-schedule-section {
   background-color: #f8fafc;
+  padding: 4.5rem 0 5rem;
 }
 
 .monthly-subtitle {
   color: #64748b;
   font-size: 1.05rem;
-  margin-top: 0.25rem;
+  margin-top: 0.35rem;
+  margin-bottom: 1.5rem;
 }
 
 .monthly-timetable-card {
   background-color: #ffffff;
-  border-radius: 1rem;
+  border-radius: 1.25rem;
   box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.01);
   border: 1px solid #e2e8f0;
   overflow: hidden;
-  padding: 1.75rem;
+  padding: 2.25rem 2.5rem;
+  margin-top: 1rem;
+  margin-bottom: 2rem;
 }
 
 /* Month Selector Header */
@@ -46,6 +50,7 @@
   align-items: center;
   gap: 0.4rem;
   overflow-x: auto;
+  padding-top: 0.25rem;
   padding-bottom: 0.25rem;
   -webkit-overflow-scrolling: touch;
   scrollbar-width: thin;

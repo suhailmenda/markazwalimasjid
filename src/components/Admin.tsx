@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { Pencil, Save, X, ArrowLeft, LogIn, Lock, Mail, ShieldAlert, RefreshCw, Clock, MapPin, Calendar } from 'lucide-react';
+import { Pencil, Save, X, ArrowLeft, LogIn, Lock, Mail, ShieldAlert, RefreshCw, Clock, MapPin, CheckCircle2 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { auth, isFirebaseConfigured } from '../firebase';
 import { signInWithEmailAndPassword, onAuthStateChanged, type User } from 'firebase/auth';
 import { DEFAULT_TIMES, type ManualTimes, type PrayerName, type TimeType } from '../types/prayer';
-import { getIslamicDateAtSunset } from '../utils/sunsetScheduler';
 import { getTodayPrayerStartEndMap } from '../utils/prayerStartEnd';
 import { formatTo12HourDisplay } from '../utils/timeFormat';
 import './Admin.css';
@@ -79,13 +78,15 @@ export const combine12HourToStored = (time12: string, period: 'AM' | 'PM'): stri
 interface AdminProps {
     manualTimes?: ManualTimes;
     saveAllSettings?: (newManualTimes: ManualTimes, newIslamicDate: string) => Promise<void>;
-    manualIslamicDate?: string;
+    islamicDate?: string;
+    syncIslamicDate?: () => Promise<string>;
 }
 
 const Admin: React.FC<AdminProps> = ({
     manualTimes,
     saveAllSettings,
-    manualIslamicDate = '',
+    islamicDate = '',
+    syncIslamicDate,
 }) => {
     const [currentTime, setCurrentTime] = useState<Date>(new Date());
 
@@ -96,24 +97,24 @@ const Admin: React.FC<AdminProps> = ({
 
     const safeManual = manualTimes || DEFAULT_TIMES;
     const { map: todayStartEndMap } = getTodayPrayerStartEndMap(currentTime);
-    const maghribAdhanStr = todayStartEndMap.Maghrib.start || safeManual.Maghrib?.adhan || '7:04 pm';
 
-    // Helper to get Islamic Date (Hijri) with auto sunset (+1 day) transition
-    const calculatedIslamicDate = getIslamicDateAtSunset(currentTime, maghribAdhanStr);
-
-    // Edit Mode State (DO NOT AUTO-SAVE)
+    // Edit Mode State
     const [isEditing, setIsEditing] = useState<boolean>(false);
     const [draftTimes, setDraftTimes] = useState<ManualTimes>(() => safeManual);
-    const [draftIslamicDate, setDraftIslamicDate] = useState<string>(manualIslamicDate || calculatedIslamicDate);
+    const [draftIslamicDate, setDraftIslamicDate] = useState<string>(islamicDate);
     const [isSaving, setIsSaving] = useState<boolean>(false);
-    
+
+    // Sync State
+    const [isSyncingDate, setIsSyncingDate] = useState<boolean>(false);
+    const [syncNotification, setSyncNotification] = useState<{ message: string; type: 'success' | 'error' } | null>(null);
+
     // Sync draftTimes when manualTimes updates and not currently editing
     useEffect(() => {
         if (!isEditing) {
             setDraftTimes(safeManual);
-            setDraftIslamicDate(manualIslamicDate || calculatedIslamicDate);
+            setDraftIslamicDate(islamicDate);
         }
-    }, [manualTimes, manualIslamicDate, isEditing, calculatedIslamicDate, safeManual]);
+    }, [manualTimes, islamicDate, isEditing, safeManual]);
 
     // Auth state
     const [user, setUser] = useState<User | null>(null);
@@ -137,10 +138,35 @@ const Admin: React.FC<AdminProps> = ({
         return () => unsubscribe();
     }, []);
 
+    const handleSyncIslamicDate = async (): Promise<void> => {
+        setIsSyncingDate(true);
+        setSyncNotification(null);
+        try {
+            if (typeof syncIslamicDate === 'function') {
+                const synced = await syncIslamicDate();
+                setDraftIslamicDate(synced);
+                setSyncNotification({
+                    message: `Synced with Aladhan API: "${synced}"`,
+                    type: 'success',
+                });
+                setTimeout(() => setSyncNotification(null), 5000);
+            }
+        } catch (err: any) {
+            console.error('Error syncing Islamic date:', err);
+            setSyncNotification({
+                message: 'Failed to sync Islamic date. Please try again.',
+                type: 'error',
+            });
+            setTimeout(() => setSyncNotification(null), 5000);
+        } finally {
+            setIsSyncingDate(false);
+        }
+    };
+
     // Enter Edit Mode & snapshot draft state
     const handleStartEdit = (): void => {
         setDraftTimes(JSON.parse(JSON.stringify(safeManual)) as ManualTimes);
-        setDraftIslamicDate(manualIslamicDate || calculatedIslamicDate);
+        setDraftIslamicDate(islamicDate);
         setIsEditing(true);
     };
 
@@ -153,7 +179,6 @@ const Admin: React.FC<AdminProps> = ({
     const handleSaveAll = async (): Promise<void> => {
         setIsSaving(true);
         try {
-            // Validate all draft times before saving; if any is invalid, revert to active safeManual value
             const validatedDraftTimes: ManualTimes = { ...draftTimes };
             (Object.keys(validatedDraftTimes) as PrayerName[]).forEach((pKey) => {
                 if (pKey !== 'Maghrib' && pKey !== 'Ishraq' && pKey !== 'Chast') {
@@ -198,16 +223,13 @@ const Admin: React.FC<AdminProps> = ({
         });
     };
 
-    // Validate on blur: if entered value is invalid, revert to old active value!
     const handleInputBlur = (prayerKey: PrayerName, type: TimeType, currentInputValue: string, period: 'AM' | 'PM'): void => {
         if (!isValid12HourTime(currentInputValue)) {
-            // Revert to old valid value
             const oldStored = safeManual[prayerKey]?.[type] || DEFAULT_TIMES[prayerKey]?.[type] || '';
             const oldParsed = parseStoredTimeTo12Hour(oldStored);
             const revertedStored = combine12HourToStored(oldParsed.time12, oldParsed.period);
             handleDraftTimeChange(prayerKey, type, revertedStored);
         } else {
-            // Standardize format and commit to draft
             const validStored = combine12HourToStored(currentInputValue, period);
             handleDraftTimeChange(prayerKey, type, validStored);
         }
@@ -216,7 +238,7 @@ const Admin: React.FC<AdminProps> = ({
     const handleLogin = async (e: React.FormEvent): Promise<void> => {
         e.preventDefault();
         setLoginError('');
-        
+
         if (!email.trim() || !password.trim()) {
             setLoginError('Please enter both email and password.');
             return;
@@ -265,7 +287,6 @@ const Admin: React.FC<AdminProps> = ({
         );
     }
 
-    // Render Login Screen if Firebase is configured and user is not authenticated
     if (isFirebaseConfigured && !user) {
         return (
             <div className="admin-login-container">
@@ -379,6 +400,28 @@ const Admin: React.FC<AdminProps> = ({
                     </div>
                 </div>
 
+                {/* Sync Notification Banner */}
+                {syncNotification && (
+                    <div
+                        style={{
+                            padding: '0.75rem 1.25rem',
+                            marginBottom: '1rem',
+                            borderRadius: '0.5rem',
+                            fontSize: '0.9rem',
+                            fontWeight: 600,
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: '0.5rem',
+                            backgroundColor: syncNotification.type === 'success' ? '#ecfdf5' : '#fef2f2',
+                            color: syncNotification.type === 'success' ? '#047857' : '#b91c1c',
+                            border: `1px solid ${syncNotification.type === 'success' ? '#a7f3d0' : '#fecaca'}`,
+                        }}
+                    >
+                        {syncNotification.type === 'success' ? <CheckCircle2 size={18} /> : <ShieldAlert size={18} />}
+                        <span>{syncNotification.message}</span>
+                    </div>
+                )}
+
                 {/* Public View Match Card */}
                 <div className="prayer-card">
                     <div className="current-time-display" style={{ position: 'relative' }}>
@@ -428,21 +471,32 @@ const Admin: React.FC<AdminProps> = ({
                             {currentTime.toLocaleDateString('en-IN', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', timeZone: 'Asia/Kolkata' })}
                         </div>
                         
-                        {/* Fixed Height Wrapper for Zero Layout Shift */}
-                        <div className="islamic-date-container">
+                        {/* Fixed Height Wrapper with Sync Button */}
+                        <div className="islamic-date-container" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.6rem', flexWrap: 'wrap' }}>
                             {!isEditing ? (
                                 <span className="islamic-date-display">
-                                    {manualIslamicDate || calculatedIslamicDate}
+                                    {islamicDate}
                                 </span>
                             ) : (
                                 <input
                                     type="text"
                                     value={draftIslamicDate}
                                     onChange={(e) => setDraftIslamicDate(e.target.value)}
-                                    placeholder="e.g. Rabiʻ I 12, 1448 AH"
+                                    placeholder="e.g. 14 Rabīʿ al-awwal 1448 AH"
                                     className="islamic-date-input-inline"
                                 />
                             )}
+
+                            <button
+                                type="button"
+                                onClick={handleSyncIslamicDate}
+                                disabled={isSyncingDate}
+                                title="Sync Islamic Date from Aladhan API directly into Firestore"
+                                className="btn-admin-sync"
+                            >
+                                <RefreshCw size={13} className={isSyncingDate ? 'animate-spin' : ''} />
+                                <span>{isSyncingDate ? 'Syncing...' : 'Sync Date'}</span>
+                            </button>
                         </div>
                     </div>
 
@@ -464,7 +518,7 @@ const Admin: React.FC<AdminProps> = ({
                                     const isMaghrib = prayerKey === 'Maghrib';
                                     const isNafl = prayerKey === 'Ishraq' || prayerKey === 'Chast';
                                     const startEnd = todayStartEndMap[prayerKey] || { start: '-', end: '-' };
-                                    
+
                                     const defaultAdhan = isNafl
                                         ? '-'
                                         : isMaghrib
@@ -477,7 +531,6 @@ const Admin: React.FC<AdminProps> = ({
                                         ? 'After Azaan'
                                         : (DEFAULT_TIMES[prayerKey]?.jamat || '-');
 
-                                    // Active saved values
                                     const activeAdhan = isNafl
                                         ? '-'
                                         : isMaghrib
@@ -490,7 +543,6 @@ const Admin: React.FC<AdminProps> = ({
                                         ? 'After Azaan'
                                         : formatTo12HourDisplay(safeManual[prayerKey]?.jamat || defaultJamat);
 
-                                    // Draft values during Edit Mode
                                     const currentDraftObj = draftTimes || safeManual;
                                     const draftAdhan = isNafl
                                         ? '-'
@@ -510,7 +562,7 @@ const Admin: React.FC<AdminProps> = ({
                                     return (
                                         <tr key={prayerKey} className="prayer-row">
                                             <td className="prayer-name">{prayer.name}</td>
-                                            
+
                                             {/* Start Time Column */}
                                             <td className="prayer-time">
                                                 <div className="cell-content text-gray-500">{startEnd.start}</div>
@@ -661,7 +713,6 @@ const Admin: React.FC<AdminProps> = ({
                                     </div>
 
                                     {isNafl ? (
-                                        /* Nafl Prayers (Ishraq & Chasht): Prominently show Start and End as main time chips */
                                         <div className="prayer-mobile-main-times">
                                             <div className="mobile-time-chip">
                                                 <span className="chip-label">Start</span>
@@ -678,10 +729,8 @@ const Admin: React.FC<AdminProps> = ({
                                             </div>
                                         </div>
                                     ) : (
-                                        /* Obligatory Prayers: Show Azaan & Jamaat time chips (with fixed-height edit controls in Edit Mode) */
                                         <>
                                             <div className="prayer-mobile-main-times">
-                                                {/* Azaan Mobile Input / View */}
                                                 <div className="mobile-time-chip">
                                                     <span className="chip-label">Azaan</span>
                                                     <div className="chip-value-container">
@@ -724,7 +773,6 @@ const Admin: React.FC<AdminProps> = ({
                                                     </div>
                                                 </div>
 
-                                                {/* Jamaat Mobile Input / View */}
                                                 <div className="mobile-time-chip jamat-chip">
                                                     <span className="chip-label">Jamaat</span>
                                                     <div className="chip-value-container">

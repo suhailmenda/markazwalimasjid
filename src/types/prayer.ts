@@ -25,7 +25,8 @@ export const DEFAULT_TIMES: ManualTimes = {
 
 export interface UsePrayerTimesReturn {
   manualTimes: ManualTimes;
-  manualIslamicDate: string;
+  islamicDate: string;
   loading: boolean;
   saveAllSettings: (newManualTimes: ManualTimes, newIslamicDate: string) => Promise<void>;
+  syncIslamicDate: () => Promise<string>;
 }

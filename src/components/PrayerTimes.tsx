@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Clock, MapPin } from 'lucide-react';
 import { DEFAULT_TIMES, type ManualTimes, type PrayerName } from '../types/prayer';
-import { getIslamicDateAtSunset } from '../utils/sunsetScheduler';
 import { getTodayPrayerStartEndMap } from '../utils/prayerStartEnd';
 import { formatTo12HourDisplay } from '../utils/timeFormat';
 import './PrayerTimes.css';
@@ -9,13 +8,13 @@ import './PrayerTimes.css';
 interface PrayerTimesProps {
     manualTimes: ManualTimes;
     loading: boolean;
-    manualIslamicDate: string;
+    islamicDate?: string;
 }
 
 const PrayerTimes: React.FC<PrayerTimesProps> = ({
     manualTimes,
     loading,
-    manualIslamicDate,
+    islamicDate = '',
 }) => {
     const [currentTime, setCurrentTime] = useState<Date>(new Date());
 
@@ -37,10 +36,6 @@ const PrayerTimes: React.FC<PrayerTimesProps> = ({
 
     const safeManual = manualTimes || DEFAULT_TIMES;
     const { map: todayStartEndMap } = getTodayPrayerStartEndMap(currentTime);
-    const maghribAdhanStr = todayStartEndMap.Maghrib.start || safeManual.Maghrib?.adhan || '7:04 pm';
-
-    // Helper to get Islamic Date (Hijri) with auto sunset (+1 day) transition
-    const calculatedIslamicDate = getIslamicDateAtSunset(currentTime, maghribAdhanStr);
 
     return (
         <section id="prayer-times" className="section-padding prayer-section">
@@ -64,7 +59,7 @@ const PrayerTimes: React.FC<PrayerTimesProps> = ({
                             {currentTime.toLocaleDateString('en-IN', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', timeZone: 'Asia/Kolkata' })}
                         </div>
                         <div className="islamic-date-container">
-                            <span className="islamic-date-display">{manualIslamicDate || calculatedIslamicDate}</span>
+                            <span className="islamic-date-display">{islamicDate}</span>
                         </div>
                     </div>
 

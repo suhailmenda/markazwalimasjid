@@ -19,6 +19,7 @@ const Footer: React.FC = () => {
                         <ul className="footer-links">
                             <li><a href="#">Home</a></li>
                             <li><a href="#prayer-times">Prayer Times</a></li>
+                            <li><a href="#monthly-schedule">Monthly Timetable</a></li>
                             <li><a href="#about">About Us</a></li>
                         </ul>
                     </div>

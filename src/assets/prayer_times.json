@@ -10,9 +10,9 @@
     "maghrib": "18:13",
     "isha": "19:29",
     "ishraqStart": "07:34",
-    "ishraqEnd": "10:17",
-    "chashtStart": "10:17",
-    "chashtEnd": "12:27"
+    "ishraqEnd": "09:58",
+    "chashtEnd": "12:37",
+    "chashtStart": "09:58"
   },
   "02-Jan": {
     "sehriEnd": "05:51",
@@ -25,9 +25,9 @@
     "maghrib": "18:13",
     "isha": "19:29",
     "ishraqStart": "07:35",
-    "ishraqEnd": "10:18",
-    "chashtStart": "10:18",
-    "chashtEnd": "12:27"
+    "ishraqEnd": "09:59",
+    "chashtEnd": "12:37",
+    "chashtStart": "09:59"
   },
   "03-Jan": {
     "sehriEnd": "05:51",
@@ -40,9 +40,9 @@
     "maghrib": "18:14",
     "isha": "19:30",
     "ishraqStart": "07:35",
-    "ishraqEnd": "10:18",
-    "chashtStart": "10:18",
-    "chashtEnd": "12:28"
+    "ishraqEnd": "09:59",
+    "chashtEnd": "12:38",
+    "chashtStart": "09:59"
   },
   "04-Jan": {
     "sehriEnd": "05:52",
@@ -55,9 +55,9 @@
     "maghrib": "18:14",
     "isha": "19:30",
     "ishraqStart": "07:35",
-    "ishraqEnd": "10:18",
-    "chashtStart": "10:18",
-    "chashtEnd": "12:28"
+    "ishraqEnd": "09:59",
+    "chashtEnd": "12:38",
+    "chashtStart": "09:59"
   },
   "05-Jan": {
     "sehriEnd": "05:52",
@@ -70,9 +70,9 @@
     "maghrib": "18:15",
     "isha": "19:31",
     "ishraqStart": "07:36",
-    "ishraqEnd": "10:19",
-    "chashtStart": "10:19",
-    "chashtEnd": "12:29"
+    "ishraqEnd": "10:00",
+    "chashtEnd": "12:39",
+    "chashtStart": "10:00"
   },
   "06-Jan": {
     "sehriEnd": "05:52",
@@ -85,9 +85,9 @@
     "maghrib": "18:16",
     "isha": "19:31",
     "ishraqStart": "07:36",
-    "ishraqEnd": "10:19",
-    "chashtStart": "10:19",
-    "chashtEnd": "12:29"
+    "ishraqEnd": "10:00",
+    "chashtEnd": "12:39",
+    "chashtStart": "10:00"
   },
   "07-Jan": {
     "sehriEnd": "05:53",
@@ -100,9 +100,9 @@
     "maghrib": "18:16",
     "isha": "19:32",
     "ishraqStart": "07:36",
-    "ishraqEnd": "10:19",
-    "chashtStart": "10:19",
-    "chashtEnd": "12:30"
+    "ishraqEnd": "10:00",
+    "chashtEnd": "12:40",
+    "chashtStart": "10:00"
   },
   "08-Jan": {
     "sehriEnd": "05:53",
@@ -115,9 +115,9 @@
     "maghrib": "18:17",
     "isha": "19:33",
     "ishraqStart": "07:36",
-    "ishraqEnd": "10:19",
-    "chashtStart": "10:19",
-    "chashtEnd": "12:30"
+    "ishraqEnd": "10:01",
+    "chashtEnd": "12:40",
+    "chashtStart": "10:01"
   },
   "09-Jan": {
     "sehriEnd": "05:53",
@@ -130,9 +130,9 @@
     "maghrib": "18:18",
     "isha": "19:33",
     "ishraqStart": "07:37",
-    "ishraqEnd": "10:20",
-    "chashtStart": "10:20",
-    "chashtEnd": "12:31"
+    "ishraqEnd": "10:02",
+    "chashtEnd": "12:41",
+    "chashtStart": "10:02"
   },
   "10-Jan": {
     "sehriEnd": "05:54",
@@ -145,9 +145,9 @@
     "maghrib": "18:18",
     "isha": "19:34",
     "ishraqStart": "07:37",
-    "ishraqEnd": "10:20",
-    "chashtStart": "10:20",
-    "chashtEnd": "12:31"
+    "ishraqEnd": "10:02",
+    "chashtEnd": "12:41",
+    "chashtStart": "10:02"
   },
   "11-Jan": {
     "sehriEnd": "05:54",
@@ -160,9 +160,9 @@
     "maghrib": "18:19",
     "isha": "19:34",
     "ishraqStart": "07:37",
-    "ishraqEnd": "10:20",
-    "chashtStart": "10:20",
-    "chashtEnd": "12:31"
+    "ishraqEnd": "10:02",
+    "chashtEnd": "12:41",
+    "chashtStart": "10:02"
   },
   "12-Jan": {
     "sehriEnd": "05:54",
@@ -175,9 +175,9 @@
     "maghrib": "18:20",
     "isha": "19:35",
     "ishraqStart": "07:37",
-    "ishraqEnd": "10:21",
-    "chashtStart": "10:21",
-    "chashtEnd": "12:32"
+    "ishraqEnd": "10:02",
+    "chashtEnd": "12:42",
+    "chashtStart": "10:02"
   },
   "13-Jan": {
     "sehriEnd": "05:54",
@@ -190,9 +190,9 @@
     "maghrib": "18:20",
     "isha": "19:35",
     "ishraqStart": "07:37",
-    "ishraqEnd": "10:21",
-    "chashtStart": "10:21",
-    "chashtEnd": "12:32"
+    "ishraqEnd": "10:02",
+    "chashtEnd": "12:42",
+    "chashtStart": "10:02"
   },
   "14-Jan": {
     "sehriEnd": "05:54",
@@ -205,9 +205,9 @@
     "maghrib": "18:21",
     "isha": "19:36",
     "ishraqStart": "07:37",
-    "ishraqEnd": "10:21",
-    "chashtStart": "10:21",
-    "chashtEnd": "12:33"
+    "ishraqEnd": "10:02",
+    "chashtEnd": "12:43",
+    "chashtStart": "10:02"
   },
   "15-Jan": {
     "sehriEnd": "05:55",
@@ -220,9 +220,9 @@
     "maghrib": "18:22",
     "isha": "19:37",
     "ishraqStart": "07:37",
-    "ishraqEnd": "10:21",
-    "chashtStart": "10:21",
-    "chashtEnd": "12:33"
+    "ishraqEnd": "10:03",
+    "chashtEnd": "12:43",
+    "chashtStart": "10:03"
   },
   "16-Jan": {
     "sehriEnd": "05:55",
@@ -235,9 +235,9 @@
     "maghrib": "18:22",
     "isha": "19:37",
     "ishraqStart": "07:37",
-    "ishraqEnd": "10:21",
-    "chashtStart": "10:21",
-    "chashtEnd": "12:33"
+    "ishraqEnd": "10:03",
+    "chashtEnd": "12:43",
+    "chashtStart": "10:03"
   },
   "17-Jan": {
     "sehriEnd": "05:55",
@@ -250,9 +250,9 @@
     "maghrib": "18:23",
     "isha": "19:38",
     "ishraqStart": "07:37",
-    "ishraqEnd": "10:21",
-    "chashtStart": "10:21",
-    "chashtEnd": "12:34"
+    "ishraqEnd": "10:03",
+    "chashtEnd": "12:44",
+    "chashtStart": "10:03"
   },
   "18-Jan": {
     "sehriEnd": "05:55",
@@ -265,9 +265,9 @@
     "maghrib": "18:24",
     "isha": "19:38",
     "ishraqStart": "07:37",
-    "ishraqEnd": "10:21",
-    "chashtStart": "10:21",
-    "chashtEnd": "12:34"
+    "ishraqEnd": "10:03",
+    "chashtEnd": "12:44",
+    "chashtStart": "10:03"
   },
   "19-Jan": {
     "sehriEnd": "05:55",
@@ -280,9 +280,9 @@
     "maghrib": "18:24",
     "isha": "19:39",
     "ishraqStart": "07:37",
-    "ishraqEnd": "10:21",
-    "chashtStart": "10:21",
-    "chashtEnd": "12:34"
+    "ishraqEnd": "10:03",
+    "chashtEnd": "12:44",
+    "chashtStart": "10:03"
   },
   "20-Jan": {
     "sehriEnd": "05:55",
@@ -295,9 +295,9 @@
     "maghrib": "18:25",
     "isha": "19:39",
     "ishraqStart": "07:37",
-    "ishraqEnd": "10:22",
-    "chashtStart": "10:22",
-    "chashtEnd": "12:35"
+    "ishraqEnd": "10:03",
+    "chashtEnd": "12:45",
+    "chashtStart": "10:03"
   },
   "21-Jan": {
     "sehriEnd": "05:55",
@@ -310,9 +310,9 @@
     "maghrib": "18:26",
     "isha": "19:40",
     "ishraqStart": "07:37",
-    "ishraqEnd": "10:22",
-    "chashtStart": "10:22",
-    "chashtEnd": "12:35"
+    "ishraqEnd": "10:04",
+    "chashtEnd": "12:45",
+    "chashtStart": "10:04"
   },
   "22-Jan": {
     "sehriEnd": "05:55",
@@ -325,9 +325,9 @@
     "maghrib": "18:26",
     "isha": "19:40",
     "ishraqStart": "07:37",
-    "ishraqEnd": "10:22",
-    "chashtStart": "10:22",
-    "chashtEnd": "12:35"
+    "ishraqEnd": "10:04",
+    "chashtEnd": "12:45",
+    "chashtStart": "10:04"
   },
   "23-Jan": {
     "sehriEnd": "05:55",
@@ -340,9 +340,9 @@
     "maghrib": "18:27",
     "isha": "19:41",
     "ishraqStart": "07:37",
-    "ishraqEnd": "10:22",
-    "chashtStart": "10:22",
-    "chashtEnd": "12:35"
+    "ishraqEnd": "10:04",
+    "chashtEnd": "12:45",
+    "chashtStart": "10:04"
   },
   "24-Jan": {
     "sehriEnd": "05:55",
@@ -355,9 +355,9 @@
     "maghrib": "18:28",
     "isha": "19:42",
     "ishraqStart": "07:37",
-    "ishraqEnd": "10:22",
-    "chashtStart": "10:22",
-    "chashtEnd": "12:36"
+    "ishraqEnd": "10:04",
+    "chashtEnd": "12:46",
+    "chashtStart": "10:04"
   },
   "25-Jan": {
     "sehriEnd": "05:55",
@@ -370,9 +370,9 @@
     "maghrib": "18:28",
     "isha": "19:42",
     "ishraqStart": "07:37",
-    "ishraqEnd": "10:22",
-    "chashtStart": "10:22",
-    "chashtEnd": "12:36"
+    "ishraqEnd": "10:04",
+    "chashtEnd": "12:46",
+    "chashtStart": "10:04"
   },
   "26-Jan": {
     "sehriEnd": "05:55",
@@ -385,9 +385,9 @@
     "maghrib": "18:29",
     "isha": "19:43",
     "ishraqStart": "07:36",
-    "ishraqEnd": "10:22",
-    "chashtStart": "10:22",
-    "chashtEnd": "12:36"
+    "ishraqEnd": "10:04",
+    "chashtEnd": "12:46",
+    "chashtStart": "10:04"
   },
   "27-Jan": {
     "sehriEnd": "05:55",
@@ -400,9 +400,9 @@
     "maghrib": "18:30",
     "isha": "19:44",
     "ishraqStart": "07:36",
-    "ishraqEnd": "10:22",
-    "chashtStart": "10:22",
-    "chashtEnd": "12:36"
+    "ishraqEnd": "10:04",
+    "chashtEnd": "12:46",
+    "chashtStart": "10:04"
   },
   "28-Jan": {
     "sehriEnd": "05:55",
@@ -415,9 +415,9 @@
     "maghrib": "18:31",
     "isha": "19:44",
     "ishraqStart": "07:36",
-    "ishraqEnd": "10:22",
-    "chashtStart": "10:22",
-    "chashtEnd": "12:37"
+    "ishraqEnd": "10:04",
+    "chashtEnd": "12:47",
+    "chashtStart": "10:04"
   },
   "29-Jan": {
     "sehriEnd": "05:55",
@@ -430,9 +430,9 @@
     "maghrib": "18:31",
     "isha": "19:45",
     "ishraqStart": "07:36",
-    "ishraqEnd": "10:22",
-    "chashtStart": "10:22",
-    "chashtEnd": "12:37"
+    "ishraqEnd": "10:04",
+    "chashtEnd": "12:47",
+    "chashtStart": "10:04"
   },
   "30-Jan": {
     "sehriEnd": "05:54",
@@ -445,9 +445,9 @@
     "maghrib": "18:32",
     "isha": "19:45",
     "ishraqStart": "07:35",
-    "ishraqEnd": "10:22",
-    "chashtStart": "10:22",
-    "chashtEnd": "12:37"
+    "ishraqEnd": "10:03",
+    "chashtEnd": "12:47",
+    "chashtStart": "10:03"
   },
   "31-Jan": {
     "sehriEnd": "05:54",
@@ -460,9 +460,9 @@
     "maghrib": "18:32",
     "isha": "19:45",
     "ishraqStart": "07:35",
-    "ishraqEnd": "10:22",
-    "chashtStart": "10:22",
-    "chashtEnd": "12:37"
+    "ishraqEnd": "10:04",
+    "chashtEnd": "12:47",
+    "chashtStart": "10:04"
   },
   "01-Feb": {
     "sehriEnd": "05:54",
@@ -475,9 +475,9 @@
     "maghrib": "18:33",
     "isha": "19:46",
     "ishraqStart": "07:35",
-    "ishraqEnd": "10:22",
-    "chashtStart": "10:22",
-    "chashtEnd": "12:37"
+    "ishraqEnd": "10:04",
+    "chashtEnd": "12:47",
+    "chashtStart": "10:04"
   },
   "02-Feb": {
     "sehriEnd": "05:54",
@@ -490,9 +490,9 @@
     "maghrib": "18:33",
     "isha": "19:46",
     "ishraqStart": "07:34",
-    "ishraqEnd": "10:21",
-    "chashtStart": "10:21",
-    "chashtEnd": "12:37"
+    "ishraqEnd": "10:03",
+    "chashtEnd": "12:47",
+    "chashtStart": "10:03"
   },
   "03-Feb": {
     "sehriEnd": "05:54",
@@ -505,9 +505,9 @@
     "maghrib": "18:34",
     "isha": "19:47",
     "ishraqStart": "07:34",
-    "ishraqEnd": "10:21",
-    "chashtStart": "10:21",
-    "chashtEnd": "12:38"
+    "ishraqEnd": "10:03",
+    "chashtEnd": "12:48",
+    "chashtStart": "10:03"
   },
   "04-Feb": {
     "sehriEnd": "05:53",
@@ -520,9 +520,9 @@
     "maghrib": "18:35",
     "isha": "19:47",
     "ishraqStart": "07:34",
-    "ishraqEnd": "10:22",
-    "chashtStart": "10:22",
-    "chashtEnd": "12:38"
+    "ishraqEnd": "10:03",
+    "chashtEnd": "12:48",
+    "chashtStart": "10:03"
   },
   "05-Feb": {
     "sehriEnd": "05:53",
@@ -535,9 +535,9 @@
     "maghrib": "18:35",
     "isha": "19:48",
     "ishraqStart": "07:33",
-    "ishraqEnd": "10:21",
-    "chashtStart": "10:21",
-    "chashtEnd": "12:38"
+    "ishraqEnd": "10:03",
+    "chashtEnd": "12:48",
+    "chashtStart": "10:03"
   },
   "06-Feb": {
     "sehriEnd": "05:53",
@@ -550,9 +550,9 @@
     "maghrib": "18:36",
     "isha": "19:48",
     "ishraqStart": "07:33",
-    "ishraqEnd": "10:21",
-    "chashtStart": "10:21",
-    "chashtEnd": "12:38"
+    "ishraqEnd": "10:03",
+    "chashtEnd": "12:48",
+    "chashtStart": "10:03"
   },
   "07-Feb": {
     "sehriEnd": "05:52",
@@ -565,9 +565,9 @@
     "maghrib": "18:36",
     "isha": "19:48",
     "ishraqStart": "07:33",
-    "ishraqEnd": "10:21",
-    "chashtStart": "10:21",
-    "chashtEnd": "12:38"
+    "ishraqEnd": "10:03",
+    "chashtEnd": "12:48",
+    "chashtStart": "10:03"
   },
   "08-Feb": {
     "sehriEnd": "05:52",
@@ -580,9 +580,9 @@
     "maghrib": "18:37",
     "isha": "19:49",
     "ishraqStart": "07:32",
-    "ishraqEnd": "10:20",
-    "chashtStart": "10:20",
-    "chashtEnd": "12:38"
+    "ishraqEnd": "10:03",
+    "chashtEnd": "12:48",
+    "chashtStart": "10:03"
   },
   "09-Feb": {
     "sehriEnd": "05:52",
@@ -595,9 +595,9 @@
     "maghrib": "18:37",
     "isha": "19:49",
     "ishraqStart": "07:32",
-    "ishraqEnd": "10:20",
-    "chashtStart": "10:20",
-    "chashtEnd": "12:38"
+    "ishraqEnd": "10:03",
+    "chashtEnd": "12:48",
+    "chashtStart": "10:03"
   },
   "10-Feb": {
     "sehriEnd": "05:51",
@@ -610,9 +610,9 @@
     "maghrib": "18:38",
     "isha": "19:50",
     "ishraqStart": "07:31",
-    "ishraqEnd": "10:20",
-    "chashtStart": "10:20",
-    "chashtEnd": "12:38"
+    "ishraqEnd": "10:02",
+    "chashtEnd": "12:48",
+    "chashtStart": "10:02"
   },
   "11-Feb": {
     "sehriEnd": "05:51",
@@ -625,9 +625,9 @@
     "maghrib": "18:38",
     "isha": "19:50",
     "ishraqStart": "07:31",
-    "ishraqEnd": "10:20",
-    "chashtStart": "10:20",
-    "chashtEnd": "12:38"
+    "ishraqEnd": "10:02",
+    "chashtEnd": "12:48",
+    "chashtStart": "10:02"
   },
   "12-Feb": {
     "sehriEnd": "05:51",
@@ -640,9 +640,9 @@
     "maghrib": "18:39",
     "isha": "19:51",
     "ishraqStart": "07:30",
-    "ishraqEnd": "10:19",
-    "chashtStart": "10:19",
-    "chashtEnd": "12:38"
+    "ishraqEnd": "10:02",
+    "chashtEnd": "12:48",
+    "chashtStart": "10:02"
   },
   "13-Feb": {
     "sehriEnd": "05:50",
@@ -655,9 +655,9 @@
     "maghrib": "18:39",
     "isha": "19:51",
     "ishraqStart": "07:30",
-    "ishraqEnd": "10:19",
-    "chashtStart": "10:19",
-    "chashtEnd": "12:38"
+    "ishraqEnd": "10:02",
+    "chashtEnd": "12:48",
+    "chashtStart": "10:02"
   },
   "14-Feb": {
     "sehriEnd": "05:50",
@@ -670,9 +670,9 @@
     "maghrib": "18:40",
     "isha": "19:51",
     "ishraqStart": "07:29",
-    "ishraqEnd": "10:19",
-    "chashtStart": "10:19",
-    "chashtEnd": "12:38"
+    "ishraqEnd": "10:01",
+    "chashtEnd": "12:48",
+    "chashtStart": "10:01"
   },
   "15-Feb": {
     "sehriEnd": "05:49",
@@ -685,9 +685,9 @@
     "maghrib": "18:40",
     "isha": "19:52",
     "ishraqStart": "07:28",
-    "ishraqEnd": "10:18",
-    "chashtStart": "10:18",
-    "chashtEnd": "12:38"
+    "ishraqEnd": "10:00",
+    "chashtEnd": "12:48",
+    "chashtStart": "10:00"
   },
   "16-Feb": {
     "sehriEnd": "05:49",
@@ -700,9 +700,9 @@
     "maghrib": "18:41",
     "isha": "19:52",
     "ishraqStart": "07:28",
-    "ishraqEnd": "10:18",
-    "chashtStart": "10:18",
-    "chashtEnd": "12:38"
+    "ishraqEnd": "10:01",
+    "chashtEnd": "12:48",
+    "chashtStart": "10:01"
   },
   "17-Feb": {
     "sehriEnd": "05:48",
@@ -715,9 +715,9 @@
     "maghrib": "18:41",
     "isha": "19:53",
     "ishraqStart": "07:27",
-    "ishraqEnd": "10:17",
-    "chashtStart": "10:17",
-    "chashtEnd": "12:38"
+    "ishraqEnd": "10:00",
+    "chashtEnd": "12:48",
+    "chashtStart": "10:00"
   },
   "18-Feb": {
     "sehriEnd": "05:48",
@@ -730,9 +730,9 @@
     "maghrib": "18:42",
     "isha": "19:53",
     "ishraqStart": "07:27",
-    "ishraqEnd": "10:18",
-    "chashtStart": "10:18",
-    "chashtEnd": "12:38"
+    "ishraqEnd": "10:00",
+    "chashtEnd": "12:48",
+    "chashtStart": "10:00"
   },
   "19-Feb": {
     "sehriEnd": "05:47",
@@ -745,9 +745,9 @@
     "maghrib": "18:42",
     "isha": "19:53",
     "ishraqStart": "07:26",
-    "ishraqEnd": "10:17",
-    "chashtStart": "10:17",
-    "chashtEnd": "12:38"
+    "ishraqEnd": "09:59",
+    "chashtEnd": "12:48",
+    "chashtStart": "09:59"
   },
   "20-Feb": {
     "sehriEnd": "05:46",
@@ -760,9 +760,9 @@
     "maghrib": "18:43",
     "isha": "19:54",
     "ishraqStart": "07:25",
-    "ishraqEnd": "10:16",
-    "chashtStart": "10:16",
-    "chashtEnd": "12:38"
+    "ishraqEnd": "09:59",
+    "chashtEnd": "12:48",
+    "chashtStart": "09:59"
   },
   "21-Feb": {
     "sehriEnd": "05:46",
@@ -775,9 +775,9 @@
     "maghrib": "18:43",
     "isha": "19:54",
     "ishraqStart": "07:25",
-    "ishraqEnd": "10:16",
-    "chashtStart": "10:16",
-    "chashtEnd": "12:38"
+    "ishraqEnd": "09:59",
+    "chashtEnd": "12:48",
+    "chashtStart": "09:59"
   },
   "22-Feb": {
     "sehriEnd": "05:45",
@@ -790,9 +790,9 @@
     "maghrib": "18:44",
     "isha": "19:54",
     "ishraqStart": "07:24",
-    "ishraqEnd": "10:16",
-    "chashtStart": "10:16",
-    "chashtEnd": "12:37"
+    "ishraqEnd": "09:58",
+    "chashtEnd": "12:47",
+    "chashtStart": "09:58"
   },
   "23-Feb": {
     "sehriEnd": "05:45",
@@ -805,9 +805,9 @@
     "maghrib": "18:44",
     "isha": "19:55",
     "ishraqStart": "07:23",
-    "ishraqEnd": "10:15",
-    "chashtStart": "10:15",
-    "chashtEnd": "12:37"
+    "ishraqEnd": "09:58",
+    "chashtEnd": "12:47",
+    "chashtStart": "09:58"
   },
   "24-Feb": {
     "sehriEnd": "05:44",
@@ -820,9 +820,9 @@
     "maghrib": "18:44",
     "isha": "19:55",
     "ishraqStart": "07:23",
-    "ishraqEnd": "10:15",
-    "chashtStart": "10:15",
-    "chashtEnd": "12:37"
+    "ishraqEnd": "09:58",
+    "chashtEnd": "12:47",
+    "chashtStart": "09:58"
   },
   "25-Feb": {
     "sehriEnd": "05:43",
@@ -835,9 +835,9 @@
     "maghrib": "18:45",
     "isha": "19:56",
     "ishraqStart": "07:22",
-    "ishraqEnd": "10:15",
-    "chashtStart": "10:15",
-    "chashtEnd": "12:37"
+    "ishraqEnd": "09:57",
+    "chashtEnd": "12:47",
+    "chashtStart": "09:57"
   },
   "26-Feb": {
     "sehriEnd": "05:43",
@@ -850,9 +850,9 @@
     "maghrib": "18:45",
     "isha": "19:56",
     "ishraqStart": "07:21",
-    "ishraqEnd": "10:14",
-    "chashtStart": "10:14",
-    "chashtEnd": "12:37"
+    "ishraqEnd": "09:56",
+    "chashtEnd": "12:47",
+    "chashtStart": "09:56"
   },
   "27-Feb": {
     "sehriEnd": "05:42",
@@ -865,9 +865,9 @@
     "maghrib": "18:46",
     "isha": "19:56",
     "ishraqStart": "07:21",
-    "ishraqEnd": "10:14",
-    "chashtStart": "10:14",
-    "chashtEnd": "12:37"
+    "ishraqEnd": "09:57",
+    "chashtEnd": "12:47",
+    "chashtStart": "09:57"
   },
   "28-Feb": {
     "sehriEnd": "05:41",
@@ -880,9 +880,9 @@
     "maghrib": "18:46",
     "isha": "19:57",
     "ishraqStart": "07:20",
-    "ishraqEnd": "10:13",
-    "chashtStart": "10:13",
-    "chashtEnd": "12:37"
+    "ishraqEnd": "09:56",
+    "chashtEnd": "12:47",
+    "chashtStart": "09:56"
   },
   "01-Mar": {
     "sehriEnd": "05:41",
@@ -895,9 +895,9 @@
     "maghrib": "18:47",
     "isha": "19:57",
     "ishraqStart": "07:19",
-    "ishraqEnd": "10:13",
-    "chashtStart": "10:13",
-    "chashtEnd": "12:36"
+    "ishraqEnd": "09:55",
+    "chashtEnd": "12:46",
+    "chashtStart": "09:55"
   },
   "02-Mar": {
     "sehriEnd": "05:40",
@@ -910,9 +910,9 @@
     "maghrib": "18:47",
     "isha": "19:57",
     "ishraqStart": "07:18",
-    "ishraqEnd": "10:12",
-    "chashtStart": "10:12",
-    "chashtEnd": "12:36"
+    "ishraqEnd": "09:55",
+    "chashtEnd": "12:46",
+    "chashtStart": "09:55"
   },
   "03-Mar": {
     "sehriEnd": "05:39",
@@ -925,9 +925,9 @@
     "maghrib": "18:47",
     "isha": "19:58",
     "ishraqStart": "07:17",
-    "ishraqEnd": "10:11",
-    "chashtStart": "10:11",
-    "chashtEnd": "12:36"
+    "ishraqEnd": "09:54",
+    "chashtEnd": "12:46",
+    "chashtStart": "09:54"
   },
   "04-Mar": {
     "sehriEnd": "05:38",
@@ -940,9 +940,9 @@
     "maghrib": "18:48",
     "isha": "19:58",
     "ishraqStart": "07:17",
-    "ishraqEnd": "10:12",
-    "chashtStart": "10:12",
-    "chashtEnd": "12:36"
+    "ishraqEnd": "09:54",
+    "chashtEnd": "12:46",
+    "chashtStart": "09:54"
   },
   "05-Mar": {
     "sehriEnd": "05:38",
@@ -955,9 +955,9 @@
     "maghrib": "18:48",
     "isha": "19:58",
     "ishraqStart": "07:16",
-    "ishraqEnd": "10:11",
-    "chashtStart": "10:11",
-    "chashtEnd": "12:36"
+    "ishraqEnd": "09:53",
+    "chashtEnd": "12:46",
+    "chashtStart": "09:53"
   },
   "06-Mar": {
     "sehriEnd": "05:37",
@@ -970,9 +970,9 @@
     "maghrib": "18:48",
     "isha": "19:59",
     "ishraqStart": "07:15",
-    "ishraqEnd": "10:10",
-    "chashtStart": "10:10",
-    "chashtEnd": "12:35"
+    "ishraqEnd": "09:53",
+    "chashtEnd": "12:45",
+    "chashtStart": "09:53"
   },
   "07-Mar": {
     "sehriEnd": "05:36",
@@ -985,9 +985,9 @@
     "maghrib": "18:49",
     "isha": "19:59",
     "ishraqStart": "07:14",
-    "ishraqEnd": "10:09",
-    "chashtStart": "10:09",
-    "chashtEnd": "12:35"
+    "ishraqEnd": "09:52",
+    "chashtEnd": "12:45",
+    "chashtStart": "09:52"
   },
   "08-Mar": {
     "sehriEnd": "05:35",
@@ -1000,9 +1000,9 @@
     "maghrib": "18:49",
     "isha": "19:59",
     "ishraqStart": "07:13",
-    "ishraqEnd": "10:09",
-    "chashtStart": "10:09",
-    "chashtEnd": "12:35"
+    "ishraqEnd": "09:51",
+    "chashtEnd": "12:45",
+    "chashtStart": "09:51"
   },
   "09-Mar": {
     "sehriEnd": "05:35",
@@ -1015,9 +1015,9 @@
     "maghrib": "18:49",
     "isha": "20:00",
     "ishraqStart": "07:13",
-    "ishraqEnd": "10:09",
-    "chashtStart": "10:09",
-    "chashtEnd": "12:35"
+    "ishraqEnd": "09:51",
+    "chashtEnd": "12:45",
+    "chashtStart": "09:51"
   },
   "10-Mar": {
     "sehriEnd": "05:34",
@@ -1030,9 +1030,9 @@
     "maghrib": "18:50",
     "isha": "20:00",
     "ishraqStart": "07:12",
-    "ishraqEnd": "10:08",
-    "chashtStart": "10:08",
-    "chashtEnd": "12:34"
+    "ishraqEnd": "09:51",
+    "chashtEnd": "12:44",
+    "chashtStart": "09:51"
   },
   "11-Mar": {
     "sehriEnd": "05:33",
@@ -1045,9 +1045,9 @@
     "maghrib": "18:50",
     "isha": "20:00",
     "ishraqStart": "07:11",
-    "ishraqEnd": "10:07",
-    "chashtStart": "10:07",
-    "chashtEnd": "12:34"
+    "ishraqEnd": "09:50",
+    "chashtEnd": "12:44",
+    "chashtStart": "09:50"
   },
   "12-Mar": {
     "sehriEnd": "05:32",
@@ -1060,9 +1060,9 @@
     "maghrib": "18:50",
     "isha": "20:00",
     "ishraqStart": "07:10",
-    "ishraqEnd": "10:07",
-    "chashtStart": "10:07",
-    "chashtEnd": "12:34"
+    "ishraqEnd": "09:49",
+    "chashtEnd": "12:44",
+    "chashtStart": "09:49"
   },
   "13-Mar": {
     "sehriEnd": "05:31",
@@ -1075,9 +1075,9 @@
     "maghrib": "18:51",
     "isha": "20:01",
     "ishraqStart": "07:09",
-    "ishraqEnd": "10:06",
-    "chashtStart": "10:06",
-    "chashtEnd": "12:34"
+    "ishraqEnd": "09:49",
+    "chashtEnd": "12:44",
+    "chashtStart": "09:49"
   },
   "14-Mar": {
     "sehriEnd": "05:30",
@@ -1090,9 +1090,9 @@
     "maghrib": "18:51",
     "isha": "20:01",
     "ishraqStart": "07:08",
-    "ishraqEnd": "10:05",
-    "chashtStart": "10:05",
-    "chashtEnd": "12:33"
+    "ishraqEnd": "09:48",
+    "chashtEnd": "12:43",
+    "chashtStart": "09:48"
   },
   "15-Mar": {
     "sehriEnd": "05:29",
@@ -1105,9 +1105,9 @@
     "maghrib": "18:51",
     "isha": "20:01",
     "ishraqStart": "07:08",
-    "ishraqEnd": "10:06",
-    "chashtStart": "10:06",
-    "chashtEnd": "12:33"
+    "ishraqEnd": "09:48",
+    "chashtEnd": "12:43",
+    "chashtStart": "09:48"
   },
   "16-Mar": {
     "sehriEnd": "05:29",
@@ -1120,9 +1120,9 @@
     "maghrib": "18:52",
     "isha": "20:02",
     "ishraqStart": "07:07",
-    "ishraqEnd": "10:05",
-    "chashtStart": "10:05",
-    "chashtEnd": "12:33"
+    "ishraqEnd": "09:48",
+    "chashtEnd": "12:43",
+    "chashtStart": "09:48"
   },
   "17-Mar": {
     "sehriEnd": "05:28",
@@ -1135,9 +1135,9 @@
     "maghrib": "18:52",
     "isha": "20:02",
     "ishraqStart": "07:06",
-    "ishraqEnd": "10:04",
-    "chashtStart": "10:04",
-    "chashtEnd": "12:32"
+    "ishraqEnd": "09:47",
+    "chashtEnd": "12:42",
+    "chashtStart": "09:47"
   },
   "18-Mar": {
     "sehriEnd": "05:27",
@@ -1150,9 +1150,9 @@
     "maghrib": "18:52",
     "isha": "20:02",
     "ishraqStart": "07:05",
-    "ishraqEnd": "10:03",
-    "chashtStart": "10:03",
-    "chashtEnd": "12:32"
+    "ishraqEnd": "09:46",
+    "chashtEnd": "12:42",
+    "chashtStart": "09:46"
   },
   "19-Mar": {
     "sehriEnd": "05:26",
@@ -1165,9 +1165,9 @@
     "maghrib": "18:53",
     "isha": "20:03",
     "ishraqStart": "07:04",
-    "ishraqEnd": "10:03",
-    "chashtStart": "10:03",
-    "chashtEnd": "12:32"
+    "ishraqEnd": "09:46",
+    "chashtEnd": "12:42",
+    "chashtStart": "09:46"
   },
   "20-Mar": {
     "sehriEnd": "05:25",
@@ -1180,9 +1180,9 @@
     "maghrib": "18:53",
     "isha": "20:03",
     "ishraqStart": "07:03",
-    "ishraqEnd": "10:02",
-    "chashtStart": "10:02",
-    "chashtEnd": "12:32"
+    "ishraqEnd": "09:45",
+    "chashtEnd": "12:42",
+    "chashtStart": "09:45"
   },
   "21-Mar": {
     "sehriEnd": "05:24",
@@ -1195,9 +1195,9 @@
     "maghrib": "18:53",
     "isha": "20:03",
     "ishraqStart": "07:02",
-    "ishraqEnd": "10:01",
-    "chashtStart": "10:01",
-    "chashtEnd": "12:31"
+    "ishraqEnd": "09:44",
+    "chashtEnd": "12:41",
+    "chashtStart": "09:44"
   },
   "22-Mar": {
     "sehriEnd": "05:23",
@@ -1210,9 +1210,9 @@
     "maghrib": "18:53",
     "isha": "20:04",
     "ishraqStart": "07:01",
-    "ishraqEnd": "10:01",
-    "chashtStart": "10:01",
-    "chashtEnd": "12:31"
+    "ishraqEnd": "09:43",
+    "chashtEnd": "12:41",
+    "chashtStart": "09:43"
   },
   "23-Mar": {
     "sehriEnd": "05:22",
@@ -1225,9 +1225,9 @@
     "maghrib": "18:54",
     "isha": "20:04",
     "ishraqStart": "07:00",
-    "ishraqEnd": "10:00",
-    "chashtStart": "10:00",
-    "chashtEnd": "12:31"
+    "ishraqEnd": "09:43",
+    "chashtEnd": "12:41",
+    "chashtStart": "09:43"
   },
   "24-Mar": {
     "sehriEnd": "05:21",
@@ -1240,9 +1240,9 @@
     "maghrib": "18:54",
     "isha": "20:04",
     "ishraqStart": "07:00",
-    "ishraqEnd": "10:00",
-    "chashtStart": "10:00",
-    "chashtEnd": "12:30"
+    "ishraqEnd": "09:43",
+    "chashtEnd": "12:40",
+    "chashtStart": "09:43"
   },
   "25-Mar": {
     "sehriEnd": "05:20",
@@ -1255,9 +1255,9 @@
     "maghrib": "18:54",
     "isha": "20:05",
     "ishraqStart": "06:59",
-    "ishraqEnd": "10:00",
-    "chashtStart": "10:00",
-    "chashtEnd": "12:30"
+    "ishraqEnd": "09:42",
+    "chashtEnd": "12:40",
+    "chashtStart": "09:42"
   },
   "26-Mar": {
     "sehriEnd": "05:19",
@@ -1270,9 +1270,9 @@
     "maghrib": "18:55",
     "isha": "20:05",
     "ishraqStart": "06:58",
-    "ishraqEnd": "09:59",
-    "chashtStart": "09:59",
-    "chashtEnd": "12:30"
+    "ishraqEnd": "09:42",
+    "chashtEnd": "12:40",
+    "chashtStart": "09:42"
   },
   "27-Mar": {
     "sehriEnd": "05:18",
@@ -1285,9 +1285,9 @@
     "maghrib": "18:55",
     "isha": "20:06",
     "ishraqStart": "06:57",
-    "ishraqEnd": "09:58",
-    "chashtStart": "09:58",
-    "chashtEnd": "12:29"
+    "ishraqEnd": "09:41",
+    "chashtEnd": "12:39",
+    "chashtStart": "09:41"
   },
   "28-Mar": {
     "sehriEnd": "05:17",
@@ -1300,9 +1300,9 @@
     "maghrib": "18:55",
     "isha": "20:06",
     "ishraqStart": "06:56",
-    "ishraqEnd": "09:58",
-    "chashtStart": "09:58",
-    "chashtEnd": "12:29"
+    "ishraqEnd": "09:40",
+    "chashtEnd": "12:39",
+    "chashtStart": "09:40"
   },
   "29-Mar": {
     "sehriEnd": "05:17",
@@ -1315,9 +1315,9 @@
     "maghrib": "18:55",
     "isha": "20:06",
     "ishraqStart": "06:55",
-    "ishraqEnd": "09:57",
-    "chashtStart": "09:57",
-    "chashtEnd": "12:29"
+    "ishraqEnd": "09:39",
+    "chashtEnd": "12:39",
+    "chashtStart": "09:39"
   },
   "30-Mar": {
     "sehriEnd": "05:16",
@@ -1330,9 +1330,9 @@
     "maghrib": "18:56",
     "isha": "20:06",
     "ishraqStart": "06:54",
-    "ishraqEnd": "09:56",
-    "chashtStart": "09:56",
-    "chashtEnd": "12:29"
+    "ishraqEnd": "09:39",
+    "chashtEnd": "12:39",
+    "chashtStart": "09:39"
   },
   "31-Mar": {
     "sehriEnd": "05:15",
@@ -1345,9 +1345,9 @@
     "maghrib": "18:56",
     "isha": "20:07",
     "ishraqStart": "06:53",
-    "ishraqEnd": "09:55",
-    "chashtStart": "09:55",
-    "chashtEnd": "12:28"
+    "ishraqEnd": "09:38",
+    "chashtEnd": "12:38",
+    "chashtStart": "09:38"
   },
   "01-Apr": {
     "sehriEnd": "05:14",
@@ -1360,9 +1360,9 @@
     "maghrib": "18:56",
     "isha": "20:07",
     "ishraqStart": "06:53",
-    "ishraqEnd": "09:56",
-    "chashtStart": "09:56",
-    "chashtEnd": "12:28"
+    "ishraqEnd": "09:38",
+    "chashtEnd": "12:38",
+    "chashtStart": "09:38"
   },
   "02-Apr": {
     "sehriEnd": "05:13",
@@ -1375,9 +1375,9 @@
     "maghrib": "18:57",
     "isha": "20:08",
     "ishraqStart": "06:52",
-    "ishraqEnd": "09:55",
-    "chashtStart": "09:55",
-    "chashtEnd": "12:28"
+    "ishraqEnd": "09:38",
+    "chashtEnd": "12:38",
+    "chashtStart": "09:38"
   },
   "03-Apr": {
     "sehriEnd": "05:12",
@@ -1390,9 +1390,9 @@
     "maghrib": "18:57",
     "isha": "20:08",
     "ishraqStart": "06:51",
-    "ishraqEnd": "09:54",
-    "chashtStart": "09:54",
-    "chashtEnd": "12:27"
+    "ishraqEnd": "09:37",
+    "chashtEnd": "12:37",
+    "chashtStart": "09:37"
   },
   "04-Apr": {
     "sehriEnd": "05:11",
@@ -1405,9 +1405,9 @@
     "maghrib": "18:57",
     "isha": "20:08",
     "ishraqStart": "06:50",
-    "ishraqEnd": "09:54",
-    "chashtStart": "09:54",
-    "chashtEnd": "12:27"
+    "ishraqEnd": "09:36",
+    "chashtEnd": "12:37",
+    "chashtStart": "09:36"
   },
   "05-Apr": {
     "sehriEnd": "05:10",
@@ -1420,9 +1420,9 @@
     "maghrib": "18:57",
     "isha": "20:09",
     "ishraqStart": "06:49",
-    "ishraqEnd": "09:53",
-    "chashtStart": "09:53",
-    "chashtEnd": "12:27"
+    "ishraqEnd": "09:35",
+    "chashtEnd": "12:37",
+    "chashtStart": "09:35"
   },
   "06-Apr": {
     "sehriEnd": "05:09",
@@ -1435,9 +1435,9 @@
     "maghrib": "18:58",
     "isha": "20:09",
     "ishraqStart": "06:48",
-    "ishraqEnd": "09:52",
-    "chashtStart": "09:52",
-    "chashtEnd": "12:27"
+    "ishraqEnd": "09:35",
+    "chashtEnd": "12:37",
+    "chashtStart": "09:35"
   },
   "07-Apr": {
     "sehriEnd": "05:08",
@@ -1450,9 +1450,9 @@
     "maghrib": "18:58",
     "isha": "20:09",
     "ishraqStart": "06:47",
-    "ishraqEnd": "09:52",
-    "chashtStart": "09:52",
-    "chashtEnd": "12:26"
+    "ishraqEnd": "09:34",
+    "chashtEnd": "12:36",
+    "chashtStart": "09:34"
   },
   "08-Apr": {
     "sehriEnd": "05:07",
@@ -1465,9 +1465,9 @@
     "maghrib": "18:58",
     "isha": "20:10",
     "ishraqStart": "06:46",
-    "ishraqEnd": "09:51",
-    "chashtStart": "09:51",
-    "chashtEnd": "12:26"
+    "ishraqEnd": "09:33",
+    "chashtEnd": "12:36",
+    "chashtStart": "09:33"
   },
   "09-Apr": {
     "sehriEnd": "05:06",
@@ -1480,9 +1480,9 @@
     "maghrib": "18:59",
     "isha": "20:10",
     "ishraqStart": "06:46",
-    "ishraqEnd": "09:51",
-    "chashtStart": "09:51",
-    "chashtEnd": "12:26"
+    "ishraqEnd": "09:34",
+    "chashtEnd": "12:36",
+    "chashtStart": "09:34"
   },
   "10-Apr": {
     "sehriEnd": "05:05",
@@ -1495,9 +1495,9 @@
     "maghrib": "18:59",
     "isha": "20:11",
     "ishraqStart": "06:45",
-    "ishraqEnd": "09:51",
-    "chashtStart": "09:51",
-    "chashtEnd": "12:25"
+    "ishraqEnd": "09:33",
+    "chashtEnd": "12:35",
+    "chashtStart": "09:33"
   },
   "11-Apr": {
     "sehriEnd": "05:04",
@@ -1510,9 +1510,9 @@
     "maghrib": "18:59",
     "isha": "20:11",
     "ishraqStart": "06:44",
-    "ishraqEnd": "09:50",
-    "chashtStart": "09:50",
-    "chashtEnd": "12:25"
+    "ishraqEnd": "09:32",
+    "chashtEnd": "12:35",
+    "chashtStart": "09:32"
   },
   "12-Apr": {
     "sehriEnd": "05:03",
@@ -1525,9 +1525,9 @@
     "maghrib": "18:59",
     "isha": "20:12",
     "ishraqStart": "06:43",
-    "ishraqEnd": "09:49",
-    "chashtStart": "09:49",
-    "chashtEnd": "12:25"
+    "ishraqEnd": "09:31",
+    "chashtEnd": "12:35",
+    "chashtStart": "09:31"
   },
   "13-Apr": {
     "sehriEnd": "05:02",
@@ -1540,9 +1540,9 @@
     "maghrib": "19:00",
     "isha": "20:12",
     "ishraqStart": "06:42",
-    "ishraqEnd": "09:49",
-    "chashtStart": "09:49",
-    "chashtEnd": "12:25"
+    "ishraqEnd": "09:31",
+    "chashtEnd": "12:35",
+    "chashtStart": "09:31"
   },
   "14-Apr": {
     "sehriEnd": "05:01",
@@ -1555,9 +1555,9 @@
     "maghrib": "19:00",
     "isha": "20:12",
     "ishraqStart": "06:41",
-    "ishraqEnd": "09:48",
-    "chashtStart": "09:48",
-    "chashtEnd": "12:24"
+    "ishraqEnd": "09:30",
+    "chashtEnd": "12:34",
+    "chashtStart": "09:30"
   },
   "15-Apr": {
     "sehriEnd": "05:00",
@@ -1570,9 +1570,9 @@
     "maghrib": "19:00",
     "isha": "20:13",
     "ishraqStart": "06:41",
-    "ishraqEnd": "09:48",
-    "chashtStart": "09:48",
-    "chashtEnd": "12:24"
+    "ishraqEnd": "09:30",
+    "chashtEnd": "12:34",
+    "chashtStart": "09:30"
   },
   "16-Apr": {
     "sehriEnd": "04:59",
@@ -1585,9 +1585,9 @@
     "maghrib": "19:01",
     "isha": "20:13",
     "ishraqStart": "06:40",
-    "ishraqEnd": "09:48",
-    "chashtStart": "09:48",
-    "chashtEnd": "12:24"
+    "ishraqEnd": "09:30",
+    "chashtEnd": "12:34",
+    "chashtStart": "09:30"
   },
   "17-Apr": {
     "sehriEnd": "04:58",
@@ -1600,9 +1600,9 @@
     "maghrib": "19:01",
     "isha": "20:14",
     "ishraqStart": "06:39",
-    "ishraqEnd": "09:47",
-    "chashtStart": "09:47",
-    "chashtEnd": "12:24"
+    "ishraqEnd": "09:29",
+    "chashtEnd": "12:34",
+    "chashtStart": "09:29"
   },
   "18-Apr": {
     "sehriEnd": "04:58",
@@ -1615,9 +1615,9 @@
     "maghrib": "19:01",
     "isha": "20:14",
     "ishraqStart": "06:38",
-    "ishraqEnd": "09:46",
-    "chashtStart": "09:46",
-    "chashtEnd": "12:23"
+    "ishraqEnd": "09:28",
+    "chashtEnd": "12:33",
+    "chashtStart": "09:28"
   },
   "19-Apr": {
     "sehriEnd": "04:57",
@@ -1630,9 +1630,9 @@
     "maghrib": "19:02",
     "isha": "20:15",
     "ishraqStart": "06:38",
-    "ishraqEnd": "09:46",
-    "chashtStart": "09:46",
-    "chashtEnd": "12:23"
+    "ishraqEnd": "09:28",
+    "chashtEnd": "12:33",
+    "chashtStart": "09:28"
   },
   "20-Apr": {
     "sehriEnd": "04:56",
@@ -1645,9 +1645,9 @@
     "maghrib": "19:02",
     "isha": "20:15",
     "ishraqStart": "06:37",
-    "ishraqEnd": "09:46",
-    "chashtStart": "09:46",
-    "chashtEnd": "12:23"
+    "ishraqEnd": "09:28",
+    "chashtEnd": "12:33",
+    "chashtStart": "09:28"
   },
   "21-Apr": {
     "sehriEnd": "04:55",
@@ -1660,9 +1660,9 @@
     "maghrib": "19:02",
     "isha": "20:15",
     "ishraqStart": "06:36",
-    "ishraqEnd": "09:45",
-    "chashtStart": "09:45",
-    "chashtEnd": "12:23"
+    "ishraqEnd": "09:27",
+    "chashtEnd": "12:33",
+    "chashtStart": "09:27"
   },
   "22-Apr": {
     "sehriEnd": "04:54",
@@ -1675,9 +1675,9 @@
     "maghrib": "19:03",
     "isha": "20:16",
     "ishraqStart": "06:35",
-    "ishraqEnd": "09:44",
-    "chashtStart": "09:44",
-    "chashtEnd": "12:22"
+    "ishraqEnd": "09:26",
+    "chashtEnd": "12:32",
+    "chashtStart": "09:26"
   },
   "23-Apr": {
     "sehriEnd": "04:53",
@@ -1690,9 +1690,9 @@
     "maghrib": "19:03",
     "isha": "20:16",
     "ishraqStart": "06:35",
-    "ishraqEnd": "09:45",
-    "chashtStart": "09:45",
-    "chashtEnd": "12:22"
+    "ishraqEnd": "09:26",
+    "chashtEnd": "12:32",
+    "chashtStart": "09:26"
   },
   "24-Apr": {
     "sehriEnd": "04:52",
@@ -1705,9 +1705,9 @@
     "maghrib": "19:03",
     "isha": "20:16",
     "ishraqStart": "06:34",
-    "ishraqEnd": "09:44",
-    "chashtStart": "09:44",
-    "chashtEnd": "12:22"
+    "ishraqEnd": "09:26",
+    "chashtEnd": "12:32",
+    "chashtStart": "09:26"
   },
   "25-Apr": {
     "sehriEnd": "04:51",
@@ -1720,9 +1720,9 @@
     "maghrib": "19:04",
     "isha": "20:16",
     "ishraqStart": "06:33",
-    "ishraqEnd": "09:43",
-    "chashtStart": "09:43",
-    "chashtEnd": "12:22"
+    "ishraqEnd": "09:25",
+    "chashtEnd": "12:32",
+    "chashtStart": "09:25"
   },
   "26-Apr": {
     "sehriEnd": "04:50",
@@ -1735,9 +1735,9 @@
     "maghrib": "19:04",
     "isha": "20:17",
     "ishraqStart": "06:32",
-    "ishraqEnd": "09:43",
-    "chashtStart": "09:43",
-    "chashtEnd": "12:22"
+    "ishraqEnd": "09:24",
+    "chashtEnd": "12:32",
+    "chashtStart": "09:24"
   },
   "27-Apr": {
     "sehriEnd": "04:50",
@@ -1750,9 +1750,9 @@
     "maghrib": "19:04",
     "isha": "20:17",
     "ishraqStart": "06:32",
-    "ishraqEnd": "09:43",
-    "chashtStart": "09:43",
-    "chashtEnd": "12:22"
+    "ishraqEnd": "09:24",
+    "chashtEnd": "12:32",
+    "chashtStart": "09:24"
   },
   "28-Apr": {
     "sehriEnd": "04:49",
@@ -1765,9 +1765,9 @@
     "maghrib": "19:05",
     "isha": "20:17",
     "ishraqStart": "06:31",
-    "ishraqEnd": "09:42",
-    "chashtStart": "09:42",
-    "chashtEnd": "12:21"
+    "ishraqEnd": "09:24",
+    "chashtEnd": "12:31",
+    "chashtStart": "09:24"
   },
   "29-Apr": {
     "sehriEnd": "04:48",
@@ -1780,9 +1780,9 @@
     "maghrib": "19:05",
     "isha": "20:17",
     "ishraqStart": "06:30",
-    "ishraqEnd": "09:41",
-    "chashtStart": "09:41",
-    "chashtEnd": "12:21"
+    "ishraqEnd": "09:23",
+    "chashtEnd": "12:31",
+    "chashtStart": "09:23"
   },
   "30-Apr": {
     "sehriEnd": "04:47",
@@ -1795,9 +1795,9 @@
     "maghrib": "19:05",
     "isha": "20:17",
     "ishraqStart": "06:30",
-    "ishraqEnd": "09:42",
-    "chashtStart": "09:42",
-    "chashtEnd": "12:21"
+    "ishraqEnd": "09:23",
+    "chashtEnd": "12:31",
+    "chashtStart": "09:23"
   },
   "01-May": {
     "sehriEnd": "04:46",
@@ -1810,9 +1810,9 @@
     "maghrib": "19:06",
     "isha": "20:18",
     "ishraqStart": "06:29",
-    "ishraqEnd": "09:41",
-    "chashtStart": "09:41",
-    "chashtEnd": "12:21"
+    "ishraqEnd": "09:23",
+    "chashtEnd": "12:31",
+    "chashtStart": "09:23"
   },
   "02-May": {
     "sehriEnd": "04:46",
@@ -1825,9 +1825,9 @@
     "maghrib": "19:06",
     "isha": "20:18",
     "ishraqStart": "06:29",
-    "ishraqEnd": "09:41",
-    "chashtStart": "09:41",
-    "chashtEnd": "12:21"
+    "ishraqEnd": "09:23",
+    "chashtEnd": "12:31",
+    "chashtStart": "09:23"
   },
   "03-May": {
     "sehriEnd": "04:45",
@@ -1840,9 +1840,9 @@
     "maghrib": "19:06",
     "isha": "20:18",
     "ishraqStart": "06:28",
-    "ishraqEnd": "09:40",
-    "chashtStart": "09:40",
-    "chashtEnd": "12:21"
+    "ishraqEnd": "09:22",
+    "chashtEnd": "12:31",
+    "chashtStart": "09:22"
   },
   "04-May": {
     "sehriEnd": "04:44",
@@ -1855,9 +1855,9 @@
     "maghrib": "19:07",
     "isha": "20:19",
     "ishraqStart": "06:27",
-    "ishraqEnd": "09:40",
-    "chashtStart": "09:40",
-    "chashtEnd": "12:21"
+    "ishraqEnd": "09:21",
+    "chashtEnd": "12:31",
+    "chashtStart": "09:21"
   },
   "05-May": {
     "sehriEnd": "04:43",
@@ -1870,9 +1870,9 @@
     "maghrib": "19:07",
     "isha": "20:19",
     "ishraqStart": "06:27",
-    "ishraqEnd": "09:40",
-    "chashtStart": "09:40",
-    "chashtEnd": "12:21"
+    "ishraqEnd": "09:21",
+    "chashtEnd": "12:31",
+    "chashtStart": "09:21"
   },
   "06-May": {
     "sehriEnd": "04:43",
@@ -1885,9 +1885,9 @@
     "maghrib": "19:07",
     "isha": "20:19",
     "ishraqStart": "06:26",
-    "ishraqEnd": "09:39",
-    "chashtStart": "09:39",
-    "chashtEnd": "12:20"
+    "ishraqEnd": "09:21",
+    "chashtEnd": "12:30",
+    "chashtStart": "09:21"
   },
   "07-May": {
     "sehriEnd": "04:42",
@@ -1900,9 +1900,9 @@
     "maghrib": "19:08",
     "isha": "20:19",
     "ishraqStart": "06:26",
-    "ishraqEnd": "09:40",
-    "chashtStart": "09:40",
-    "chashtEnd": "12:20"
+    "ishraqEnd": "09:21",
+    "chashtEnd": "12:30",
+    "chashtStart": "09:21"
   },
   "08-May": {
     "sehriEnd": "04:41",
@@ -1915,9 +1915,9 @@
     "maghrib": "19:08",
     "isha": "20:20",
     "ishraqStart": "06:25",
-    "ishraqEnd": "09:39",
-    "chashtStart": "09:39",
-    "chashtEnd": "12:20"
+    "ishraqEnd": "09:20",
+    "chashtEnd": "12:30",
+    "chashtStart": "09:20"
   },
   "09-May": {
     "sehriEnd": "04:40",
@@ -1930,9 +1930,9 @@
     "maghrib": "19:09",
     "isha": "20:21",
     "ishraqStart": "06:25",
-    "ishraqEnd": "09:39",
-    "chashtStart": "09:39",
-    "chashtEnd": "12:20"
+    "ishraqEnd": "09:20",
+    "chashtEnd": "12:30",
+    "chashtStart": "09:20"
   },
   "10-May": {
     "sehriEnd": "04:40",
@@ -1945,9 +1945,9 @@
     "maghrib": "19:09",
     "isha": "20:21",
     "ishraqStart": "06:24",
-    "ishraqEnd": "09:38",
-    "chashtStart": "09:38",
-    "chashtEnd": "12:20"
+    "ishraqEnd": "09:20",
+    "chashtEnd": "12:30",
+    "chashtStart": "09:20"
   },
   "11-May": {
     "sehriEnd": "04:39",
@@ -1960,9 +1960,9 @@
     "maghrib": "19:09",
     "isha": "20:22",
     "ishraqStart": "06:24",
-    "ishraqEnd": "09:39",
-    "chashtStart": "09:39",
-    "chashtEnd": "12:20"
+    "ishraqEnd": "09:20",
+    "chashtEnd": "12:30",
+    "chashtStart": "09:20"
   },
   "12-May": {
     "sehriEnd": "04:39",
@@ -1975,9 +1975,9 @@
     "maghrib": "19:10",
     "isha": "20:22",
     "ishraqStart": "06:23",
-    "ishraqEnd": "09:38",
-    "chashtStart": "09:38",
-    "chashtEnd": "12:20"
+    "ishraqEnd": "09:19",
+    "chashtEnd": "12:30",
+    "chashtStart": "09:19"
   },
   "13-May": {
     "sehriEnd": "04:39",
@@ -1990,9 +1990,9 @@
     "maghrib": "19:10",
     "isha": "20:23",
     "ishraqStart": "06:23",
-    "ishraqEnd": "09:38",
-    "chashtStart": "09:38",
-    "chashtEnd": "12:20"
+    "ishraqEnd": "09:19",
+    "chashtEnd": "12:30",
+    "chashtStart": "09:19"
   },
   "14-May": {
     "sehriEnd": "04:37",
@@ -2005,9 +2005,9 @@
     "maghrib": "19:11",
     "isha": "20:23",
     "ishraqStart": "06:22",
-    "ishraqEnd": "09:38",
-    "chashtStart": "09:38",
-    "chashtEnd": "12:20"
+    "ishraqEnd": "09:19",
+    "chashtEnd": "12:30",
+    "chashtStart": "09:19"
   },
   "15-May": {
     "sehriEnd": "04:37",
@@ -2020,9 +2020,9 @@
     "maghrib": "19:11",
     "isha": "20:24",
     "ishraqStart": "06:22",
-    "ishraqEnd": "09:38",
-    "chashtStart": "09:38",
-    "chashtEnd": "12:20"
+    "ishraqEnd": "09:19",
+    "chashtEnd": "12:30",
+    "chashtStart": "09:19"
   },
   "16-May": {
     "sehriEnd": "04:36",
@@ -2035,9 +2035,9 @@
     "maghrib": "19:12",
     "isha": "20:25",
     "ishraqStart": "06:22",
-    "ishraqEnd": "09:38",
-    "chashtStart": "09:38",
-    "chashtEnd": "12:20"
+    "ishraqEnd": "09:19",
+    "chashtEnd": "12:30",
+    "chashtStart": "09:19"
   },
   "17-May": {
     "sehriEnd": "04:36",
@@ -2050,9 +2050,9 @@
     "maghrib": "19:12",
     "isha": "20:25",
     "ishraqStart": "06:21",
-    "ishraqEnd": "09:37",
-    "chashtStart": "09:37",
-    "chashtEnd": "12:20"
+    "ishraqEnd": "09:18",
+    "chashtEnd": "12:30",
+    "chashtStart": "09:18"
   },
   "18-May": {
     "sehriEnd": "04:35",
@@ -2065,9 +2065,9 @@
     "maghrib": "19:12",
     "isha": "20:26",
     "ishraqStart": "06:21",
-    "ishraqEnd": "09:37",
-    "chashtStart": "09:37",
-    "chashtEnd": "12:20"
+    "ishraqEnd": "09:18",
+    "chashtEnd": "12:30",
+    "chashtStart": "09:18"
   },
   "19-May": {
     "sehriEnd": "04:35",
@@ -2080,9 +2080,9 @@
     "maghrib": "19:13",
     "isha": "20:26",
     "ishraqStart": "06:21",
-    "ishraqEnd": "09:38",
-    "chashtStart": "09:38",
-    "chashtEnd": "12:20"
+    "ishraqEnd": "09:18",
+    "chashtEnd": "12:30",
+    "chashtStart": "09:18"
   },
   "20-May": {
     "sehriEnd": "04:34",
@@ -2095,9 +2095,9 @@
     "maghrib": "19:13",
     "isha": "20:27",
     "ishraqStart": "06:20",
-    "ishraqEnd": "09:37",
-    "chashtStart": "09:37",
-    "chashtEnd": "12:20"
+    "ishraqEnd": "09:18",
+    "chashtEnd": "12:30",
+    "chashtStart": "09:18"
   },
   "21-May": {
     "sehriEnd": "04:34",
@@ -2110,9 +2110,9 @@
     "maghrib": "19:13",
     "isha": "20:27",
     "ishraqStart": "06:20",
-    "ishraqEnd": "09:37",
-    "chashtStart": "09:37",
-    "chashtEnd": "12:20"
+    "ishraqEnd": "09:18",
+    "chashtEnd": "12:30",
+    "chashtStart": "09:18"
   },
   "22-May": {
     "sehriEnd": "04:33",
@@ -2125,9 +2125,9 @@
     "maghrib": "19:14",
     "isha": "20:27",
     "ishraqStart": "06:20",
-    "ishraqEnd": "09:37",
-    "chashtStart": "09:37",
-    "chashtEnd": "12:20"
+    "ishraqEnd": "09:18",
+    "chashtEnd": "12:30",
+    "chashtStart": "09:18"
   },
   "23-May": {
     "sehriEnd": "04:33",
@@ -2140,9 +2140,9 @@
     "maghrib": "19:14",
     "isha": "20:28",
     "ishraqStart": "06:19",
-    "ishraqEnd": "09:36",
-    "chashtStart": "09:36",
-    "chashtEnd": "12:20"
+    "ishraqEnd": "09:17",
+    "chashtEnd": "12:30",
+    "chashtStart": "09:17"
   },
   "24-May": {
     "sehriEnd": "04:32",
@@ -2155,9 +2155,9 @@
     "maghrib": "19:15",
     "isha": "20:29",
     "ishraqStart": "06:19",
-    "ishraqEnd": "09:37",
-    "chashtStart": "09:37",
-    "chashtEnd": "12:20"
+    "ishraqEnd": "09:17",
+    "chashtEnd": "12:30",
+    "chashtStart": "09:17"
   },
   "25-May": {
     "sehriEnd": "04:32",
@@ -2170,9 +2170,9 @@
     "maghrib": "19:15",
     "isha": "20:29",
     "ishraqStart": "06:19",
-    "ishraqEnd": "09:37",
-    "chashtStart": "09:37",
-    "chashtEnd": "12:21"
+    "ishraqEnd": "09:17",
+    "chashtEnd": "12:31",
+    "chashtStart": "09:17"
   },
   "26-May": {
     "sehriEnd": "04:32",
@@ -2185,9 +2185,9 @@
     "maghrib": "19:16",
     "isha": "20:30",
     "ishraqStart": "06:19",
-    "ishraqEnd": "09:37",
-    "chashtStart": "09:37",
-    "chashtEnd": "12:21"
+    "ishraqEnd": "09:18",
+    "chashtEnd": "12:31",
+    "chashtStart": "09:18"
   },
   "27-May": {
     "sehriEnd": "04:31",
@@ -2200,9 +2200,9 @@
     "maghrib": "19:16",
     "isha": "20:30",
     "ishraqStart": "06:19",
-    "ishraqEnd": "09:37",
-    "chashtStart": "09:37",
-    "chashtEnd": "12:21"
+    "ishraqEnd": "09:18",
+    "chashtEnd": "12:31",
+    "chashtStart": "09:18"
   },
   "28-May": {
     "sehriEnd": "04:31",
@@ -2215,9 +2215,9 @@
     "maghrib": "19:16",
     "isha": "20:31",
     "ishraqStart": "06:18",
-    "ishraqEnd": "09:36",
-    "chashtStart": "09:36",
-    "chashtEnd": "12:21"
+    "ishraqEnd": "09:17",
+    "chashtEnd": "12:31",
+    "chashtStart": "09:17"
   },
   "29-May": {
     "sehriEnd": "04:31",
@@ -2230,9 +2230,9 @@
     "maghrib": "19:17",
     "isha": "20:31",
     "ishraqStart": "06:18",
-    "ishraqEnd": "09:37",
-    "chashtStart": "09:37",
-    "chashtEnd": "12:21"
+    "ishraqEnd": "09:17",
+    "chashtEnd": "12:31",
+    "chashtStart": "09:17"
   },
   "30-May": {
     "sehriEnd": "04:30",
@@ -2245,9 +2245,9 @@
     "maghrib": "19:17",
     "isha": "20:32",
     "ishraqStart": "06:18",
-    "ishraqEnd": "09:37",
-    "chashtStart": "09:37",
-    "chashtEnd": "12:21"
+    "ishraqEnd": "09:17",
+    "chashtEnd": "12:31",
+    "chashtStart": "09:17"
   },
   "31-May": {
     "sehriEnd": "04:30",
@@ -2260,9 +2260,9 @@
     "maghrib": "19:18",
     "isha": "20:32",
     "ishraqStart": "06:18",
-    "ishraqEnd": "09:37",
-    "chashtStart": "09:37",
-    "chashtEnd": "12:21"
+    "ishraqEnd": "09:17",
+    "chashtEnd": "12:31",
+    "chashtStart": "09:17"
   },
   "01-Jun": {
     "sehriEnd": "04:30",
@@ -2275,9 +2275,9 @@
     "maghrib": "19:18",
     "isha": "20:33",
     "ishraqStart": "06:18",
-    "ishraqEnd": "09:37",
-    "chashtStart": "09:37",
-    "chashtEnd": "12:21"
+    "ishraqEnd": "09:17",
+    "chashtEnd": "12:31",
+    "chashtStart": "09:17"
   },
   "02-Jun": {
     "sehriEnd": "04:30",
@@ -2290,9 +2290,9 @@
     "maghrib": "19:18",
     "isha": "20:33",
     "ishraqStart": "06:18",
-    "ishraqEnd": "09:37",
-    "chashtStart": "09:37",
-    "chashtEnd": "12:22"
+    "ishraqEnd": "09:17",
+    "chashtEnd": "12:32",
+    "chashtStart": "09:17"
   },
   "03-Jun": {
     "sehriEnd": "04:29",
@@ -2305,9 +2305,9 @@
     "maghrib": "19:19",
     "isha": "20:34",
     "ishraqStart": "06:18",
-    "ishraqEnd": "09:38",
-    "chashtStart": "09:38",
-    "chashtEnd": "12:22"
+    "ishraqEnd": "09:18",
+    "chashtEnd": "12:32",
+    "chashtStart": "09:18"
   },
   "04-Jun": {
     "sehriEnd": "04:29",
@@ -2320,9 +2320,9 @@
     "maghrib": "19:19",
     "isha": "20:34",
     "ishraqStart": "06:18",
-    "ishraqEnd": "09:38",
-    "chashtStart": "09:38",
-    "chashtEnd": "12:22"
+    "ishraqEnd": "09:18",
+    "chashtEnd": "12:32",
+    "chashtStart": "09:18"
   },
   "05-Jun": {
     "sehriEnd": "04:29",
@@ -2335,9 +2335,9 @@
     "maghrib": "19:19",
     "isha": "20:35",
     "ishraqStart": "06:18",
-    "ishraqEnd": "09:38",
-    "chashtStart": "09:38",
-    "chashtEnd": "12:22"
+    "ishraqEnd": "09:18",
+    "chashtEnd": "12:32",
+    "chashtStart": "09:18"
   },
   "06-Jun": {
     "sehriEnd": "04:29",
@@ -2350,9 +2350,9 @@
     "maghrib": "19:20",
     "isha": "20:35",
     "ishraqStart": "06:18",
-    "ishraqEnd": "09:38",
-    "chashtStart": "09:38",
-    "chashtEnd": "12:22"
+    "ishraqEnd": "09:18",
+    "chashtEnd": "12:32",
+    "chashtStart": "09:18"
   },
   "07-Jun": {
     "sehriEnd": "04:29",
@@ -2365,9 +2365,9 @@
     "maghrib": "19:20",
     "isha": "20:36",
     "ishraqStart": "06:18",
-    "ishraqEnd": "09:38",
-    "chashtStart": "09:38",
-    "chashtEnd": "12:22"
+    "ishraqEnd": "09:18",
+    "chashtEnd": "12:32",
+    "chashtStart": "09:18"
   },
   "08-Jun": {
     "sehriEnd": "04:29",
@@ -2380,9 +2380,9 @@
     "maghrib": "19:21",
     "isha": "20:36",
     "ishraqStart": "06:18",
-    "ishraqEnd": "09:38",
-    "chashtStart": "09:38",
-    "chashtEnd": "12:23"
+    "ishraqEnd": "09:18",
+    "chashtEnd": "12:33",
+    "chashtStart": "09:18"
   },
   "09-Jun": {
     "sehriEnd": "04:29",
@@ -2395,9 +2395,9 @@
     "maghrib": "19:21",
     "isha": "20:37",
     "ishraqStart": "06:18",
-    "ishraqEnd": "09:38",
-    "chashtStart": "09:38",
-    "chashtEnd": "12:23"
+    "ishraqEnd": "09:18",
+    "chashtEnd": "12:33",
+    "chashtStart": "09:18"
   },
   "10-Jun": {
     "sehriEnd": "04:29",
@@ -2410,9 +2410,9 @@
     "maghrib": "19:21",
     "isha": "20:37",
     "ishraqStart": "06:18",
-    "ishraqEnd": "09:38",
-    "chashtStart": "09:38",
-    "chashtEnd": "12:23"
+    "ishraqEnd": "09:18",
+    "chashtEnd": "12:33",
+    "chashtStart": "09:18"
   },
   "11-Jun": {
     "sehriEnd": "04:29",
@@ -2425,9 +2425,9 @@
     "maghrib": "19:22",
     "isha": "20:38",
     "ishraqStart": "06:18",
-    "ishraqEnd": "09:38",
-    "chashtStart": "09:38",
-    "chashtEnd": "12:23"
+    "ishraqEnd": "09:18",
+    "chashtEnd": "12:33",
+    "chashtStart": "09:18"
   },
   "12-Jun": {
     "sehriEnd": "04:29",
@@ -2440,9 +2440,9 @@
     "maghrib": "19:22",
     "isha": "20:38",
     "ishraqStart": "06:18",
-    "ishraqEnd": "09:38",
-    "chashtStart": "09:38",
-    "chashtEnd": "12:23"
+    "ishraqEnd": "09:18",
+    "chashtEnd": "12:33",
+    "chashtStart": "09:18"
   },
   "13-Jun": {
     "sehriEnd": "04:29",
@@ -2455,9 +2455,9 @@
     "maghrib": "19:22",
     "isha": "20:39",
     "ishraqStart": "06:18",
-    "ishraqEnd": "09:38",
-    "chashtStart": "09:38",
-    "chashtEnd": "12:24"
+    "ishraqEnd": "09:18",
+    "chashtEnd": "12:34",
+    "chashtStart": "09:18"
   },
   "14-Jun": {
     "sehriEnd": "04:29",
@@ -2470,9 +2470,9 @@
     "maghrib": "19:23",
     "isha": "20:39",
     "ishraqStart": "06:18",
-    "ishraqEnd": "09:39",
-    "chashtStart": "09:39",
-    "chashtEnd": "12:24"
+    "ishraqEnd": "09:19",
+    "chashtEnd": "12:34",
+    "chashtStart": "09:19"
   },
   "15-Jun": {
     "sehriEnd": "04:29",
@@ -2485,9 +2485,9 @@
     "maghrib": "19:23",
     "isha": "20:40",
     "ishraqStart": "06:18",
-    "ishraqEnd": "09:39",
-    "chashtStart": "09:39",
-    "chashtEnd": "12:24"
+    "ishraqEnd": "09:19",
+    "chashtEnd": "12:34",
+    "chashtStart": "09:19"
   },
   "16-Jun": {
     "sehriEnd": "04:29",
@@ -2500,9 +2500,9 @@
     "maghrib": "19:23",
     "isha": "20:40",
     "ishraqStart": "06:18",
-    "ishraqEnd": "09:39",
-    "chashtStart": "09:39",
-    "chashtEnd": "12:24"
+    "ishraqEnd": "09:19",
+    "chashtEnd": "12:34",
+    "chashtStart": "09:19"
   },
   "17-Jun": {
     "sehriEnd": "04:29",
@@ -2515,9 +2515,9 @@
     "maghrib": "19:23",
     "isha": "20:40",
     "ishraqStart": "06:19",
-    "ishraqEnd": "09:40",
-    "chashtStart": "09:40",
-    "chashtEnd": "12:24"
+    "ishraqEnd": "09:19",
+    "chashtEnd": "12:34",
+    "chashtStart": "09:19"
   },
   "18-Jun": {
     "sehriEnd": "04:29",
@@ -2530,9 +2530,9 @@
     "maghrib": "19:24",
     "isha": "20:41",
     "ishraqStart": "06:19",
-    "ishraqEnd": "09:40",
-    "chashtStart": "09:40",
-    "chashtEnd": "12:25"
+    "ishraqEnd": "09:20",
+    "chashtEnd": "12:35",
+    "chashtStart": "09:20"
   },
   "19-Jun": {
     "sehriEnd": "04:29",
@@ -2545,9 +2545,9 @@
     "maghrib": "19:24",
     "isha": "20:41",
     "ishraqStart": "06:19",
-    "ishraqEnd": "09:40",
-    "chashtStart": "09:40",
-    "chashtEnd": "12:25"
+    "ishraqEnd": "09:20",
+    "chashtEnd": "12:35",
+    "chashtStart": "09:20"
   },
   "20-Jun": {
     "sehriEnd": "04:30",
@@ -2560,9 +2560,9 @@
     "maghrib": "19:24",
     "isha": "20:42",
     "ishraqStart": "06:19",
-    "ishraqEnd": "09:40",
-    "chashtStart": "09:40",
-    "chashtEnd": "12:25"
+    "ishraqEnd": "09:20",
+    "chashtEnd": "12:35",
+    "chashtStart": "09:20"
   },
   "21-Jun": {
     "sehriEnd": "04:30",
@@ -2575,9 +2575,9 @@
     "maghrib": "19:24",
     "isha": "20:42",
     "ishraqStart": "06:19",
-    "ishraqEnd": "09:40",
-    "chashtStart": "09:40",
-    "chashtEnd": "12:25"
+    "ishraqEnd": "09:20",
+    "chashtEnd": "12:35",
+    "chashtStart": "09:20"
   },
   "22-Jun": {
     "sehriEnd": "04:30",
@@ -2590,9 +2590,9 @@
     "maghrib": "19:25",
     "isha": "20:42",
     "ishraqStart": "06:19",
-    "ishraqEnd": "09:40",
-    "chashtStart": "09:40",
-    "chashtEnd": "12:26"
+    "ishraqEnd": "09:20",
+    "chashtEnd": "12:36",
+    "chashtStart": "09:20"
   },
   "23-Jun": {
     "sehriEnd": "04:30",
@@ -2605,9 +2605,9 @@
     "maghrib": "19:25",
     "isha": "20:42",
     "ishraqStart": "06:20",
-    "ishraqEnd": "09:41",
-    "chashtStart": "09:41",
-    "chashtEnd": "12:26"
+    "ishraqEnd": "09:21",
+    "chashtEnd": "12:36",
+    "chashtStart": "09:21"
   },
   "24-Jun": {
     "sehriEnd": "04:30",
@@ -2620,9 +2620,9 @@
     "maghrib": "19:25",
     "isha": "20:42",
     "ishraqStart": "06:20",
-    "ishraqEnd": "09:41",
-    "chashtStart": "09:41",
-    "chashtEnd": "12:26"
+    "ishraqEnd": "09:21",
+    "chashtEnd": "12:36",
+    "chashtStart": "09:21"
   },
   "25-Jun": {
     "sehriEnd": "04:31",
@@ -2635,9 +2635,9 @@
     "maghrib": "19:25",
     "isha": "20:42",
     "ishraqStart": "06:20",
-    "ishraqEnd": "09:41",
-    "chashtStart": "09:41",
-    "chashtEnd": "12:26"
+    "ishraqEnd": "09:21",
+    "chashtEnd": "12:36",
+    "chashtStart": "09:21"
   },
   "26-Jun": {
     "sehriEnd": "04:31",
@@ -2650,9 +2650,9 @@
     "maghrib": "19:25",
     "isha": "20:42",
     "ishraqStart": "06:20",
-    "ishraqEnd": "09:41",
-    "chashtStart": "09:41",
-    "chashtEnd": "12:26"
+    "ishraqEnd": "09:21",
+    "chashtEnd": "12:36",
+    "chashtStart": "09:21"
   },
   "27-Jun": {
     "sehriEnd": "04:31",
@@ -2665,9 +2665,9 @@
     "maghrib": "19:25",
     "isha": "20:42",
     "ishraqStart": "06:21",
-    "ishraqEnd": "09:42",
-    "chashtStart": "09:42",
-    "chashtEnd": "12:27"
+    "ishraqEnd": "09:21",
+    "chashtEnd": "12:37",
+    "chashtStart": "09:21"
   },
   "28-Jun": {
     "sehriEnd": "04:32",
@@ -2680,9 +2680,9 @@
     "maghrib": "19:26",
     "isha": "20:42",
     "ishraqStart": "06:21",
-    "ishraqEnd": "09:42",
-    "chashtStart": "09:42",
-    "chashtEnd": "12:27"
+    "ishraqEnd": "09:22",
+    "chashtEnd": "12:37",
+    "chashtStart": "09:22"
   },
   "29-Jun": {
     "sehriEnd": "04:32",
@@ -2695,9 +2695,9 @@
     "maghrib": "19:26",
     "isha": "20:42",
     "ishraqStart": "06:21",
-    "ishraqEnd": "09:42",
-    "chashtStart": "09:42",
-    "chashtEnd": "12:27"
+    "ishraqEnd": "09:22",
+    "chashtEnd": "12:37",
+    "chashtStart": "09:22"
   },
   "30-Jun": {
     "sehriEnd": "04:32",
@@ -2710,9 +2710,9 @@
     "maghrib": "19:26",
     "isha": "20:42",
     "ishraqStart": "06:22",
-    "ishraqEnd": "09:43",
-    "chashtStart": "09:43",
-    "chashtEnd": "12:27"
+    "ishraqEnd": "09:22",
+    "chashtEnd": "12:37",
+    "chashtStart": "09:22"
   },
   "01-Jul": {
     "sehriEnd": "04:33",
@@ -2725,9 +2725,9 @@
     "maghrib": "19:26",
     "isha": "20:42",
     "ishraqStart": "06:22",
-    "ishraqEnd": "09:42",
-    "chashtStart": "09:42",
-    "chashtEnd": "12:27"
+    "ishraqEnd": "09:22",
+    "chashtEnd": "12:37",
+    "chashtStart": "09:22"
   },
   "02-Jul": {
     "sehriEnd": "04:33",
@@ -2740,9 +2740,9 @@
     "maghrib": "19:26",
     "isha": "20:42",
     "ishraqStart": "06:22",
-    "ishraqEnd": "09:42",
-    "chashtStart": "09:42",
-    "chashtEnd": "12:28"
+    "ishraqEnd": "09:22",
+    "chashtEnd": "12:38",
+    "chashtStart": "09:22"
   },
   "03-Jul": {
     "sehriEnd": "04:33",
@@ -2755,9 +2755,9 @@
     "maghrib": "19:26",
     "isha": "20:42",
     "ishraqStart": "06:23",
-    "ishraqEnd": "09:43",
-    "chashtStart": "09:43",
-    "chashtEnd": "12:28"
+    "ishraqEnd": "09:23",
+    "chashtEnd": "12:38",
+    "chashtStart": "09:23"
   },
   "04-Jul": {
     "sehriEnd": "04:34",
@@ -2770,9 +2770,9 @@
     "maghrib": "19:26",
     "isha": "20:42",
     "ishraqStart": "06:23",
-    "ishraqEnd": "09:43",
-    "chashtStart": "09:43",
-    "chashtEnd": "12:28"
+    "ishraqEnd": "09:23",
+    "chashtEnd": "12:38",
+    "chashtStart": "09:23"
   },
   "05-Jul": {
     "sehriEnd": "04:34",
@@ -2785,9 +2785,9 @@
     "maghrib": "19:26",
     "isha": "20:42",
     "ishraqStart": "06:23",
-    "ishraqEnd": "09:43",
-    "chashtStart": "09:43",
-    "chashtEnd": "12:28"
+    "ishraqEnd": "09:23",
+    "chashtEnd": "12:38",
+    "chashtStart": "09:23"
   },
   "06-Jul": {
     "sehriEnd": "04:35",
@@ -2800,9 +2800,9 @@
     "maghrib": "19:26",
     "isha": "20:42",
     "ishraqStart": "06:24",
-    "ishraqEnd": "09:44",
-    "chashtStart": "09:44",
-    "chashtEnd": "12:28"
+    "ishraqEnd": "09:24",
+    "chashtEnd": "12:38",
+    "chashtStart": "09:24"
   },
   "07-Jul": {
     "sehriEnd": "04:35",
@@ -2815,9 +2815,9 @@
     "maghrib": "19:26",
     "isha": "20:41",
     "ishraqStart": "06:24",
-    "ishraqEnd": "09:44",
-    "chashtStart": "09:44",
-    "chashtEnd": "12:28"
+    "ishraqEnd": "09:24",
+    "chashtEnd": "12:38",
+    "chashtStart": "09:24"
   },
   "08-Jul": {
     "sehriEnd": "04:36",
@@ -2830,9 +2830,9 @@
     "maghrib": "19:26",
     "isha": "20:41",
     "ishraqStart": "06:24",
-    "ishraqEnd": "09:44",
-    "chashtStart": "09:44",
-    "chashtEnd": "12:29"
+    "ishraqEnd": "09:24",
+    "chashtEnd": "12:39",
+    "chashtStart": "09:24"
   },
   "09-Jul": {
     "sehriEnd": "04:36",
@@ -2845,9 +2845,9 @@
     "maghrib": "19:26",
     "isha": "20:41",
     "ishraqStart": "06:25",
-    "ishraqEnd": "09:45",
-    "chashtStart": "09:45",
-    "chashtEnd": "12:29"
+    "ishraqEnd": "09:25",
+    "chashtEnd": "12:39",
+    "chashtStart": "09:25"
   },
   "10-Jul": {
     "sehriEnd": "04:37",
@@ -2860,9 +2860,9 @@
     "maghrib": "19:26",
     "isha": "20:41",
     "ishraqStart": "06:25",
-    "ishraqEnd": "09:44",
-    "chashtStart": "09:44",
-    "chashtEnd": "12:29"
+    "ishraqEnd": "09:25",
+    "chashtEnd": "12:39",
+    "chashtStart": "09:25"
   },
   "11-Jul": {
     "sehriEnd": "04:37",
@@ -2875,9 +2875,9 @@
     "maghrib": "19:26",
     "isha": "20:40",
     "ishraqStart": "06:25",
-    "ishraqEnd": "09:44",
-    "chashtStart": "09:44",
-    "chashtEnd": "12:29"
+    "ishraqEnd": "09:25",
+    "chashtEnd": "12:39",
+    "chashtStart": "09:25"
   },
   "12-Jul": {
     "sehriEnd": "04:38",
@@ -2890,9 +2890,9 @@
     "maghrib": "19:26",
     "isha": "20:40",
     "ishraqStart": "06:26",
-    "ishraqEnd": "09:45",
-    "chashtStart": "09:45",
-    "chashtEnd": "12:29"
+    "ishraqEnd": "09:25",
+    "chashtEnd": "12:39",
+    "chashtStart": "09:25"
   },
   "13-Jul": {
     "sehriEnd": "04:38",
@@ -2905,9 +2905,9 @@
     "maghrib": "19:26",
     "isha": "20:40",
     "ishraqStart": "06:26",
-    "ishraqEnd": "09:45",
-    "chashtStart": "09:45",
-    "chashtEnd": "12:29"
+    "ishraqEnd": "09:25",
+    "chashtEnd": "12:39",
+    "chashtStart": "09:25"
   },
   "14-Jul": {
     "sehriEnd": "04:39",
@@ -2920,9 +2920,9 @@
     "maghrib": "19:25",
     "isha": "20:40",
     "ishraqStart": "06:26",
-    "ishraqEnd": "09:45",
-    "chashtStart": "09:45",
-    "chashtEnd": "12:29"
+    "ishraqEnd": "09:25",
+    "chashtEnd": "12:39",
+    "chashtStart": "09:25"
   },
   "15-Jul": {
     "sehriEnd": "04:39",
@@ -2935,9 +2935,9 @@
     "maghrib": "19:25",
     "isha": "20:39",
     "ishraqStart": "06:27",
-    "ishraqEnd": "09:46",
-    "chashtStart": "09:46",
-    "chashtEnd": "12:30"
+    "ishraqEnd": "09:26",
+    "chashtEnd": "12:40",
+    "chashtStart": "09:26"
   },
   "16-Jul": {
     "sehriEnd": "04:40",
@@ -2950,9 +2950,9 @@
     "maghrib": "19:25",
     "isha": "20:39",
     "ishraqStart": "06:27",
-    "ishraqEnd": "09:45",
-    "chashtStart": "09:45",
-    "chashtEnd": "12:30"
+    "ishraqEnd": "09:26",
+    "chashtEnd": "12:40",
+    "chashtStart": "09:26"
   },
   "17-Jul": {
     "sehriEnd": "04:40",
@@ -2965,9 +2965,9 @@
     "maghrib": "19:25",
     "isha": "20:39",
     "ishraqStart": "06:28",
-    "ishraqEnd": "09:46",
-    "chashtStart": "09:46",
-    "chashtEnd": "12:30"
+    "ishraqEnd": "09:27",
+    "chashtEnd": "12:40",
+    "chashtStart": "09:27"
   },
   "18-Jul": {
     "sehriEnd": "04:41",
@@ -2980,9 +2980,9 @@
     "maghrib": "19:25",
     "isha": "20:39",
     "ishraqStart": "06:28",
-    "ishraqEnd": "09:46",
-    "chashtStart": "09:46",
-    "chashtEnd": "12:30"
+    "ishraqEnd": "09:27",
+    "chashtEnd": "12:40",
+    "chashtStart": "09:27"
   },
   "19-Jul": {
     "sehriEnd": "04:41",
@@ -2995,9 +2995,9 @@
     "maghrib": "19:24",
     "isha": "20:38",
     "ishraqStart": "06:28",
-    "ishraqEnd": "09:46",
-    "chashtStart": "09:46",
-    "chashtEnd": "12:30"
+    "ishraqEnd": "09:26",
+    "chashtEnd": "12:40",
+    "chashtStart": "09:26"
   },
   "20-Jul": {
     "sehriEnd": "04:42",
@@ -3010,9 +3010,9 @@
     "maghrib": "19:24",
     "isha": "20:37",
     "ishraqStart": "06:29",
-    "ishraqEnd": "09:47",
-    "chashtStart": "09:47",
-    "chashtEnd": "12:30"
+    "ishraqEnd": "09:27",
+    "chashtEnd": "12:40",
+    "chashtStart": "09:27"
   },
   "21-Jul": {
     "sehriEnd": "04:42",
@@ -3025,9 +3025,9 @@
     "maghrib": "19:24",
     "isha": "20:37",
     "ishraqStart": "06:29",
-    "ishraqEnd": "09:47",
-    "chashtStart": "09:47",
-    "chashtEnd": "12:30"
+    "ishraqEnd": "09:27",
+    "chashtEnd": "12:40",
+    "chashtStart": "09:27"
   },
   "22-Jul": {
     "sehriEnd": "04:43",
@@ -3040,9 +3040,9 @@
     "maghrib": "19:24",
     "isha": "20:37",
     "ishraqStart": "06:30",
-    "ishraqEnd": "09:47",
-    "chashtStart": "09:47",
-    "chashtEnd": "12:30"
+    "ishraqEnd": "09:28",
+    "chashtEnd": "12:40",
+    "chashtStart": "09:28"
   },
   "23-Jul": {
     "sehriEnd": "04:43",
@@ -3055,9 +3055,9 @@
     "maghrib": "19:23",
     "isha": "20:36",
     "ishraqStart": "06:30",
-    "ishraqEnd": "09:47",
-    "chashtStart": "09:47",
-    "chashtEnd": "12:30"
+    "ishraqEnd": "09:28",
+    "chashtEnd": "12:40",
+    "chashtStart": "09:28"
   },
   "24-Jul": {
     "sehriEnd": "04:44",
@@ -3070,9 +3070,9 @@
     "maghrib": "19:23",
     "isha": "20:36",
     "ishraqStart": "06:30",
-    "ishraqEnd": "09:47",
-    "chashtStart": "09:47",
-    "chashtEnd": "12:30"
+    "ishraqEnd": "09:28",
+    "chashtEnd": "12:40",
+    "chashtStart": "09:28"
   },
   "25-Jul": {
     "sehriEnd": "04:44",
@@ -3085,9 +3085,9 @@
     "maghrib": "19:23",
     "isha": "20:35",
     "ishraqStart": "06:31",
-    "ishraqEnd": "09:48",
-    "chashtStart": "09:48",
-    "chashtEnd": "12:30"
+    "ishraqEnd": "09:28",
+    "chashtEnd": "12:40",
+    "chashtStart": "09:28"
   },
   "26-Jul": {
     "sehriEnd": "04:45",
@@ -3100,9 +3100,9 @@
     "maghrib": "19:22",
     "isha": "20:35",
     "ishraqStart": "06:31",
-    "ishraqEnd": "09:47",
-    "chashtStart": "09:47",
-    "chashtEnd": "12:30"
+    "ishraqEnd": "09:28",
+    "chashtEnd": "12:40",
+    "chashtStart": "09:28"
   },
   "27-Jul": {
     "sehriEnd": "04:45",
@@ -3115,9 +3115,9 @@
     "maghrib": "19:22",
     "isha": "20:34",
     "ishraqStart": "06:31",
-    "ishraqEnd": "09:47",
-    "chashtStart": "09:47",
-    "chashtEnd": "12:30"
+    "ishraqEnd": "09:28",
+    "chashtEnd": "12:40",
+    "chashtStart": "09:28"
   },
   "28-Jul": {
     "sehriEnd": "04:46",
@@ -3130,9 +3130,9 @@
     "maghrib": "19:21",
     "isha": "20:34",
     "ishraqStart": "06:32",
-    "ishraqEnd": "09:48",
-    "chashtStart": "09:48",
-    "chashtEnd": "12:30"
+    "ishraqEnd": "09:29",
+    "chashtEnd": "12:40",
+    "chashtStart": "09:29"
   },
   "29-Jul": {
     "sehriEnd": "04:47",
@@ -3145,9 +3145,9 @@
     "maghrib": "19:21",
     "isha": "20:33",
     "ishraqStart": "06:32",
-    "ishraqEnd": "09:48",
-    "chashtStart": "09:48",
-    "chashtEnd": "12:30"
+    "ishraqEnd": "09:29",
+    "chashtEnd": "12:40",
+    "chashtStart": "09:29"
   },
   "30-Jul": {
     "sehriEnd": "04:47",
@@ -3160,9 +3160,9 @@
     "maghrib": "19:20",
     "isha": "20:32",
     "ishraqStart": "06:33",
-    "ishraqEnd": "09:48",
-    "chashtStart": "09:48",
-    "chashtEnd": "12:30"
+    "ishraqEnd": "09:29",
+    "chashtEnd": "12:40",
+    "chashtStart": "09:29"
   },
   "31-Jul": {
     "sehriEnd": "04:48",
@@ -3175,9 +3175,9 @@
     "maghrib": "19:20",
     "isha": "20:32",
     "ishraqStart": "06:33",
-    "ishraqEnd": "09:48",
-    "chashtStart": "09:48",
-    "chashtEnd": "12:30"
+    "ishraqEnd": "09:29",
+    "chashtEnd": "12:40",
+    "chashtStart": "09:29"
   },
   "01-Aug": {
     "sehriEnd": "04:48",
@@ -3190,9 +3190,9 @@
     "maghrib": "19:20",
     "isha": "20:32",
     "ishraqStart": "06:33",
-    "ishraqEnd": "09:48",
-    "chashtStart": "09:48",
-    "chashtEnd": "12:30"
+    "ishraqEnd": "09:29",
+    "chashtEnd": "12:40",
+    "chashtStart": "09:29"
   },
   "02-Aug": {
     "sehriEnd": "04:49",
@@ -3205,9 +3205,9 @@
     "maghrib": "19:19",
     "isha": "20:31",
     "ishraqStart": "06:34",
-    "ishraqEnd": "09:49",
-    "chashtStart": "09:49",
-    "chashtEnd": "12:30"
+    "ishraqEnd": "09:30",
+    "chashtEnd": "12:40",
+    "chashtStart": "09:30"
   },
   "03-Aug": {
     "sehriEnd": "04:49",
@@ -3220,9 +3220,9 @@
     "maghrib": "19:19",
     "isha": "20:30",
     "ishraqStart": "06:34",
-    "ishraqEnd": "09:49",
-    "chashtStart": "09:49",
-    "chashtEnd": "12:30"
+    "ishraqEnd": "09:30",
+    "chashtEnd": "12:40",
+    "chashtStart": "09:30"
   },
   "04-Aug": {
     "sehriEnd": "04:50",
@@ -3235,9 +3235,9 @@
     "maghrib": "19:18",
     "isha": "20:30",
     "ishraqStart": "06:34",
-    "ishraqEnd": "09:48",
-    "chashtStart": "09:48",
-    "chashtEnd": "12:30"
+    "ishraqEnd": "09:29",
+    "chashtEnd": "12:40",
+    "chashtStart": "09:29"
   },
   "05-Aug": {
     "sehriEnd": "04:50",
@@ -3250,9 +3250,9 @@
     "maghrib": "19:18",
     "isha": "20:29",
     "ishraqStart": "06:35",
-    "ishraqEnd": "09:49",
-    "chashtStart": "09:49",
-    "chashtEnd": "12:30"
+    "ishraqEnd": "09:30",
+    "chashtEnd": "12:40",
+    "chashtStart": "09:30"
   },
   "06-Aug": {
     "sehriEnd": "04:51",
@@ -3265,9 +3265,9 @@
     "maghrib": "19:17",
     "isha": "20:28",
     "ishraqStart": "06:35",
-    "ishraqEnd": "09:49",
-    "chashtStart": "09:49",
-    "chashtEnd": "12:30"
+    "ishraqEnd": "09:30",
+    "chashtEnd": "12:40",
+    "chashtStart": "09:30"
   },
   "07-Aug": {
     "sehriEnd": "04:51",
@@ -3280,9 +3280,9 @@
     "maghrib": "19:17",
     "isha": "20:28",
     "ishraqStart": "06:35",
-    "ishraqEnd": "09:49",
-    "chashtStart": "09:49",
-    "chashtEnd": "12:30"
+    "ishraqEnd": "09:30",
+    "chashtEnd": "12:40",
+    "chashtStart": "09:30"
   },
   "08-Aug": {
     "sehriEnd": "04:52",
@@ -3295,9 +3295,9 @@
     "maghrib": "19:16",
     "isha": "20:27",
     "ishraqStart": "06:36",
-    "ishraqEnd": "09:49",
-    "chashtStart": "09:49",
-    "chashtEnd": "12:30"
+    "ishraqEnd": "09:30",
+    "chashtEnd": "12:40",
+    "chashtStart": "09:30"
   },
   "09-Aug": {
     "sehriEnd": "04:52",
@@ -3310,9 +3310,9 @@
     "maghrib": "19:15",
     "isha": "20:27",
     "ishraqStart": "06:36",
-    "ishraqEnd": "09:49",
-    "chashtStart": "09:49",
-    "chashtEnd": "12:29"
+    "ishraqEnd": "09:30",
+    "chashtEnd": "12:39",
+    "chashtStart": "09:30"
   },
   "10-Aug": {
     "sehriEnd": "04:53",
@@ -3325,9 +3325,9 @@
     "maghrib": "19:15",
     "isha": "20:26",
     "ishraqStart": "06:36",
-    "ishraqEnd": "09:49",
-    "chashtStart": "09:49",
-    "chashtEnd": "12:29"
+    "ishraqEnd": "09:30",
+    "chashtEnd": "12:39",
+    "chashtStart": "09:30"
   },
   "11-Aug": {
     "sehriEnd": "04:53",
@@ -3340,9 +3340,9 @@
     "maghrib": "19:14",
     "isha": "20:26",
     "ishraqStart": "06:37",
-    "ishraqEnd": "09:49",
-    "chashtStart": "09:49",
-    "chashtEnd": "12:29"
+    "ishraqEnd": "09:31",
+    "chashtEnd": "12:39",
+    "chashtStart": "09:31"
   },
   "12-Aug": {
     "sehriEnd": "04:54",
@@ -3355,9 +3355,9 @@
     "maghrib": "19:14",
     "isha": "20:25",
     "ishraqStart": "06:37",
-    "ishraqEnd": "09:49",
-    "chashtStart": "09:49",
-    "chashtEnd": "12:29"
+    "ishraqEnd": "09:31",
+    "chashtEnd": "12:39",
+    "chashtStart": "09:31"
   },
   "13-Aug": {
     "sehriEnd": "04:54",
@@ -3370,9 +3370,9 @@
     "maghrib": "19:13",
     "isha": "20:25",
     "ishraqStart": "06:37",
-    "ishraqEnd": "09:49",
-    "chashtStart": "09:49",
-    "chashtEnd": "12:29"
+    "ishraqEnd": "09:30",
+    "chashtEnd": "12:39",
+    "chashtStart": "09:30"
   },
   "14-Aug": {
     "sehriEnd": "04:55",
@@ -3385,9 +3385,9 @@
     "maghrib": "19:12",
     "isha": "20:24",
     "ishraqStart": "06:38",
-    "ishraqEnd": "09:49",
-    "chashtStart": "09:49",
-    "chashtEnd": "12:29"
+    "ishraqEnd": "09:31",
+    "chashtEnd": "12:39",
+    "chashtStart": "09:31"
   },
   "15-Aug": {
     "sehriEnd": "04:55",
@@ -3400,9 +3400,9 @@
     "maghrib": "19:12",
     "isha": "20:23",
     "ishraqStart": "06:38",
-    "ishraqEnd": "09:49",
-    "chashtStart": "09:49",
-    "chashtEnd": "12:28"
+    "ishraqEnd": "09:31",
+    "chashtEnd": "12:38",
+    "chashtStart": "09:31"
   },
   "16-Aug": {
     "sehriEnd": "04:56",
@@ -3415,9 +3415,9 @@
     "maghrib": "19:11",
     "isha": "20:23",
     "ishraqStart": "06:38",
-    "ishraqEnd": "09:49",
-    "chashtStart": "09:49",
-    "chashtEnd": "12:28"
+    "ishraqEnd": "09:31",
+    "chashtEnd": "12:38",
+    "chashtStart": "09:31"
   },
   "17-Aug": {
     "sehriEnd": "04:56",
@@ -3430,9 +3430,9 @@
     "maghrib": "19:10",
     "isha": "20:22",
     "ishraqStart": "06:39",
-    "ishraqEnd": "09:50",
-    "chashtStart": "09:50",
-    "chashtEnd": "12:28"
+    "ishraqEnd": "09:31",
+    "chashtEnd": "12:38",
+    "chashtStart": "09:31"
   },
   "18-Aug": {
     "sehriEnd": "04:57",
@@ -3445,9 +3445,9 @@
     "maghrib": "19:09",
     "isha": "20:21",
     "ishraqStart": "06:39",
-    "ishraqEnd": "09:49",
-    "chashtStart": "09:49",
-    "chashtEnd": "12:28"
+    "ishraqEnd": "09:31",
+    "chashtEnd": "12:38",
+    "chashtStart": "09:31"
   },
   "19-Aug": {
     "sehriEnd": "04:57",
@@ -3460,9 +3460,9 @@
     "maghrib": "19:09",
     "isha": "20:21",
     "ishraqStart": "06:39",
-    "ishraqEnd": "09:49",
-    "chashtStart": "09:49",
-    "chashtEnd": "12:28"
+    "ishraqEnd": "09:31",
+    "chashtEnd": "12:38",
+    "chashtStart": "09:31"
   },
   "20-Aug": {
     "sehriEnd": "04:58",
@@ -3475,9 +3475,9 @@
     "maghrib": "19:08",
     "isha": "20:20",
     "ishraqStart": "06:39",
-    "ishraqEnd": "09:49",
-    "chashtStart": "09:49",
-    "chashtEnd": "12:27"
+    "ishraqEnd": "09:31",
+    "chashtEnd": "12:37",
+    "chashtStart": "09:31"
   },
   "21-Aug": {
     "sehriEnd": "04:58",
@@ -3490,9 +3490,9 @@
     "maghrib": "19:07",
     "isha": "20:19",
     "ishraqStart": "06:40",
-    "ishraqEnd": "09:49",
-    "chashtStart": "09:49",
-    "chashtEnd": "12:27"
+    "ishraqEnd": "09:31",
+    "chashtEnd": "12:37",
+    "chashtStart": "09:31"
   },
   "22-Aug": {
     "sehriEnd": "04:58",
@@ -3505,9 +3505,9 @@
     "maghrib": "19:07",
     "isha": "20:19",
     "ishraqStart": "06:40",
-    "ishraqEnd": "09:49",
-    "chashtStart": "09:49",
-    "chashtEnd": "12:27"
+    "ishraqEnd": "09:31",
+    "chashtEnd": "12:37",
+    "chashtStart": "09:31"
   },
   "23-Aug": {
     "sehriEnd": "04:59",
@@ -3520,9 +3520,9 @@
     "maghrib": "19:06",
     "isha": "20:18",
     "ishraqStart": "06:40",
-    "ishraqEnd": "09:49",
-    "chashtStart": "09:49",
-    "chashtEnd": "12:27"
+    "ishraqEnd": "09:31",
+    "chashtEnd": "12:37",
+    "chashtStart": "09:31"
   },
   "24-Aug": {
     "sehriEnd": "04:59",
@@ -3535,9 +3535,9 @@
     "maghrib": "19:05",
     "isha": "20:17",
     "ishraqStart": "06:41",
-    "ishraqEnd": "09:50",
-    "chashtStart": "09:50",
-    "chashtEnd": "12:26"
+    "ishraqEnd": "09:31",
+    "chashtEnd": "12:36",
+    "chashtStart": "09:31"
   },
   "25-Aug": {
     "sehriEnd": "05:00",
@@ -3550,9 +3550,9 @@
     "maghrib": "19:04",
     "isha": "20:16",
     "ishraqStart": "06:41",
-    "ishraqEnd": "09:49",
-    "chashtStart": "09:49",
-    "chashtEnd": "12:26"
+    "ishraqEnd": "09:31",
+    "chashtEnd": "12:36",
+    "chashtStart": "09:31"
   },
   "26-Aug": {
     "sehriEnd": "05:00",
@@ -3565,9 +3565,9 @@
     "maghrib": "19:04",
     "isha": "20:15",
     "ishraqStart": "06:41",
-    "ishraqEnd": "09:49",
-    "chashtStart": "09:49",
-    "chashtEnd": "12:26"
+    "ishraqEnd": "09:31",
+    "chashtEnd": "12:36",
+    "chashtStart": "09:31"
   },
   "27-Aug": {
     "sehriEnd": "05:00",
@@ -3580,9 +3580,9 @@
     "maghrib": "19:02",
     "isha": "20:15",
     "ishraqStart": "06:41",
-    "ishraqEnd": "09:49",
-    "chashtStart": "09:49",
-    "chashtEnd": "12:26"
+    "ishraqEnd": "09:31",
+    "chashtEnd": "12:36",
+    "chashtStart": "09:31"
   },
   "28-Aug": {
     "sehriEnd": "05:01",
@@ -3595,9 +3595,9 @@
     "maghrib": "19:02",
     "isha": "20:14",
     "ishraqStart": "06:42",
-    "ishraqEnd": "09:49",
-    "chashtStart": "09:49",
-    "chashtEnd": "12:25"
+    "ishraqEnd": "09:31",
+    "chashtEnd": "12:35",
+    "chashtStart": "09:31"
   },
   "29-Aug": {
     "sehriEnd": "05:01",
@@ -3610,9 +3610,9 @@
     "maghrib": "19:01",
     "isha": "20:13",
     "ishraqStart": "06:42",
-    "ishraqEnd": "09:49",
-    "chashtStart": "09:49",
-    "chashtEnd": "12:25"
+    "ishraqEnd": "09:31",
+    "chashtEnd": "12:35",
+    "chashtStart": "09:31"
   },
   "30-Aug": {
     "sehriEnd": "05:02",
@@ -3625,9 +3625,9 @@
     "maghrib": "19:00",
     "isha": "20:12",
     "ishraqStart": "06:42",
-    "ishraqEnd": "09:49",
-    "chashtStart": "09:49",
-    "chashtEnd": "12:25"
+    "ishraqEnd": "09:31",
+    "chashtEnd": "12:35",
+    "chashtStart": "09:31"
   },
   "31-Aug": {
     "sehriEnd": "05:02",
@@ -3640,9 +3640,9 @@
     "maghrib": "18:59",
     "isha": "20:11",
     "ishraqStart": "06:42",
-    "ishraqEnd": "09:48",
-    "chashtStart": "09:48",
-    "chashtEnd": "12:24"
+    "ishraqEnd": "09:31",
+    "chashtEnd": "12:34",
+    "chashtStart": "09:31"
   },
   "01-Sep": {
     "sehriEnd": "05:02",
@@ -3655,9 +3655,9 @@
     "maghrib": "18:58",
     "isha": "20:10",
     "ishraqStart": "06:43",
-    "ishraqEnd": "09:49",
-    "chashtStart": "09:49",
-    "chashtEnd": "12:24"
+    "ishraqEnd": "09:31",
+    "chashtEnd": "12:34",
+    "chashtStart": "09:31"
   },
   "02-Sep": {
     "sehriEnd": "05:03",
@@ -3670,9 +3670,9 @@
     "maghrib": "18:57",
     "isha": "20:09",
     "ishraqStart": "06:43",
-    "ishraqEnd": "09:49",
-    "chashtStart": "09:49",
-    "chashtEnd": "12:24"
+    "ishraqEnd": "09:31",
+    "chashtEnd": "12:34",
+    "chashtStart": "09:31"
   },
   "03-Sep": {
     "sehriEnd": "05:03",
@@ -3685,9 +3685,9 @@
     "maghrib": "18:56",
     "isha": "20:08",
     "ishraqStart": "06:43",
-    "ishraqEnd": "09:48",
-    "chashtStart": "09:48",
-    "chashtEnd": "12:23"
+    "ishraqEnd": "09:31",
+    "chashtEnd": "12:33",
+    "chashtStart": "09:31"
   },
   "04-Sep": {
     "sehriEnd": "05:03",
@@ -3700,9 +3700,9 @@
     "maghrib": "18:56",
     "isha": "20:07",
     "ishraqStart": "06:43",
-    "ishraqEnd": "09:48",
-    "chashtStart": "09:48",
-    "chashtEnd": "12:23"
+    "ishraqEnd": "09:31",
+    "chashtEnd": "12:33",
+    "chashtStart": "09:31"
   },
   "05-Sep": {
     "sehriEnd": "05:04",
@@ -3715,9 +3715,9 @@
     "maghrib": "18:55",
     "isha": "20:06",
     "ishraqStart": "06:44",
-    "ishraqEnd": "09:49",
-    "chashtStart": "09:49",
-    "chashtEnd": "12:23"
+    "ishraqEnd": "09:31",
+    "chashtEnd": "12:33",
+    "chashtStart": "09:31"
   },
   "06-Sep": {
     "sehriEnd": "05:04",
@@ -3730,9 +3730,9 @@
     "maghrib": "18:54",
     "isha": "20:05",
     "ishraqStart": "06:44",
-    "ishraqEnd": "09:49",
-    "chashtStart": "09:49",
-    "chashtEnd": "12:22"
+    "ishraqEnd": "09:31",
+    "chashtEnd": "12:32",
+    "chashtStart": "09:31"
   },
   "07-Sep": {
     "sehriEnd": "05:04",
@@ -3745,9 +3745,9 @@
     "maghrib": "18:53",
     "isha": "20:04",
     "ishraqStart": "06:44",
-    "ishraqEnd": "09:48",
-    "chashtStart": "09:48",
-    "chashtEnd": "12:22"
+    "ishraqEnd": "09:31",
+    "chashtEnd": "12:32",
+    "chashtStart": "09:31"
   },
   "08-Sep": {
     "sehriEnd": "05:05",
@@ -3760,9 +3760,9 @@
     "maghrib": "18:52",
     "isha": "20:03",
     "ishraqStart": "06:44",
-    "ishraqEnd": "09:48",
-    "chashtStart": "09:48",
-    "chashtEnd": "12:22"
+    "ishraqEnd": "09:30",
+    "chashtEnd": "12:32",
+    "chashtStart": "09:30"
   },
   "09-Sep": {
     "sehriEnd": "05:05",
@@ -3775,9 +3775,9 @@
     "maghrib": "18:51",
     "isha": "20:02",
     "ishraqStart": "06:44",
-    "ishraqEnd": "09:48",
-    "chashtStart": "09:48",
-    "chashtEnd": "12:21"
+    "ishraqEnd": "09:30",
+    "chashtEnd": "12:31",
+    "chashtStart": "09:30"
   },
   "10-Sep": {
     "sehriEnd": "05:05",
@@ -3790,9 +3790,9 @@
     "maghrib": "18:50",
     "isha": "20:01",
     "ishraqStart": "06:45",
-    "ishraqEnd": "09:48",
-    "chashtStart": "09:48",
-    "chashtEnd": "12:21"
+    "ishraqEnd": "09:31",
+    "chashtEnd": "12:31",
+    "chashtStart": "09:31"
   },
   "11-Sep": {
     "sehriEnd": "05:06",
@@ -3805,9 +3805,9 @@
     "maghrib": "18:49",
     "isha": "20:00",
     "ishraqStart": "06:45",
-    "ishraqEnd": "09:48",
-    "chashtStart": "09:48",
-    "chashtEnd": "12:21"
+    "ishraqEnd": "09:30",
+    "chashtEnd": "12:31",
+    "chashtStart": "09:30"
   },
   "12-Sep": {
     "sehriEnd": "05:06",
@@ -3820,9 +3820,9 @@
     "maghrib": "18:48",
     "isha": "19:59",
     "ishraqStart": "06:45",
-    "ishraqEnd": "09:48",
-    "chashtStart": "09:48",
-    "chashtEnd": "12:20"
+    "ishraqEnd": "09:30",
+    "chashtEnd": "12:30",
+    "chashtStart": "09:30"
   },
   "13-Sep": {
     "sehriEnd": "05:06",
@@ -3835,9 +3835,9 @@
     "maghrib": "18:47",
     "isha": "19:58",
     "ishraqStart": "06:45",
-    "ishraqEnd": "09:47",
-    "chashtStart": "09:47",
-    "chashtEnd": "12:20"
+    "ishraqEnd": "09:30",
+    "chashtEnd": "12:30",
+    "chashtStart": "09:30"
   },
   "14-Sep": {
     "sehriEnd": "05:07",
@@ -3850,9 +3850,9 @@
     "maghrib": "18:46",
     "isha": "19:57",
     "ishraqStart": "06:46",
-    "ishraqEnd": "09:48",
-    "chashtStart": "09:48",
-    "chashtEnd": "12:20"
+    "ishraqEnd": "09:30",
+    "chashtEnd": "12:30",
+    "chashtStart": "09:30"
   },
   "15-Sep": {
     "sehriEnd": "05:07",
@@ -3865,9 +3865,9 @@
     "maghrib": "18:46",
     "isha": "19:56",
     "ishraqStart": "06:46",
-    "ishraqEnd": "09:48",
-    "chashtStart": "09:48",
-    "chashtEnd": "12:19"
+    "ishraqEnd": "09:30",
+    "chashtEnd": "12:29",
+    "chashtStart": "09:30"
   },
   "16-Sep": {
     "sehriEnd": "05:07",
@@ -3880,9 +3880,9 @@
     "maghrib": "18:45",
     "isha": "19:55",
     "ishraqStart": "06:46",
-    "ishraqEnd": "09:48",
-    "chashtStart": "09:48",
-    "chashtEnd": "12:19"
+    "ishraqEnd": "09:30",
+    "chashtEnd": "12:29",
+    "chashtStart": "09:30"
   },
   "17-Sep": {
     "sehriEnd": "05:07",
@@ -3895,9 +3895,9 @@
     "maghrib": "18:44",
     "isha": "19:54",
     "ishraqStart": "06:46",
-    "ishraqEnd": "09:47",
-    "chashtStart": "09:47",
-    "chashtEnd": "12:19"
+    "ishraqEnd": "09:30",
+    "chashtEnd": "12:29",
+    "chashtStart": "09:30"
   },
   "18-Sep": {
     "sehriEnd": "05:08",
@@ -3910,9 +3910,9 @@
     "maghrib": "18:43",
     "isha": "19:53",
     "ishraqStart": "06:46",
-    "ishraqEnd": "09:47",
-    "chashtStart": "09:47",
-    "chashtEnd": "12:18"
+    "ishraqEnd": "09:30",
+    "chashtEnd": "12:28",
+    "chashtStart": "09:30"
   },
   "19-Sep": {
     "sehriEnd": "05:08",
@@ -3925,9 +3925,9 @@
     "maghrib": "18:42",
     "isha": "19:52",
     "ishraqStart": "06:47",
-    "ishraqEnd": "09:48",
-    "chashtStart": "09:48",
-    "chashtEnd": "12:18"
+    "ishraqEnd": "09:30",
+    "chashtEnd": "12:28",
+    "chashtStart": "09:30"
   },
   "20-Sep": {
     "sehriEnd": "05:08",
@@ -3940,9 +3940,9 @@
     "maghrib": "18:41",
     "isha": "19:51",
     "ishraqStart": "06:47",
-    "ishraqEnd": "09:47",
-    "chashtStart": "09:47",
-    "chashtEnd": "12:18"
+    "ishraqEnd": "09:30",
+    "chashtEnd": "12:28",
+    "chashtStart": "09:30"
   },
   "21-Sep": {
     "sehriEnd": "05:09",
@@ -3955,9 +3955,9 @@
     "maghrib": "18:40",
     "isha": "19:50",
     "ishraqStart": "06:47",
-    "ishraqEnd": "09:47",
-    "chashtStart": "09:47",
-    "chashtEnd": "12:17"
+    "ishraqEnd": "09:30",
+    "chashtEnd": "12:27",
+    "chashtStart": "09:30"
   },
   "22-Sep": {
     "sehriEnd": "05:09",
@@ -3970,9 +3970,9 @@
     "maghrib": "18:39",
     "isha": "19:49",
     "ishraqStart": "06:47",
-    "ishraqEnd": "09:47",
-    "chashtStart": "09:47",
-    "chashtEnd": "12:17"
+    "ishraqEnd": "09:29",
+    "chashtEnd": "12:27",
+    "chashtStart": "09:29"
   },
   "23-Sep": {
     "sehriEnd": "05:09",
@@ -3985,9 +3985,9 @@
     "maghrib": "18:38",
     "isha": "19:48",
     "ishraqStart": "06:48",
-    "ishraqEnd": "09:47",
-    "chashtStart": "09:47",
-    "chashtEnd": "12:17"
+    "ishraqEnd": "09:30",
+    "chashtEnd": "12:27",
+    "chashtStart": "09:30"
   },
   "24-Sep": {
     "sehriEnd": "05:09",
@@ -4000,9 +4000,9 @@
     "maghrib": "18:37",
     "isha": "19:47",
     "ishraqStart": "06:48",
-    "ishraqEnd": "09:47",
-    "chashtStart": "09:47",
-    "chashtEnd": "12:16"
+    "ishraqEnd": "09:30",
+    "chashtEnd": "12:26",
+    "chashtStart": "09:30"
   },
   "25-Sep": {
     "sehriEnd": "05:10",
@@ -4015,9 +4015,9 @@
     "maghrib": "18:36",
     "isha": "19:46",
     "ishraqStart": "06:48",
-    "ishraqEnd": "09:47",
-    "chashtStart": "09:47",
-    "chashtEnd": "12:16"
+    "ishraqEnd": "09:29",
+    "chashtEnd": "12:26",
+    "chashtStart": "09:29"
   },
   "26-Sep": {
     "sehriEnd": "05:10",
@@ -4030,9 +4030,9 @@
     "maghrib": "18:35",
     "isha": "19:45",
     "ishraqStart": "06:48",
-    "ishraqEnd": "09:46",
-    "chashtStart": "09:46",
-    "chashtEnd": "12:15"
+    "ishraqEnd": "09:29",
+    "chashtEnd": "12:25",
+    "chashtStart": "09:29"
   },
   "27-Sep": {
     "sehriEnd": "05:10",
@@ -4045,9 +4045,9 @@
     "maghrib": "18:34",
     "isha": "19:44",
     "ishraqStart": "06:49",
-    "ishraqEnd": "09:47",
-    "chashtStart": "09:47",
-    "chashtEnd": "12:15"
+    "ishraqEnd": "09:30",
+    "chashtEnd": "12:25",
+    "chashtStart": "09:30"
   },
   "28-Sep": {
     "sehriEnd": "05:10",
@@ -4060,9 +4060,9 @@
     "maghrib": "18:33",
     "isha": "19:43",
     "ishraqStart": "06:49",
-    "ishraqEnd": "09:47",
-    "chashtStart": "09:47",
-    "chashtEnd": "12:15"
+    "ishraqEnd": "09:29",
+    "chashtEnd": "12:25",
+    "chashtStart": "09:29"
   },
   "29-Sep": {
     "sehriEnd": "05:11",
@@ -4075,9 +4075,9 @@
     "maghrib": "18:33",
     "isha": "19:42",
     "ishraqStart": "06:49",
-    "ishraqEnd": "09:47",
-    "chashtStart": "09:47",
-    "chashtEnd": "12:14"
+    "ishraqEnd": "09:29",
+    "chashtEnd": "12:24",
+    "chashtStart": "09:29"
   },
   "30-Sep": {
     "sehriEnd": "05:11",
@@ -4090,9 +4090,9 @@
     "maghrib": "18:32",
     "isha": "19:41",
     "ishraqStart": "06:49",
-    "ishraqEnd": "09:46",
-    "chashtStart": "09:46",
-    "chashtEnd": "12:14"
+    "ishraqEnd": "09:29",
+    "chashtEnd": "12:24",
+    "chashtStart": "09:29"
   },
   "01-Oct": {
     "sehriEnd": "05:11",
@@ -4105,9 +4105,9 @@
     "maghrib": "18:31",
     "isha": "19:40",
     "ishraqStart": "06:50",
-    "ishraqEnd": "09:47",
-    "chashtStart": "09:47",
-    "chashtEnd": "12:14"
+    "ishraqEnd": "09:30",
+    "chashtEnd": "12:24",
+    "chashtStart": "09:30"
   },
   "02-Oct": {
     "sehriEnd": "05:11",
@@ -4120,9 +4120,9 @@
     "maghrib": "18:30",
     "isha": "19:39",
     "ishraqStart": "06:50",
-    "ishraqEnd": "09:47",
-    "chashtStart": "09:47",
-    "chashtEnd": "12:13"
+    "ishraqEnd": "09:29",
+    "chashtEnd": "12:23",
+    "chashtStart": "09:29"
   },
   "03-Oct": {
     "sehriEnd": "05:12",
@@ -4135,9 +4135,9 @@
     "maghrib": "18:29",
     "isha": "19:39",
     "ishraqStart": "06:50",
-    "ishraqEnd": "09:46",
-    "chashtStart": "09:46",
-    "chashtEnd": "12:13"
+    "ishraqEnd": "09:29",
+    "chashtEnd": "12:23",
+    "chashtStart": "09:29"
   },
   "04-Oct": {
     "sehriEnd": "05:12",
@@ -4150,9 +4150,9 @@
     "maghrib": "18:28",
     "isha": "19:38",
     "ishraqStart": "06:50",
-    "ishraqEnd": "09:46",
-    "chashtStart": "09:46",
-    "chashtEnd": "12:13"
+    "ishraqEnd": "09:29",
+    "chashtEnd": "12:23",
+    "chashtStart": "09:29"
   },
   "05-Oct": {
     "sehriEnd": "05:12",
@@ -4165,9 +4165,9 @@
     "maghrib": "18:27",
     "isha": "19:37",
     "ishraqStart": "06:51",
-    "ishraqEnd": "09:47",
-    "chashtStart": "09:47",
-    "chashtEnd": "12:13"
+    "ishraqEnd": "09:29",
+    "chashtEnd": "12:23",
+    "chashtStart": "09:29"
   },
   "06-Oct": {
     "sehriEnd": "05:12",
@@ -4180,9 +4180,9 @@
     "maghrib": "18:26",
     "isha": "19:36",
     "ishraqStart": "06:51",
-    "ishraqEnd": "09:47",
-    "chashtStart": "09:47",
-    "chashtEnd": "12:12"
+    "ishraqEnd": "09:29",
+    "chashtEnd": "12:22",
+    "chashtStart": "09:29"
   },
   "07-Oct": {
     "sehriEnd": "05:13",
@@ -4195,9 +4195,9 @@
     "maghrib": "18:25",
     "isha": "19:35",
     "ishraqStart": "06:51",
-    "ishraqEnd": "09:46",
-    "chashtStart": "09:46",
-    "chashtEnd": "12:12"
+    "ishraqEnd": "09:29",
+    "chashtEnd": "12:22",
+    "chashtStart": "09:29"
   },
   "08-Oct": {
     "sehriEnd": "05:13",
@@ -4210,9 +4210,9 @@
     "maghrib": "18:25",
     "isha": "19:34",
     "ishraqStart": "06:51",
-    "ishraqEnd": "09:46",
-    "chashtStart": "09:46",
-    "chashtEnd": "12:12"
+    "ishraqEnd": "09:29",
+    "chashtEnd": "12:22",
+    "chashtStart": "09:29"
   },
   "09-Oct": {
     "sehriEnd": "05:13",
@@ -4225,9 +4225,9 @@
     "maghrib": "18:24",
     "isha": "19:33",
     "ishraqStart": "06:52",
-    "ishraqEnd": "09:47",
-    "chashtStart": "09:47",
-    "chashtEnd": "12:11"
+    "ishraqEnd": "09:29",
+    "chashtEnd": "12:21",
+    "chashtStart": "09:29"
   },
   "10-Oct": {
     "sehriEnd": "05:13",
@@ -4240,9 +4240,9 @@
     "maghrib": "18:23",
     "isha": "19:33",
     "ishraqStart": "06:52",
-    "ishraqEnd": "09:47",
-    "chashtStart": "09:47",
-    "chashtEnd": "12:11"
+    "ishraqEnd": "09:29",
+    "chashtEnd": "12:21",
+    "chashtStart": "09:29"
   },
   "11-Oct": {
     "sehriEnd": "05:14",
@@ -4255,9 +4255,9 @@
     "maghrib": "18:22",
     "isha": "19:32",
     "ishraqStart": "06:52",
-    "ishraqEnd": "09:46",
-    "chashtStart": "09:46",
-    "chashtEnd": "12:11"
+    "ishraqEnd": "09:29",
+    "chashtEnd": "12:21",
+    "chashtStart": "09:29"
   },
   "12-Oct": {
     "sehriEnd": "05:14",
@@ -4270,9 +4270,9 @@
     "maghrib": "18:21",
     "isha": "19:31",
     "ishraqStart": "06:53",
-    "ishraqEnd": "09:47",
-    "chashtStart": "09:47",
-    "chashtEnd": "12:11"
+    "ishraqEnd": "09:29",
+    "chashtEnd": "12:21",
+    "chashtStart": "09:29"
   },
   "13-Oct": {
     "sehriEnd": "05:14",
@@ -4285,9 +4285,9 @@
     "maghrib": "18:20",
     "isha": "19:30",
     "ishraqStart": "06:53",
-    "ishraqEnd": "09:47",
-    "chashtStart": "09:47",
-    "chashtEnd": "12:10"
+    "ishraqEnd": "09:29",
+    "chashtEnd": "12:20",
+    "chashtStart": "09:29"
   },
   "14-Oct": {
     "sehriEnd": "05:15",
@@ -4300,9 +4300,9 @@
     "maghrib": "18:20",
     "isha": "19:29",
     "ishraqStart": "06:53",
-    "ishraqEnd": "09:46",
-    "chashtStart": "09:46",
-    "chashtEnd": "12:10"
+    "ishraqEnd": "09:29",
+    "chashtEnd": "12:20",
+    "chashtStart": "09:29"
   },
   "15-Oct": {
     "sehriEnd": "05:15",
@@ -4315,9 +4315,9 @@
     "maghrib": "18:19",
     "isha": "19:29",
     "ishraqStart": "06:54",
-    "ishraqEnd": "09:47",
-    "chashtStart": "09:47",
-    "chashtEnd": "12:10"
+    "ishraqEnd": "09:30",
+    "chashtEnd": "12:20",
+    "chashtStart": "09:30"
   },
   "16-Oct": {
     "sehriEnd": "05:15",
@@ -4330,9 +4330,9 @@
     "maghrib": "18:18",
     "isha": "19:28",
     "ishraqStart": "06:54",
-    "ishraqEnd": "09:47",
-    "chashtStart": "09:47",
-    "chashtEnd": "12:10"
+    "ishraqEnd": "09:29",
+    "chashtEnd": "12:20",
+    "chashtStart": "09:29"
   },
   "17-Oct": {
     "sehriEnd": "05:15",
@@ -4345,9 +4345,9 @@
     "maghrib": "18:17",
     "isha": "19:27",
     "ishraqStart": "06:54",
-    "ishraqEnd": "09:47",
-    "chashtStart": "09:47",
-    "chashtEnd": "12:09"
+    "ishraqEnd": "09:29",
+    "chashtEnd": "12:19",
+    "chashtStart": "09:29"
   },
   "18-Oct": {
     "sehriEnd": "05:16",
@@ -4360,9 +4360,9 @@
     "maghrib": "18:16",
     "isha": "19:27",
     "ishraqStart": "06:55",
-    "ishraqEnd": "09:47",
-    "chashtStart": "09:47",
-    "chashtEnd": "12:09"
+    "ishraqEnd": "09:30",
+    "chashtEnd": "12:19",
+    "chashtStart": "09:30"
   },
   "19-Oct": {
     "sehriEnd": "05:16",
@@ -4375,9 +4375,9 @@
     "maghrib": "18:16",
     "isha": "19:26",
     "ishraqStart": "06:55",
-    "ishraqEnd": "09:47",
-    "chashtStart": "09:47",
-    "chashtEnd": "12:09"
+    "ishraqEnd": "09:30",
+    "chashtEnd": "12:19",
+    "chashtStart": "09:30"
   },
   "20-Oct": {
     "sehriEnd": "05:16",
@@ -4390,9 +4390,9 @@
     "maghrib": "18:15",
     "isha": "19:25",
     "ishraqStart": "06:55",
-    "ishraqEnd": "09:47",
-    "chashtStart": "09:47",
-    "chashtEnd": "12:09"
+    "ishraqEnd": "09:29",
+    "chashtEnd": "12:19",
+    "chashtStart": "09:29"
   },
   "21-Oct": {
     "sehriEnd": "05:17",
@@ -4405,9 +4405,9 @@
     "maghrib": "18:14",
     "isha": "19:25",
     "ishraqStart": "06:56",
-    "ishraqEnd": "09:47",
-    "chashtStart": "09:47",
-    "chashtEnd": "12:09"
+    "ishraqEnd": "09:30",
+    "chashtEnd": "12:19",
+    "chashtStart": "09:30"
   },
   "22-Oct": {
     "sehriEnd": "05:17",
@@ -4420,9 +4420,9 @@
     "maghrib": "18:13",
     "isha": "19:24",
     "ishraqStart": "06:56",
-    "ishraqEnd": "09:47",
-    "chashtStart": "09:47",
-    "chashtEnd": "12:08"
+    "ishraqEnd": "09:30",
+    "chashtEnd": "12:18",
+    "chashtStart": "09:30"
   },
   "23-Oct": {
     "sehriEnd": "05:17",
@@ -4435,9 +4435,9 @@
     "maghrib": "18:13",
     "isha": "19:23",
     "ishraqStart": "06:57",
-    "ishraqEnd": "09:48",
-    "chashtStart": "09:48",
-    "chashtEnd": "12:08"
+    "ishraqEnd": "09:30",
+    "chashtEnd": "12:18",
+    "chashtStart": "09:30"
   },
   "24-Oct": {
     "sehriEnd": "05:18",
@@ -4450,9 +4450,9 @@
     "maghrib": "18:12",
     "isha": "19:23",
     "ishraqStart": "06:57",
-    "ishraqEnd": "09:48",
-    "chashtStart": "09:48",
-    "chashtEnd": "12:08"
+    "ishraqEnd": "09:30",
+    "chashtEnd": "12:18",
+    "chashtStart": "09:30"
   },
   "25-Oct": {
     "sehriEnd": "05:18",
@@ -4465,9 +4465,9 @@
     "maghrib": "18:11",
     "isha": "19:22",
     "ishraqStart": "06:57",
-    "ishraqEnd": "09:47",
-    "chashtStart": "09:47",
-    "chashtEnd": "12:08"
+    "ishraqEnd": "09:30",
+    "chashtEnd": "12:18",
+    "chashtStart": "09:30"
   },
   "26-Oct": {
     "sehriEnd": "05:18",
@@ -4480,9 +4480,9 @@
     "maghrib": "18:10",
     "isha": "19:21",
     "ishraqStart": "06:58",
-    "ishraqEnd": "09:48",
-    "chashtStart": "09:48",
-    "chashtEnd": "12:08"
+    "ishraqEnd": "09:30",
+    "chashtEnd": "12:18",
+    "chashtStart": "09:30"
   },
   "27-Oct": {
     "sehriEnd": "05:19",
@@ -4495,9 +4495,9 @@
     "maghrib": "18:10",
     "isha": "19:21",
     "ishraqStart": "06:58",
-    "ishraqEnd": "09:48",
-    "chashtStart": "09:48",
-    "chashtEnd": "12:08"
+    "ishraqEnd": "09:30",
+    "chashtEnd": "12:18",
+    "chashtStart": "09:30"
   },
   "28-Oct": {
     "sehriEnd": "05:19",
@@ -4510,9 +4510,9 @@
     "maghrib": "18:09",
     "isha": "19:20",
     "ishraqStart": "06:59",
-    "ishraqEnd": "09:49",
-    "chashtStart": "09:49",
-    "chashtEnd": "12:08"
+    "ishraqEnd": "09:31",
+    "chashtEnd": "12:18",
+    "chashtStart": "09:31"
   },
   "29-Oct": {
     "sehriEnd": "05:19",
@@ -4525,9 +4525,9 @@
     "maghrib": "18:08",
     "isha": "19:20",
     "ishraqStart": "06:59",
-    "ishraqEnd": "09:48",
-    "chashtStart": "09:48",
-    "chashtEnd": "12:08"
+    "ishraqEnd": "09:31",
+    "chashtEnd": "12:18",
+    "chashtStart": "09:31"
   },
   "30-Oct": {
     "sehriEnd": "05:20",
@@ -4540,9 +4540,9 @@
     "maghrib": "18:08",
     "isha": "19:19",
     "ishraqStart": "07:00",
-    "ishraqEnd": "09:49",
-    "chashtStart": "09:49",
-    "chashtEnd": "12:07"
+    "ishraqEnd": "09:31",
+    "chashtEnd": "12:17",
+    "chashtStart": "09:31"
   },
   "31-Oct": {
     "sehriEnd": "05:20",
@@ -4555,9 +4555,9 @@
     "maghrib": "18:08",
     "isha": "19:19",
     "ishraqStart": "07:00",
-    "ishraqEnd": "09:49",
-    "chashtStart": "09:49",
-    "chashtEnd": "12:07"
+    "ishraqEnd": "09:31",
+    "chashtEnd": "12:17",
+    "chashtStart": "09:31"
   },
   "01-Nov": {
     "sehriEnd": "05:20",
@@ -4570,9 +4570,9 @@
     "maghrib": "18:07",
     "isha": "19:19",
     "ishraqStart": "07:00",
-    "ishraqEnd": "09:49",
-    "chashtStart": "09:49",
-    "chashtEnd": "12:07"
+    "ishraqEnd": "09:31",
+    "chashtEnd": "12:17",
+    "chashtStart": "09:31"
   },
   "02-Nov": {
     "sehriEnd": "05:21",
@@ -4585,9 +4585,9 @@
     "maghrib": "18:07",
     "isha": "19:18",
     "ishraqStart": "07:01",
-    "ishraqEnd": "09:50",
-    "chashtStart": "09:50",
-    "chashtEnd": "12:07"
+    "ishraqEnd": "09:32",
+    "chashtEnd": "12:17",
+    "chashtStart": "09:32"
   },
   "03-Nov": {
     "sehriEnd": "05:21",
@@ -4600,9 +4600,9 @@
     "maghrib": "18:07",
     "isha": "19:18",
     "ishraqStart": "07:01",
-    "ishraqEnd": "09:50",
-    "chashtStart": "09:50",
-    "chashtEnd": "12:07"
+    "ishraqEnd": "09:32",
+    "chashtEnd": "12:17",
+    "chashtStart": "09:32"
   },
   "04-Nov": {
     "sehriEnd": "05:22",
@@ -4615,9 +4615,9 @@
     "maghrib": "18:06",
     "isha": "19:18",
     "ishraqStart": "07:02",
-    "ishraqEnd": "09:50",
-    "chashtStart": "09:50",
-    "chashtEnd": "12:07"
+    "ishraqEnd": "09:32",
+    "chashtEnd": "12:17",
+    "chashtStart": "09:32"
   },
   "05-Nov": {
     "sehriEnd": "05:22",
@@ -4630,9 +4630,9 @@
     "maghrib": "18:05",
     "isha": "19:17",
     "ishraqStart": "07:02",
-    "ishraqEnd": "09:50",
-    "chashtStart": "09:50",
-    "chashtEnd": "12:07"
+    "ishraqEnd": "09:32",
+    "chashtEnd": "12:17",
+    "chashtStart": "09:32"
   },
   "06-Nov": {
     "sehriEnd": "05:22",
@@ -4645,9 +4645,9 @@
     "maghrib": "18:05",
     "isha": "19:17",
     "ishraqStart": "07:03",
-    "ishraqEnd": "09:51",
-    "chashtStart": "09:51",
-    "chashtEnd": "12:07"
+    "ishraqEnd": "09:33",
+    "chashtEnd": "12:17",
+    "chashtStart": "09:33"
   },
   "07-Nov": {
     "sehriEnd": "05:23",
@@ -4660,9 +4660,9 @@
     "maghrib": "18:04",
     "isha": "19:17",
     "ishraqStart": "07:03",
-    "ishraqEnd": "09:50",
-    "chashtStart": "09:50",
-    "chashtEnd": "12:07"
+    "ishraqEnd": "09:33",
+    "chashtEnd": "12:17",
+    "chashtStart": "09:33"
   },
   "08-Nov": {
     "sehriEnd": "05:23",
@@ -4675,9 +4675,9 @@
     "maghrib": "18:04",
     "isha": "19:16",
     "ishraqStart": "07:04",
-    "ishraqEnd": "09:51",
-    "chashtStart": "09:51",
-    "chashtEnd": "12:08"
+    "ishraqEnd": "09:33",
+    "chashtEnd": "12:18",
+    "chashtStart": "09:33"
   },
   "09-Nov": {
     "sehriEnd": "05:24",
@@ -4690,9 +4690,9 @@
     "maghrib": "18:04",
     "isha": "19:16",
     "ishraqStart": "07:05",
-    "ishraqEnd": "09:52",
-    "chashtStart": "09:52",
-    "chashtEnd": "12:08"
+    "ishraqEnd": "09:34",
+    "chashtEnd": "12:18",
+    "chashtStart": "09:34"
   },
   "10-Nov": {
     "sehriEnd": "05:24",
@@ -4705,9 +4705,9 @@
     "maghrib": "18:03",
     "isha": "19:16",
     "ishraqStart": "07:05",
-    "ishraqEnd": "09:52",
-    "chashtStart": "09:52",
-    "chashtEnd": "12:08"
+    "ishraqEnd": "09:34",
+    "chashtEnd": "12:18",
+    "chashtStart": "09:34"
   },
   "11-Nov": {
     "sehriEnd": "05:25",
@@ -4720,9 +4720,9 @@
     "maghrib": "18:03",
     "isha": "19:16",
     "ishraqStart": "07:06",
-    "ishraqEnd": "09:53",
-    "chashtStart": "09:53",
-    "chashtEnd": "12:08"
+    "ishraqEnd": "09:35",
+    "chashtEnd": "12:18",
+    "chashtStart": "09:35"
   },
   "12-Nov": {
     "sehriEnd": "05:25",
@@ -4735,9 +4735,9 @@
     "maghrib": "18:02",
     "isha": "19:15",
     "ishraqStart": "07:06",
-    "ishraqEnd": "09:52",
-    "chashtStart": "09:52",
-    "chashtEnd": "12:08"
+    "ishraqEnd": "09:34",
+    "chashtEnd": "12:18",
+    "chashtStart": "09:34"
   },
   "13-Nov": {
     "sehriEnd": "05:25",
@@ -4750,9 +4750,9 @@
     "maghrib": "18:02",
     "isha": "19:15",
     "ishraqStart": "07:07",
-    "ishraqEnd": "09:53",
-    "chashtStart": "09:53",
-    "chashtEnd": "12:08"
+    "ishraqEnd": "09:35",
+    "chashtEnd": "12:18",
+    "chashtStart": "09:35"
   },
   "14-Nov": {
     "sehriEnd": "05:26",
@@ -4765,9 +4765,9 @@
     "maghrib": "18:02",
     "isha": "19:15",
     "ishraqStart": "07:07",
-    "ishraqEnd": "09:53",
-    "chashtStart": "09:53",
-    "chashtEnd": "12:08"
+    "ishraqEnd": "09:35",
+    "chashtEnd": "12:18",
+    "chashtStart": "09:35"
   },
   "15-Nov": {
     "sehriEnd": "05:26",
@@ -4780,9 +4780,9 @@
     "maghrib": "18:02",
     "isha": "19:15",
     "ishraqStart": "07:08",
-    "ishraqEnd": "09:54",
-    "chashtStart": "09:54",
-    "chashtEnd": "12:08"
+    "ishraqEnd": "09:36",
+    "chashtEnd": "12:18",
+    "chashtStart": "09:36"
   },
   "16-Nov": {
     "sehriEnd": "05:27",
@@ -4795,9 +4795,9 @@
     "maghrib": "18:01",
     "isha": "19:15",
     "ishraqStart": "07:08",
-    "ishraqEnd": "09:54",
-    "chashtStart": "09:54",
-    "chashtEnd": "12:08"
+    "ishraqEnd": "09:36",
+    "chashtEnd": "12:18",
+    "chashtStart": "09:36"
   },
   "17-Nov": {
     "sehriEnd": "05:27",
@@ -4810,9 +4810,9 @@
     "maghrib": "18:01",
     "isha": "19:15",
     "ishraqStart": "07:09",
-    "ishraqEnd": "09:55",
-    "chashtStart": "09:55",
-    "chashtEnd": "12:09"
+    "ishraqEnd": "09:36",
+    "chashtEnd": "12:19",
+    "chashtStart": "09:36"
   },
   "18-Nov": {
     "sehriEnd": "05:28",
@@ -4825,9 +4825,9 @@
     "maghrib": "18:01",
     "isha": "19:14",
     "ishraqStart": "07:10",
-    "ishraqEnd": "09:55",
-    "chashtStart": "09:55",
-    "chashtEnd": "12:09"
+    "ishraqEnd": "09:37",
+    "chashtEnd": "12:19",
+    "chashtStart": "09:37"
   },
   "19-Nov": {
     "sehriEnd": "05:28",
@@ -4840,9 +4840,9 @@
     "maghrib": "18:01",
     "isha": "19:14",
     "ishraqStart": "07:10",
-    "ishraqEnd": "09:55",
-    "chashtStart": "09:55",
-    "chashtEnd": "12:09"
+    "ishraqEnd": "09:37",
+    "chashtEnd": "12:19",
+    "chashtStart": "09:37"
   },
   "20-Nov": {
     "sehriEnd": "05:29",
@@ -4855,9 +4855,9 @@
     "maghrib": "18:01",
     "isha": "19:14",
     "ishraqStart": "07:11",
-    "ishraqEnd": "09:56",
-    "chashtStart": "09:56",
-    "chashtEnd": "12:09"
+    "ishraqEnd": "09:38",
+    "chashtEnd": "12:19",
+    "chashtStart": "09:38"
   },
   "21-Nov": {
     "sehriEnd": "05:29",
@@ -4870,9 +4870,9 @@
     "maghrib": "18:00",
     "isha": "19:14",
     "ishraqStart": "07:12",
-    "ishraqEnd": "09:57",
-    "chashtStart": "09:57",
-    "chashtEnd": "12:09"
+    "ishraqEnd": "09:38",
+    "chashtEnd": "12:19",
+    "chashtStart": "09:38"
   },
   "22-Nov": {
     "sehriEnd": "05:30",
@@ -4885,9 +4885,9 @@
     "maghrib": "18:00",
     "isha": "19:14",
     "ishraqStart": "07:12",
-    "ishraqEnd": "09:57",
-    "chashtStart": "09:57",
-    "chashtEnd": "12:10"
+    "ishraqEnd": "09:38",
+    "chashtEnd": "12:20",
+    "chashtStart": "09:38"
   },
   "23-Nov": {
     "sehriEnd": "05:30",
@@ -4900,9 +4900,9 @@
     "maghrib": "18:00",
     "isha": "19:14",
     "ishraqStart": "07:13",
-    "ishraqEnd": "09:58",
-    "chashtStart": "09:58",
-    "chashtEnd": "12:10"
+    "ishraqEnd": "09:39",
+    "chashtEnd": "12:20",
+    "chashtStart": "09:39"
   },
   "24-Nov": {
     "sehriEnd": "05:31",
@@ -4915,9 +4915,9 @@
     "maghrib": "18:00",
     "isha": "19:14",
     "ishraqStart": "07:13",
-    "ishraqEnd": "09:57",
-    "chashtStart": "09:57",
-    "chashtEnd": "12:10"
+    "ishraqEnd": "09:39",
+    "chashtEnd": "12:20",
+    "chashtStart": "09:39"
   },
   "25-Nov": {
     "sehriEnd": "05:31",
@@ -4930,9 +4930,9 @@
     "maghrib": "18:00",
     "isha": "19:14",
     "ishraqStart": "07:14",
-    "ishraqEnd": "09:58",
-    "chashtStart": "09:58",
-    "chashtEnd": "12:11"
+    "ishraqEnd": "09:40",
+    "chashtEnd": "12:21",
+    "chashtStart": "09:40"
   },
   "26-Nov": {
     "sehriEnd": "05:32",
@@ -4945,9 +4945,9 @@
     "maghrib": "18:00",
     "isha": "19:15",
     "ishraqStart": "07:15",
-    "ishraqEnd": "09:59",
-    "chashtStart": "09:59",
-    "chashtEnd": "12:11"
+    "ishraqEnd": "09:41",
+    "chashtEnd": "12:21",
+    "chashtStart": "09:41"
   },
   "27-Nov": {
     "sehriEnd": "05:32",
@@ -4960,9 +4960,9 @@
     "maghrib": "18:00",
     "isha": "19:15",
     "ishraqStart": "07:15",
-    "ishraqEnd": "09:59",
-    "chashtStart": "09:59",
-    "chashtEnd": "12:11"
+    "ishraqEnd": "09:41",
+    "chashtEnd": "12:21",
+    "chashtStart": "09:41"
   },
   "28-Nov": {
     "sehriEnd": "05:33",
@@ -4975,9 +4975,9 @@
     "maghrib": "18:00",
     "isha": "19:15",
     "ishraqStart": "07:16",
-    "ishraqEnd": "10:00",
-    "chashtStart": "10:00",
-    "chashtEnd": "12:11"
+    "ishraqEnd": "09:41",
+    "chashtEnd": "12:21",
+    "chashtStart": "09:41"
   },
   "29-Nov": {
     "sehriEnd": "05:34",
@@ -4990,9 +4990,9 @@
     "maghrib": "18:00",
     "isha": "19:15",
     "ishraqStart": "07:17",
-    "ishraqEnd": "10:01",
-    "chashtStart": "10:01",
-    "chashtEnd": "12:12"
+    "ishraqEnd": "09:42",
+    "chashtEnd": "12:22",
+    "chashtStart": "09:42"
   },
   "30-Nov": {
     "sehriEnd": "05:34",
@@ -5005,9 +5005,9 @@
     "maghrib": "18:00",
     "isha": "19:15",
     "ishraqStart": "07:17",
-    "ishraqEnd": "10:01",
-    "chashtStart": "10:01",
-    "chashtEnd": "12:12"
+    "ishraqEnd": "09:42",
+    "chashtEnd": "12:22",
+    "chashtStart": "09:42"
   },
   "01-Dec": {
     "sehriEnd": "05:35",
@@ -5020,9 +5020,9 @@
     "maghrib": "18:00",
     "isha": "19:15",
     "ishraqStart": "07:18",
-    "ishraqEnd": "10:01",
-    "chashtStart": "10:01",
-    "chashtEnd": "12:13"
+    "ishraqEnd": "09:43",
+    "chashtEnd": "12:23",
+    "chashtStart": "09:43"
   },
   "02-Dec": {
     "sehriEnd": "05:35",
@@ -5035,9 +5035,9 @@
     "maghrib": "18:00",
     "isha": "19:15",
     "ishraqStart": "07:18",
-    "ishraqEnd": "10:01",
-    "chashtStart": "10:01",
-    "chashtEnd": "12:13"
+    "ishraqEnd": "09:43",
+    "chashtEnd": "12:23",
+    "chashtStart": "09:43"
   },
   "03-Dec": {
     "sehriEnd": "05:36",
@@ -5050,9 +5050,9 @@
     "maghrib": "18:00",
     "isha": "19:16",
     "ishraqStart": "07:19",
-    "ishraqEnd": "10:02",
-    "chashtStart": "10:02",
-    "chashtEnd": "12:13"
+    "ishraqEnd": "09:44",
+    "chashtEnd": "12:23",
+    "chashtStart": "09:44"
   },
   "04-Dec": {
     "sehriEnd": "05:36",
@@ -5065,9 +5065,9 @@
     "maghrib": "18:01",
     "isha": "19:16",
     "ishraqStart": "07:20",
-    "ishraqEnd": "10:03",
-    "chashtStart": "10:03",
-    "chashtEnd": "12:14"
+    "ishraqEnd": "09:45",
+    "chashtEnd": "12:24",
+    "chashtStart": "09:45"
   },
   "05-Dec": {
     "sehriEnd": "05:37",
@@ -5080,9 +5080,9 @@
     "maghrib": "18:01",
     "isha": "19:16",
     "ishraqStart": "07:20",
-    "ishraqEnd": "10:03",
-    "chashtStart": "10:03",
-    "chashtEnd": "12:14"
+    "ishraqEnd": "09:45",
+    "chashtEnd": "12:24",
+    "chashtStart": "09:45"
   },
   "06-Dec": {
     "sehriEnd": "05:37",
@@ -5095,9 +5095,9 @@
     "maghrib": "18:01",
     "isha": "19:16",
     "ishraqStart": "07:21",
-    "ishraqEnd": "10:04",
-    "chashtStart": "10:04",
-    "chashtEnd": "12:14"
+    "ishraqEnd": "09:45",
+    "chashtEnd": "12:24",
+    "chashtStart": "09:45"
   },
   "07-Dec": {
     "sehriEnd": "05:38",
@@ -5110,9 +5110,9 @@
     "maghrib": "18:01",
     "isha": "19:17",
     "ishraqStart": "07:22",
-    "ishraqEnd": "10:05",
-    "chashtStart": "10:05",
-    "chashtEnd": "12:15"
+    "ishraqEnd": "09:46",
+    "chashtEnd": "12:25",
+    "chashtStart": "09:46"
   },
   "08-Dec": {
     "sehriEnd": "05:39",
@@ -5125,9 +5125,9 @@
     "maghrib": "18:01",
     "isha": "19:17",
     "ishraqStart": "07:22",
-    "ishraqEnd": "10:05",
-    "chashtStart": "10:05",
-    "chashtEnd": "12:15"
+    "ishraqEnd": "09:46",
+    "chashtEnd": "12:25",
+    "chashtStart": "09:46"
   },
   "09-Dec": {
     "sehriEnd": "05:39",
@@ -5140,9 +5140,9 @@
     "maghrib": "18:02",
     "isha": "19:17",
     "ishraqStart": "07:23",
-    "ishraqEnd": "10:06",
-    "chashtStart": "10:06",
-    "chashtEnd": "12:16"
+    "ishraqEnd": "09:47",
+    "chashtEnd": "12:26",
+    "chashtStart": "09:47"
   },
   "10-Dec": {
     "sehriEnd": "05:40",
@@ -5155,9 +5155,9 @@
     "maghrib": "18:02",
     "isha": "19:18",
     "ishraqStart": "07:23",
-    "ishraqEnd": "10:06",
-    "chashtStart": "10:06",
-    "chashtEnd": "12:16"
+    "ishraqEnd": "09:47",
+    "chashtEnd": "12:26",
+    "chashtStart": "09:47"
   },
   "11-Dec": {
     "sehriEnd": "05:40",
@@ -5170,9 +5170,9 @@
     "maghrib": "18:02",
     "isha": "19:18",
     "ishraqStart": "07:24",
-    "ishraqEnd": "10:07",
-    "chashtStart": "10:07",
-    "chashtEnd": "12:17"
+    "ishraqEnd": "09:48",
+    "chashtEnd": "12:27",
+    "chashtStart": "09:48"
   },
   "12-Dec": {
     "sehriEnd": "05:41",
@@ -5185,9 +5185,9 @@
     "maghrib": "18:03",
     "isha": "19:18",
     "ishraqStart": "07:25",
-    "ishraqEnd": "10:08",
-    "chashtStart": "10:08",
-    "chashtEnd": "12:17"
+    "ishraqEnd": "09:49",
+    "chashtEnd": "12:27",
+    "chashtStart": "09:49"
   },
   "13-Dec": {
     "sehriEnd": "05:41",
@@ -5200,9 +5200,9 @@
     "maghrib": "18:03",
     "isha": "19:19",
     "ishraqStart": "07:25",
-    "ishraqEnd": "10:08",
-    "chashtStart": "10:08",
-    "chashtEnd": "12:18"
+    "ishraqEnd": "09:49",
+    "chashtEnd": "12:28",
+    "chashtStart": "09:49"
   },
   "14-Dec": {
     "sehriEnd": "05:42",
@@ -5215,9 +5215,9 @@
     "maghrib": "18:03",
     "isha": "19:19",
     "ishraqStart": "07:26",
-    "ishraqEnd": "10:08",
-    "chashtStart": "10:08",
-    "chashtEnd": "12:18"
+    "ishraqEnd": "09:50",
+    "chashtEnd": "12:28",
+    "chashtStart": "09:50"
   },
   "15-Dec": {
     "sehriEnd": "05:42",
@@ -5230,9 +5230,9 @@
     "maghrib": "18:04",
     "isha": "19:20",
     "ishraqStart": "07:26",
-    "ishraqEnd": "10:09",
-    "chashtStart": "10:09",
-    "chashtEnd": "12:19"
+    "ishraqEnd": "09:50",
+    "chashtEnd": "12:29",
+    "chashtStart": "09:50"
   },
   "16-Dec": {
     "sehriEnd": "05:43",
@@ -5245,9 +5245,9 @@
     "maghrib": "18:04",
     "isha": "19:20",
     "ishraqStart": "07:27",
-    "ishraqEnd": "10:09",
-    "chashtStart": "10:09",
-    "chashtEnd": "12:19"
+    "ishraqEnd": "09:51",
+    "chashtEnd": "12:29",
+    "chashtStart": "09:51"
   },
   "17-Dec": {
     "sehriEnd": "05:44",
@@ -5260,9 +5260,9 @@
     "maghrib": "18:04",
     "isha": "19:21",
     "ishraqStart": "07:28",
-    "ishraqEnd": "10:10",
-    "chashtStart": "10:10",
-    "chashtEnd": "12:19"
+    "ishraqEnd": "09:51",
+    "chashtEnd": "12:29",
+    "chashtStart": "09:51"
   },
   "18-Dec": {
     "sehriEnd": "05:44",
@@ -5275,9 +5275,9 @@
     "maghrib": "18:05",
     "isha": "19:21",
     "ishraqStart": "07:28",
-    "ishraqEnd": "10:10",
-    "chashtStart": "10:10",
-    "chashtEnd": "12:20"
+    "ishraqEnd": "09:52",
+    "chashtEnd": "12:30",
+    "chashtStart": "09:52"
   },
   "19-Dec": {
     "sehriEnd": "05:45",
@@ -5290,9 +5290,9 @@
     "maghrib": "18:05",
     "isha": "19:21",
     "ishraqStart": "07:29",
-    "ishraqEnd": "10:11",
-    "chashtStart": "10:11",
-    "chashtEnd": "12:20"
+    "ishraqEnd": "09:52",
+    "chashtEnd": "12:30",
+    "chashtStart": "09:52"
   },
   "20-Dec": {
     "sehriEnd": "05:45",
@@ -5305,9 +5305,9 @@
     "maghrib": "18:06",
     "isha": "19:22",
     "ishraqStart": "07:29",
-    "ishraqEnd": "10:11",
-    "chashtStart": "10:11",
-    "chashtEnd": "12:21"
+    "ishraqEnd": "09:53",
+    "chashtEnd": "12:31",
+    "chashtStart": "09:53"
   },
   "21-Dec": {
     "sehriEnd": "05:46",
@@ -5320,9 +5320,9 @@
     "maghrib": "18:06",
     "isha": "19:22",
     "ishraqStart": "07:30",
-    "ishraqEnd": "10:12",
-    "chashtStart": "10:12",
-    "chashtEnd": "12:21"
+    "ishraqEnd": "09:53",
+    "chashtEnd": "12:31",
+    "chashtStart": "09:53"
   },
   "22-Dec": {
     "sehriEnd": "05:46",
@@ -5335,9 +5335,9 @@
     "maghrib": "18:07",
     "isha": "19:23",
     "ishraqStart": "07:30",
-    "ishraqEnd": "10:12",
-    "chashtStart": "10:12",
-    "chashtEnd": "12:22"
+    "ishraqEnd": "09:54",
+    "chashtEnd": "12:32",
+    "chashtStart": "09:54"
   },
   "23-Dec": {
     "sehriEnd": "05:47",
@@ -5350,9 +5350,9 @@
     "maghrib": "18:07",
     "isha": "19:23",
     "ishraqStart": "07:31",
-    "ishraqEnd": "10:13",
-    "chashtStart": "10:13",
-    "chashtEnd": "12:22"
+    "ishraqEnd": "09:54",
+    "chashtEnd": "12:32",
+    "chashtStart": "09:54"
   },
   "24-Dec": {
     "sehriEnd": "05:47",
@@ -5365,9 +5365,9 @@
     "maghrib": "18:08",
     "isha": "19:24",
     "ishraqStart": "07:31",
-    "ishraqEnd": "10:13",
-    "chashtStart": "10:13",
-    "chashtEnd": "12:23"
+    "ishraqEnd": "09:55",
+    "chashtEnd": "12:33",
+    "chashtStart": "09:55"
   },
   "25-Dec": {
     "sehriEnd": "05:48",
@@ -5380,9 +5380,9 @@
     "maghrib": "18:08",
     "isha": "19:24",
     "ishraqStart": "07:32",
-    "ishraqEnd": "10:14",
-    "chashtStart": "10:14",
-    "chashtEnd": "12:23"
+    "ishraqEnd": "09:55",
+    "chashtEnd": "12:33",
+    "chashtStart": "09:55"
   },
   "26-Dec": {
     "sehriEnd": "05:48",
@@ -5395,9 +5395,9 @@
     "maghrib": "18:09",
     "isha": "19:25",
     "ishraqStart": "07:32",
-    "ishraqEnd": "10:14",
-    "chashtStart": "10:14",
-    "chashtEnd": "12:24"
+    "ishraqEnd": "09:56",
+    "chashtEnd": "12:34",
+    "chashtStart": "09:56"
   },
   "27-Dec": {
     "sehriEnd": "05:49",
@@ -5410,9 +5410,9 @@
     "maghrib": "18:10",
     "isha": "19:26",
     "ishraqStart": "07:32",
-    "ishraqEnd": "10:14",
-    "chashtStart": "10:14",
-    "chashtEnd": "12:24"
+    "ishraqEnd": "09:56",
+    "chashtEnd": "12:34",
+    "chashtStart": "09:56"
   },
   "28-Dec": {
     "sehriEnd": "05:49",
@@ -5425,9 +5425,9 @@
     "maghrib": "18:10",
     "isha": "19:26",
     "ishraqStart": "07:33",
-    "ishraqEnd": "10:15",
-    "chashtStart": "10:15",
-    "chashtEnd": "12:25"
+    "ishraqEnd": "09:57",
+    "chashtEnd": "12:35",
+    "chashtStart": "09:57"
   },
   "29-Dec": {
     "sehriEnd": "05:49",
@@ -5440,9 +5440,9 @@
     "maghrib": "18:11",
     "isha": "19:27",
     "ishraqStart": "07:33",
-    "ishraqEnd": "10:16",
-    "chashtStart": "10:16",
-    "chashtEnd": "12:25"
+    "ishraqEnd": "09:57",
+    "chashtEnd": "12:35",
+    "chashtStart": "09:57"
   },
   "30-Dec": {
     "sehriEnd": "05:50",
@@ -5455,9 +5455,9 @@
     "maghrib": "18:11",
     "isha": "19:27",
     "ishraqStart": "07:34",
-    "ishraqEnd": "10:16",
-    "chashtStart": "10:16",
-    "chashtEnd": "12:26"
+    "ishraqEnd": "09:58",
+    "chashtEnd": "12:36",
+    "chashtStart": "09:58"
   },
   "31-Dec": {
     "sehriEnd": "05:50",
@@ -5470,8 +5470,8 @@
     "maghrib": "18:12",
     "isha": "19:28",
     "ishraqStart": "07:34",
-    "ishraqEnd": "10:17",
-    "chashtStart": "10:17",
-    "chashtEnd": "12:26"
+    "ishraqEnd": "09:58",
+    "chashtEnd": "12:36",
+    "chashtStart": "09:58"
   }
 }
