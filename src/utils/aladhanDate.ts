@@ -1,35 +1,57 @@
 import { db, isFirebaseConfigured } from '../firebase';
 import { doc, getDoc, setDoc } from 'firebase/firestore';
+import { getTodayPrayerStartEndMap } from './prayerStartEnd';
+import { parseTimeToToday } from './timeFormat';
 
 export interface IslamicDateCache {
-  date: string;        // e.g. "27-08-2026"
+  date: string;        // e.g. "28-08-2026"
   time: string;        // e.g. "07:04 pm"
-  islamicDate: string; // e.g. "14 Rabīʿ al-awwal 1448 AH"
+  islamicDate: string; // e.g. "15 Rabīʿ al-awwal 1448 AH"
+  expiresAt: string;   // ISO timestamp string e.g. "2026-08-28T13:32:00.000Z"
 }
 
 /**
- * Checks Firestore islamicDateCache for today's date key (DD-MM-YYYY).
- * If present in cache, returns it immediately.
- * Only calls Aladhan API if today's date key is NOT present in cache.
+ * Calculates the exact next Maghrib timestamp when the current Islamic day expires.
+ * - Before Maghrib today  => Expires at today's Maghrib timestamp.
+ * - Past Maghrib today    => Expires at tomorrow's Maghrib timestamp.
+ */
+export const getNextMaghribExpiration = (currentTime: Date = new Date()): Date => {
+  const todayMap = getTodayPrayerStartEndMap(currentTime);
+  const maghribStr = todayMap.map.Maghrib.start || '07:04 pm';
+  const todayMaghrib = parseTimeToToday(maghribStr, currentTime);
+
+  if (todayMaghrib && currentTime < todayMaghrib) {
+    return todayMaghrib;
+  } else {
+    const tomorrow = new Date(currentTime.getTime() + 24 * 60 * 60 * 1000);
+    const tomorrowMap = getTodayPrayerStartEndMap(tomorrow);
+    const tomorrowMaghribStr = tomorrowMap.map.Maghrib.start || '07:04 pm';
+    return parseTimeToToday(tomorrowMaghribStr, tomorrow) || new Date(tomorrow.setHours(19, 4, 0, 0));
+  }
+};
+
+/**
+ * Checks Firestore islamicDateCache using the expiresAt timestamp.
+ * - If currentTime < expiresAt (Maghrib has NOT been crossed), returns cached Islamic date directly.
+ * - If currentTime >= expiresAt (Maghrib crossed), fetches Aladhan API and updates cache.
  */
 export const getOrFetchIslamicDateWithFirestore = async (
   currentTime: Date = new Date(),
   maghribTimeStr: string = '07:04 pm'
 ): Promise<string> => {
-  const dd = currentTime.getDate().toString().padStart(2, '0');
-  const mm = (currentTime.getMonth() + 1).toString().padStart(2, '0');
-  const yyyy = currentTime.getFullYear();
-  const targetDateKey = `${dd}-${mm}-${yyyy}`;
-
-  // 1. Try reading from Firestore cache for today's targetDateKey
+  // 1. Try reading from Firestore cache
   if (isFirebaseConfigured && db) {
     try {
       const docRef = doc(db, 'settings', 'islamicDateCache');
       const docSnap = await getDoc(docRef);
       if (docSnap.exists()) {
         const data = docSnap.data() as Partial<IslamicDateCache>;
-        if (data.date === targetDateKey && data.islamicDate) {
-          return data.islamicDate;
+        if (data.islamicDate && data.expiresAt) {
+          const expiryTimestamp = new Date(data.expiresAt).getTime();
+          if (currentTime.getTime() < expiryTimestamp) {
+            // Current time is before next Maghrib expiration -> Return cached date directly
+            return data.islamicDate;
+          }
         }
       }
     } catch (err) {
@@ -37,20 +59,30 @@ export const getOrFetchIslamicDateWithFirestore = async (
     }
   }
 
-  // 2. Fetch from Aladhan API if cache miss
+  // 2. Expiration timestamp crossed or cache miss: Fetch from API and update cache
   return forceSyncIslamicDateWithAladhan(currentTime, maghribTimeStr);
 };
 
 /**
- * Directly calls Aladhan API (Silvassa, method=2) for today's date and updates Firestore settings/islamicDateCache.
+ * Directly calls Aladhan API (Silvassa, method=2) for the active Islamic date and updates Firestore settings/islamicDateCache with new expiresAt.
  */
 export const forceSyncIslamicDateWithAladhan = async (
   currentTime: Date = new Date(),
   maghribTimeStr: string = '07:04 pm'
 ): Promise<string> => {
-  const dd = currentTime.getDate().toString().padStart(2, '0');
-  const mm = (currentTime.getMonth() + 1).toString().padStart(2, '0');
-  const yyyy = currentTime.getFullYear();
+  let targetDate = new Date(currentTime);
+  const todayMap = getTodayPrayerStartEndMap(currentTime);
+  const maghribStr = todayMap.map.Maghrib.start || maghribTimeStr || '07:04 pm';
+  const todayMaghrib = parseTimeToToday(maghribStr, currentTime);
+
+  if (todayMaghrib && currentTime >= todayMaghrib) {
+    // Past Maghrib today: target tomorrow's date for the new Islamic day
+    targetDate = new Date(currentTime.getTime() + 24 * 60 * 60 * 1000);
+  }
+
+  const dd = targetDate.getDate().toString().padStart(2, '0');
+  const mm = (targetDate.getMonth() + 1).toString().padStart(2, '0');
+  const yyyy = targetDate.getFullYear();
   const targetDateKey = `${dd}-${mm}-${yyyy}`;
 
   const response = await fetch(
@@ -67,13 +99,15 @@ export const forceSyncIslamicDateWithAladhan = async (
     const monthName = h.month.en || 'Rabi\' al-awwal';
     const fetchedIslamicDate = `${h.day} ${monthName} ${h.year} ${h.designation?.abbreviated || 'AH'}`;
 
+    const nextMaghrib = getNextMaghribExpiration(currentTime);
+
     const cacheObj: IslamicDateCache = {
       date: targetDateKey,
-      time: maghribTimeStr,
+      time: maghribStr,
       islamicDate: fetchedIslamicDate,
+      expiresAt: nextMaghrib.toISOString(),
     };
 
-    // Save cache object directly to settings/islamicDateCache in Firestore
     if (isFirebaseConfigured && db) {
       try {
         await setDoc(doc(db, 'settings', 'islamicDateCache'), cacheObj, { merge: true });
