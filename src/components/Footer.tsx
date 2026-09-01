@@ -10,7 +10,7 @@ const Footer: React.FC = () => {
                     <div className="footer-col">
                         <h3 className="footer-title">Markaz wali Masjid</h3>
                         <p className="footer-text">
-                            A center for spiritual growth and community service. We welcome everyone to join us in our journey of faith.
+                            This website is created solely for a noble cause to provide accurate prayer times and serve the community.
                         </p>
                     </div>
 
@@ -36,12 +36,6 @@ const Footer: React.FC = () => {
                                 >
                                     <MapPin size={18} />
                                     <span>72G4+9WG, Kilvani Rd, near Jalaram Temple, Naka, Park City, Silvassa, Dadra and Nagar Haveli and Daman and Diu 396230</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="mailto:markazwalimasjid@gmail.com" className="contact-link">
-                                    <Mail size={18} />
-                                    <span>markazwalimasjid@gmail.com</span>
                                 </a>
                             </li>
                         </ul>

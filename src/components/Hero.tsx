@@ -26,7 +26,7 @@ const Hero: React.FC = () => {
                     Welcome to <span className="text-gold">Markaz wali Masjid</span>
                 </h1>
                 <p className="hero-subtitle">
-                    A place of peace, prayer, and community. Join us in worship and spiritual growth.
+                    A humble effort by people with a noble intention to serve the community with prayer times and useful resources.
                 </p>
                 <div className="hero-buttons">
                     <a href="#prayer-times" className="btn btn-primary">View Prayer Times</a>
