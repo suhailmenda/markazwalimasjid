@@ -3,19 +3,47 @@ import { Link, useLocation } from 'react-router-dom';
 import { Moon, Menu, X } from 'lucide-react';
 import './Navbar.css';
 
+const navItems = [
+    { id: 'home', label: 'Home', href: '#' },
+    { id: 'prayer-times', label: 'Prayer Times', href: '#prayer-times' },
+    { id: 'monthly-schedule', label: 'Monthly Timetable', href: '#monthly-schedule' },
+    { id: 'about', label: 'About', href: '#about' },
+    { id: 'contact', label: 'Contact', href: '#contact' },
+];
+
 const Navbar: React.FC = () => {
     const [isScrolled, setIsScrolled] = useState<boolean>(false);
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState<boolean>(false);
+    const [activeSection, setActiveSection] = useState<string>('home');
     const location = useLocation();
     const isHomePage = location.pathname === '/';
 
     useEffect(() => {
         const handleScroll = (): void => {
             setIsScrolled(window.scrollY > 20);
+
+            if (isHomePage) {
+                if (window.scrollY < 200) {
+                    setActiveSection('home');
+                    return;
+                }
+                const sections = ['prayer-times', 'monthly-schedule', 'about', 'contact'];
+                for (const sectionId of sections) {
+                    const el = document.getElementById(sectionId);
+                    if (el) {
+                        const rect = el.getBoundingClientRect();
+                        if (rect.top <= 150 && rect.bottom >= 150) {
+                            setActiveSection(sectionId);
+                            break;
+                        }
+                    }
+                }
+            }
         };
+
         window.addEventListener('scroll', handleScroll);
         return () => window.removeEventListener('scroll', handleScroll);
-    }, []);
+    }, [isHomePage]);
 
     return (
         <nav className={`navbar ${isScrolled ? 'scrolled' : ''}`}>
@@ -26,22 +54,16 @@ const Navbar: React.FC = () => {
                 </Link>
 
                 <div className="desktop-menu">
-                    <Link to="/" className={`nav-link ${isHomePage ? 'active' : ''}`}>Home</Link>
-                    {isHomePage ? (
-                        <>
-                            <a href="#prayer-times" className="nav-link">Prayer Times</a>
-                            <a href="#monthly-schedule" className="nav-link">Monthly Timetable</a>
-                            <a href="#about" className="nav-link">About</a>
-                            <a href="#contact" className="nav-link">Contact</a>
-                        </>
-                    ) : (
-                        <>
-                            <Link to="/#prayer-times" className="nav-link">Prayer Times</Link>
-                            <Link to="/#monthly-schedule" className="nav-link">Monthly Timetable</Link>
-                            <Link to="/#about" className="nav-link">About</Link>
-                            <Link to="/#contact" className="nav-link">Contact</Link>
-                        </>
-                    )}
+                    {navItems.map((item) => (
+                        <a
+                            key={item.id}
+                            href={isHomePage ? item.href : `/${item.href}`}
+                            onClick={() => setActiveSection(item.id)}
+                            className={`nav-link ${activeSection === item.id ? 'active' : ''}`}
+                        >
+                            {item.label}
+                        </a>
+                    ))}
                 </div>
 
                 <button
@@ -53,11 +75,19 @@ const Navbar: React.FC = () => {
 
                 {isMobileMenuOpen && (
                     <div className="mobile-menu">
-                        <Link to="/" onClick={() => setIsMobileMenuOpen(false)}>Home</Link>
-                        <a href="#prayer-times" onClick={() => setIsMobileMenuOpen(false)}>Prayer Times</a>
-                        <a href="#monthly-schedule" onClick={() => setIsMobileMenuOpen(false)}>Monthly Timetable</a>
-                        <a href="#about" onClick={() => setIsMobileMenuOpen(false)}>About</a>
-                        <a href="#contact" onClick={() => setIsMobileMenuOpen(false)}>Contact</a>
+                        {navItems.map((item) => (
+                            <a
+                                key={item.id}
+                                href={isHomePage ? item.href : `/${item.href}`}
+                                onClick={() => {
+                                    setActiveSection(item.id);
+                                    setIsMobileMenuOpen(false);
+                                }}
+                                className={activeSection === item.id ? 'active' : ''}
+                            >
+                                {item.label}
+                            </a>
+                        ))}
                     </div>
                 )}
             </div>
