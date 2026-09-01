@@ -8,6 +8,7 @@ import {
   forceSyncIslamicDateWithAladhan,
   type IslamicDateCache,
 } from './utils/aladhanDate';
+import { sendFcmBulkNotification } from './utils/sendFcmNotification';
 
 export const usePrayerTimes = (): UsePrayerTimesReturn => {
   const [loading, setLoading] = useState<boolean>(true);
@@ -118,6 +119,8 @@ export const usePrayerTimes = (): UsePrayerTimesReturn => {
       Chast: { adhan: '-', jamat: '-' },
     };
 
+    const timesHaveChanged = JSON.stringify(manualTimes) !== JSON.stringify(sanitizedTimes);
+
     setManualTimes(sanitizedTimes);
     if (val) setIslamicDate(val);
 
@@ -136,6 +139,15 @@ export const usePrayerTimes = (): UsePrayerTimesReturn => {
           { date: `${dd}-${mm}-${yyyy}`, time: '07:04 pm', islamicDate: val },
           { merge: true },
         );
+      }
+
+      // Send FCM bulk push notification ONLY if prayer times changed
+      if (timesHaveChanged) {
+        try {
+          await sendFcmBulkNotification();
+        } catch (err) {
+          console.error('Failed to trigger FCM bulk push notification:', err);
+        }
       }
     }
   };
