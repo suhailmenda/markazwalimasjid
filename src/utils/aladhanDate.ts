@@ -64,29 +64,19 @@ export const getOrFetchIslamicDateWithFirestore = async (
 };
 
 /**
- * Directly calls Aladhan API (Silvassa, method=2) for the active Islamic date and updates Firestore settings/islamicDateCache with new expiresAt.
+ * Directly calls Aladhan API (Silvassa, method=2) for the active date and updates Firestore settings/islamicDateCache.
  */
 export const forceSyncIslamicDateWithAladhan = async (
   currentTime: Date = new Date(),
   maghribTimeStr: string = '07:04 pm'
 ): Promise<string> => {
-  let targetDate = new Date(currentTime);
-  const todayMap = getTodayPrayerStartEndMap(currentTime);
-  const maghribStr = todayMap.map.Maghrib.start || maghribTimeStr || '07:04 pm';
-  const todayMaghrib = parseTimeToToday(maghribStr, currentTime);
-
-  if (todayMaghrib && currentTime >= todayMaghrib) {
-    // Past Maghrib today: target tomorrow's date for the new Islamic day
-    targetDate = new Date(currentTime.getTime() + 24 * 60 * 60 * 1000);
-  }
-
-  const dd = targetDate.getDate().toString().padStart(2, '0');
-  const mm = (targetDate.getMonth() + 1).toString().padStart(2, '0');
-  const yyyy = targetDate.getFullYear();
-  const targetDateKey = `${dd}-${mm}-${yyyy}`;
+  const dd = currentTime.getDate().toString().padStart(2, '0');
+  const mm = (currentTime.getMonth() + 1).toString().padStart(2, '0');
+  const yyyy = currentTime.getFullYear();
+  const dateKey = `${dd}-${mm}-${yyyy}`;
 
   const response = await fetch(
-    `https://api.aladhan.com/v1/timingsByCity/${targetDateKey}?city=Silvassa&country=India&method=2`
+    `https://api.aladhan.com/v1/timingsByCity/${dateKey}?city=Silvassa&country=India&method=2`
   );
 
   if (!response.ok) {
@@ -102,8 +92,8 @@ export const forceSyncIslamicDateWithAladhan = async (
     const nextMaghrib = getNextMaghribExpiration(currentTime);
 
     const cacheObj: IslamicDateCache = {
-      date: targetDateKey,
-      time: maghribStr,
+      date: dateKey,
+      time: maghribTimeStr,
       islamicDate: fetchedIslamicDate,
       expiresAt: nextMaghrib.toISOString(),
     };
