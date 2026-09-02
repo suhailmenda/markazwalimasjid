@@ -11,9 +11,17 @@ export default async function handler(req, res) {
   }
 
   try {
-    const serviceAccount = typeof rawServiceAccount === 'string'
-      ? JSON.parse(rawServiceAccount)
-      : rawServiceAccount;
+    let parsedStr = rawServiceAccount.trim();
+    // If stored as base64 in Vercel, decode it automatically
+    if (!parsedStr.startsWith('{')) {
+      try {
+        parsedStr = Buffer.from(parsedStr, 'base64').toString('utf8');
+      } catch (_) {}
+    }
+
+    const serviceAccount = typeof parsedStr === 'string'
+      ? JSON.parse(parsedStr)
+      : parsedStr;
 
     const accessToken = await getAccessToken(serviceAccount);
     const projectId = serviceAccount.project_id || 'markazwalimasjid-459f6';
@@ -51,6 +59,15 @@ export default async function handler(req, res) {
   }
 }
 
+function getFormattedPrivateKey(key) {
+  if (!key) return '';
+  let formatted = key.replace(/\\n/g, '\n');
+  if (formatted.startsWith('"') && formatted.endsWith('"')) {
+    formatted = formatted.slice(1, -1);
+  }
+  return formatted;
+}
+
 function createJwt(serviceAccount) {
   const header = { alg: 'RS256', typ: 'JWT' };
   const now = Math.floor(Date.now() / 1000);
@@ -71,9 +88,11 @@ function createJwt(serviceAccount) {
 
   const unsignedToken = `${encodeBase64Url(header)}.${encodeBase64Url(claimSet)}`;
 
+  const privateKey = getFormattedPrivateKey(serviceAccount.private_key);
+
   const signer = crypto.createSign('RSA-SHA256');
   signer.update(unsignedToken);
-  const signature = signer.sign(serviceAccount.private_key, 'base64')
+  const signature = signer.sign(privateKey, 'base64')
     .replace(/=/g, '')
     .replace(/\+/g, '-')
     .replace(/\//g, '_');
