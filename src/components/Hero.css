@@ -1,15 +1,18 @@
 .hero {
     position: relative;
     height: 100vh;
-    min-height: 600px;
+    height: 100dvh;
+    min-height: 100vh;
+    min-height: 100dvh;
     background-image: url('https://images.pexels.com/photos/12777419/pexels-photo-12777419.jpeg');
     background-size: cover;
     background-position: center;
     display: flex;
     align-items: center;
+    justify-content: center;
     color: var(--color-white);
-    margin-top: -80px;
-    /* To go behind navbar */
+    padding-top: 80px;
+    box-sizing: border-box;
 }
 
 .hero-overlay {

@@ -506,6 +506,16 @@
   color: #0f172a;
 }
 
+.zawal-range-val {
+  font-size: 0.88rem;
+  white-space: nowrap;
+}
+
+.monthly-table .th-zawal,
+.monthly-table .td-zawal {
+  min-width: 145px;
+}
+
 /* Responsive Visibility Helpers */
 .desktop-only-view {
   display: block;

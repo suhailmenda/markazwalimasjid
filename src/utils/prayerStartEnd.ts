@@ -7,15 +7,16 @@ export interface DayJsonEntry {
   subahSadiq: string;
   fajr: string;
   tulu: string;
-  zawal: string;
+  zawalStart: string;
+  zawalEnd: string;
   asr: string;
+  asrEnd: string;
   sunset: string;
   maghrib: string;
   isha: string;
   ishraqStart?: string;
   ishraqEnd?: string;
   chashtStart?: string;
-  chashtEnd?: string;
 }
 
 type PrayerTimesData = Record<string, DayJsonEntry>;
@@ -35,7 +36,7 @@ export const getTodayPrayerStartEndMap = (date: Date = new Date()): { map: Praye
   const month = months[date.getMonth()];
   const key = `${day}-${month}`; // e.g. "26-Aug"
 
-  const entry = prayerTimesData[key] || prayerTimesData['01-Jan'];
+  const entry = prayerTimesData[key];
 
   const map: PrayerStartEndMap = {
     Fajr: {
@@ -48,15 +49,15 @@ export const getTodayPrayerStartEndMap = (date: Date = new Date()): { map: Praye
     },
     Chast: {
       start: formatTo12HourDisplay(entry.chashtStart),
-      end: formatTo12HourDisplay(entry.chashtEnd),
+      end: formatTo12HourDisplay(entry.zawalStart),
     },
     Dhuhr: {
-      start: formatTo12HourDisplay(entry.zawal),
+      start: formatTo12HourDisplay(entry.zawalEnd),
       end: formatTo12HourDisplay(entry.asr),
     },
     Asr: {
       start: formatTo12HourDisplay(entry.asr),
-      end: formatTo12HourDisplay(entry.sunset),
+      end: formatTo12HourDisplay(entry.asrEnd),
     },
     Maghrib: {
       start: formatTo12HourDisplay(entry.maghrib),

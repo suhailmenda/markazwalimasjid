@@ -1,34 +1,19 @@
 import { useState, useEffect } from 'react';
 import { db, isFirebaseConfigured } from './firebase';
 import { doc, onSnapshot, setDoc, type Unsubscribe } from 'firebase/firestore';
-import { DEFAULT_TIMES, type ManualTimes, type UsePrayerTimesReturn } from './types/prayer';
+import type { ManualTimes, UsePrayerTimesReturn } from './types/prayer';
 import { getTodayPrayerStartEndMap } from './utils/prayerStartEnd';
-import {
-  getOrFetchIslamicDateWithFirestore,
-  forceSyncIslamicDateWithAladhan,
-  type IslamicDateCache,
-} from './utils/aladhanDate';
+import { calculateIslamicDate, type IslamicDateCache } from './utils/islamicDate';
 import { sendFcmBulkNotification } from './utils/sendFcmNotification';
 
 export const usePrayerTimes = (): UsePrayerTimesReturn => {
   const [loading, setLoading] = useState<boolean>(true);
-  const [manualTimes, setManualTimes] = useState<ManualTimes>(DEFAULT_TIMES);
-  const [islamicDate, setIslamicDate] = useState<string>('');
-
-  // Fetch / check Islamic date with Firestore caching
-  useEffect(() => {
-    let isMounted = true;
-    const checkIslamicDate = async () => {
-      const todayJsonInfo = getTodayPrayerStartEndMap();
-      const maghribTime = todayJsonInfo.map.Maghrib.start || '07:04 pm';
-      const fetchedDate = await getOrFetchIslamicDateWithFirestore(new Date(), maghribTime);
-      if (isMounted && fetchedDate) {
-        setIslamicDate(fetchedDate);
-      }
-    };
-
-    checkIslamicDate();
-  }, []);
+  const [manualTimes, setManualTimes] = useState<ManualTimes>({});
+  const [islamicDate, setIslamicDate] = useState<string>(() => {
+    const todayJsonInfo = getTodayPrayerStartEndMap();
+    const maghribTime = todayJsonInfo.map.Maghrib.start;
+    return calculateIslamicDate(new Date(), maghribTime);
+  });
 
   // Firestore Realtime Listeners
   useEffect(() => {
@@ -49,10 +34,9 @@ export const usePrayerTimes = (): UsePrayerTimesReturn => {
                 const jsonMaghribTime = todayJsonInfo.map.Maghrib.start;
 
                 const merged: ManualTimes = {
-                  ...DEFAULT_TIMES,
                   ...data.manualTimes,
                   Maghrib: {
-                    adhan: jsonMaghribTime || data.manualTimes.Maghrib?.adhan || '07:04 pm',
+                    adhan: jsonMaghribTime,
                     jamat: 'After Azaan',
                   },
                   Ishraq: { adhan: '-', jamat: '-' },
@@ -109,10 +93,9 @@ export const usePrayerTimes = (): UsePrayerTimesReturn => {
     const jsonMaghribTime = todayJsonInfo.map.Maghrib.start;
 
     const sanitizedTimes: ManualTimes = {
-      ...DEFAULT_TIMES,
       ...newManualTimes,
       Maghrib: {
-        adhan: jsonMaghribTime || newManualTimes.Maghrib?.adhan || '07:04 pm',
+        adhan: jsonMaghribTime,
         jamat: 'After Azaan',
       },
       Ishraq: { adhan: '-', jamat: '-' },
@@ -136,7 +119,7 @@ export const usePrayerTimes = (): UsePrayerTimesReturn => {
         const yyyy = new Date().getFullYear();
         await setDoc(
           doc(db, 'settings', 'islamicDateCache'),
-          { date: `${dd}-${mm}-${yyyy}`, time: '07:04 pm', islamicDate: val },
+          { date: `${dd}-${mm}-${yyyy}`, time: jsonMaghribTime, islamicDate: val },
           { merge: true },
         );
       }
@@ -152,24 +135,10 @@ export const usePrayerTimes = (): UsePrayerTimesReturn => {
     }
   };
 
-  /**
-   * Directly calls Aladhan API and updates Firestore settings/islamicDateCache.
-   */
-  const syncIslamicDate = async (): Promise<string> => {
-    const todayJsonInfo = getTodayPrayerStartEndMap();
-    const maghribTime = todayJsonInfo.map.Maghrib.start || '07:04 pm';
-    const syncedDate = await forceSyncIslamicDateWithAladhan(new Date(), maghribTime);
-    if (syncedDate) {
-      setIslamicDate(syncedDate);
-    }
-    return syncedDate;
-  };
-
   return {
     manualTimes,
     islamicDate,
     loading,
     saveAllSettings,
-    syncIslamicDate,
   };
 };

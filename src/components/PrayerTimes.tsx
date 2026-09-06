@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { Clock, MapPin } from 'lucide-react';
-import { DEFAULT_TIMES, type ManualTimes, type PrayerName } from '../types/prayer';
+import { MapPin } from 'lucide-react';
+import type { ManualTimes, PrayerName } from '../types/prayer';
 import { getTodayPrayerStartEndMap } from '../utils/prayerStartEnd';
 import { formatTo12HourDisplay } from '../utils/timeFormat';
+import CurrentNextPrayer from './CurrentNextPrayer';
 import './PrayerTimes.css';
 
 interface PrayerTimesProps {
@@ -31,10 +32,8 @@ const PrayerTimes: React.FC<PrayerTimesProps> = ({
         { name: 'Asr', key: 'Asr' },
         { name: 'Maghrib', key: 'Maghrib' },
         { name: 'Isha', key: 'Isha' },
-        { name: 'Jummah', key: 'Jummah' },
     ];
 
-    const safeManual = manualTimes || DEFAULT_TIMES;
     const { map: todayStartEndMap } = getTodayPrayerStartEndMap(currentTime);
 
     return (
@@ -49,9 +48,8 @@ const PrayerTimes: React.FC<PrayerTimesProps> = ({
                 </div>
 
                 <div className="prayer-card">
-                    {/* Header Card Display */}
+                    {/* Unified Header Card Display */}
                     <div className="current-time-display">
-                        <Clock className="mb-2 text-gold" size={32} />
                         <div className="time">
                             {currentTime.toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit', second: '2-digit', timeZone: 'Asia/Kolkata' })}
                         </div>
@@ -61,6 +59,9 @@ const PrayerTimes: React.FC<PrayerTimesProps> = ({
                         <div className="islamic-date-container">
                             <span className="islamic-date-display">{islamicDate}</span>
                         </div>
+
+                        {/* Integrated Active & Next Namaz Banner */}
+                        <CurrentNextPrayer currentTime={currentTime} manualTimes={manualTimes} />
                     </div>
 
                     {/* Desktop View: Full 5-Column Table */}
@@ -83,29 +84,17 @@ const PrayerTimes: React.FC<PrayerTimesProps> = ({
                                         const isNafl = prayer.key === 'Ishraq' || prayer.key === 'Chast';
                                         const startEnd = todayStartEndMap[prayer.key] || { start: '-', end: '-' };
 
-                                        const defaultAdhan = isNafl
-                                            ? '-'
-                                            : prayer.key === 'Maghrib'
-                                                ? startEnd.start
-                                                : (DEFAULT_TIMES[prayer.key]?.adhan || '-');
-
-                                        const defaultJamat = isNafl
-                                            ? '-'
-                                            : prayer.key === 'Maghrib'
-                                                ? 'After Azaan'
-                                                : (DEFAULT_TIMES[prayer.key]?.jamat || '-');
-
                                         const adhanTime = isNafl
                                             ? '-'
                                             : prayer.key === 'Maghrib'
                                                 ? startEnd.start
-                                                : formatTo12HourDisplay(safeManual[prayer.key]?.adhan || defaultAdhan);
+                                                : formatTo12HourDisplay(manualTimes[prayer.key]?.adhan);
 
                                         const jamatTime = isNafl
                                             ? '-'
                                             : prayer.key === 'Maghrib'
                                                 ? 'After Azaan'
-                                                : formatTo12HourDisplay(safeManual[prayer.key]?.jamat || defaultJamat);
+                                                : formatTo12HourDisplay(manualTimes[prayer.key]?.jamat);
 
                                         return (
                                             <tr key={prayer.key} className="prayer-row">
@@ -147,29 +136,17 @@ const PrayerTimes: React.FC<PrayerTimesProps> = ({
                                 const isNafl = prayer.key === 'Ishraq' || prayer.key === 'Chast';
                                 const startEnd = todayStartEndMap[prayer.key] || { start: '-', end: '-' };
 
-                                const defaultAdhan = isNafl
-                                    ? '-'
-                                    : prayer.key === 'Maghrib'
-                                        ? startEnd.start
-                                        : (DEFAULT_TIMES[prayer.key]?.adhan || '-');
-
-                                const defaultJamat = isNafl
-                                    ? '-'
-                                    : prayer.key === 'Maghrib'
-                                        ? 'After Azaan'
-                                        : (DEFAULT_TIMES[prayer.key]?.jamat || '-');
-
                                 const adhanTime = isNafl
                                     ? '-'
                                     : prayer.key === 'Maghrib'
                                         ? startEnd.start
-                                        : formatTo12HourDisplay(safeManual[prayer.key]?.adhan || defaultAdhan);
+                                        : formatTo12HourDisplay(manualTimes[prayer.key]?.adhan);
 
                                 const jamatTime = isNafl
                                     ? '-'
                                     : prayer.key === 'Maghrib'
                                         ? 'After Azaan'
-                                        : formatTo12HourDisplay(safeManual[prayer.key]?.jamat || defaultJamat);
+                                        : formatTo12HourDisplay(manualTimes[prayer.key]?.jamat);
 
                                 return (
                                     <div key={prayer.key} className="prayer-mobile-card">
@@ -224,6 +201,23 @@ const PrayerTimes: React.FC<PrayerTimesProps> = ({
                                 );
                             })
                         )}
+                    </div>
+
+                    {/* Dedicated Jummah Prayer Timing Card */}
+                    <div className="jummah-card">
+                        <div className="jummah-header">
+                            <span className="jummah-title">Jummah</span>
+                        </div>
+                        <div className="jummah-times-grid">
+                            <div className="jummah-time-item">
+                                <span className="jummah-time-label">Azaan</span>
+                                <span className="jummah-time-value">{formatTo12HourDisplay(manualTimes.Jummah?.adhan)}</span>
+                            </div>
+                            <div className="jummah-time-item highlight">
+                                <span className="jummah-time-label">Khutba</span>
+                                <span className="jummah-time-value text-primary font-bold">{formatTo12HourDisplay(manualTimes.Jummah?.jamat)}</span>
+                            </div>
+                        </div>
                     </div>
 
                 </div>

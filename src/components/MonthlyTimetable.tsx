@@ -9,20 +9,25 @@ interface DayPrayerTiming {
   subahSadiq: string;
   fajr: string;
   tulu: string;
-  zawal: string;
+  zawalStart: string;
+  zawalEnd: string;
   asr: string;
+  asrEnd: string;
   sunset: string;
   maghrib: string;
   isha: string;
   ishraqStart?: string;
   ishraqEnd?: string;
   chashtStart?: string;
-  chashtEnd?: string;
 }
 
 type PrayerTimesData = Record<string, DayPrayerTiming>;
 
 const prayerTimesData = prayerTimesDataJson as PrayerTimesData;
+
+const formatZawalDisplay = (timings: DayPrayerTiming): string => {
+  return `${formatTo12HourDisplay(timings.zawalStart)} - ${formatTo12HourDisplay(timings.zawalEnd)}`;
+};
 
 interface MonthOption {
   code: string; // e.g. "Jan", "Feb"
@@ -227,7 +232,7 @@ const MonthlyTimetable: React.FC = () => {
                   <th>Tulu (Sunrise)</th>
                   <th>Ishraq</th>
                   <th>Chasht</th>
-                  <th>Zawal</th>
+                  <th className="th-zawal">Zawal</th>
                   <th>Asr</th>
                   <th>Sunset</th>
                   <th>Maghrib</th>
@@ -252,7 +257,7 @@ const MonthlyTimetable: React.FC = () => {
                       <td>{formatTo12HourDisplay(timings.tulu)}</td>
                       <td>{formatTo12HourDisplay(timings.ishraqStart)}</td>
                       <td>{formatTo12HourDisplay(timings.chashtStart)}</td>
-                      <td>{formatTo12HourDisplay(timings.zawal)}</td>
+                      <td className="td-zawal">{formatZawalDisplay(timings)}</td>
                       <td>{formatTo12HourDisplay(timings.asr)}</td>
                       <td>{formatTo12HourDisplay(timings.sunset)}</td>
                       <td className="font-semibold text-primary">{formatTo12HourDisplay(timings.maghrib)}</td>
@@ -353,7 +358,7 @@ const MonthlyTimetable: React.FC = () => {
                   </div>
                   <div className="day-grid-item">
                     <span className="grid-item-label">Zawal</span>
-                    <span className="grid-item-val">{formatTo12HourDisplay(activeDayData.timings.zawal)}</span>
+                    <span className="grid-item-val zawal-range-val">{formatZawalDisplay(activeDayData.timings)}</span>
                   </div>
                   <div className="day-grid-item">
                     <span className="grid-item-label">Asr</span>

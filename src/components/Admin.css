@@ -447,3 +447,75 @@
   min-height: 4.25rem;
   box-sizing: border-box;
 }
+
+/* Card Level Action Buttons (Mobile View) */
+.btn-card-action-edit {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.35rem 0.75rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--color-primary);
+  background-color: #ecfdf5;
+  border: 1px solid #a7f3d0;
+  border-radius: 0.45rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-card-action-edit:hover {
+  background-color: #d1fae5;
+  color: var(--color-primary-dark);
+}
+
+.card-action-btn-group {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.btn-card-action-cancel {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.35rem 0.65rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #64748b;
+  background-color: #f1f5f9;
+  border: 1px solid #cbd5e1;
+  border-radius: 0.45rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-card-action-cancel:hover {
+  background-color: #e2e8f0;
+  color: #334155;
+}
+
+.btn-card-action-save {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.35rem 0.8rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #ffffff;
+  background-color: var(--color-primary);
+  border: 1px solid var(--color-primary);
+  border-radius: 0.45rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-card-action-save:hover {
+  background-color: var(--color-primary-dark);
+}
+
+.btn-card-action-save:disabled,
+.btn-card-action-cancel:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}

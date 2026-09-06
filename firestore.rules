@@ -2,15 +2,10 @@ rules_version = '2';
 
 service cloud.firestore {
   match /databases/{database}/documents {
-    // Anyone can read prayer times, only authenticated admins can update them
-    match /settings/prayerTimes {
+    // Anyone can read settings, only authenticated admins can update them
+    match /settings/{document=**} {
       allow read: if true;
       allow write: if request.auth != null;
-    }
-
-    // Public read & write access for Islamic Date Cache (any visitor can populate/update cache)
-    match /settings/islamicDateCache {
-      allow read, write: if true;
     }
   }
 }

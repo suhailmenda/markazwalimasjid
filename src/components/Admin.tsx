@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { Pencil, Save, X, ArrowLeft, LogIn, Lock, Mail, ShieldAlert, RefreshCw, Clock, MapPin, CheckCircle2 } from 'lucide-react';
+import { Pencil, Save, X, ArrowLeft, LogIn, Lock, Mail, ShieldAlert, RefreshCw, MapPin } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { auth, isFirebaseConfigured } from '../firebase';
 import { signInWithEmailAndPassword, onAuthStateChanged, type User } from 'firebase/auth';
-import { DEFAULT_TIMES, type ManualTimes, type PrayerName, type TimeType } from '../types/prayer';
+import { type ManualTimes, type PrayerName, type TimeType } from '../types/prayer';
 import { getTodayPrayerStartEndMap } from '../utils/prayerStartEnd';
 import { formatTo12HourDisplay } from '../utils/timeFormat';
+import CurrentNextPrayer from './CurrentNextPrayer';
 import './Admin.css';
 import './PrayerTimes.css';
 
@@ -79,14 +80,12 @@ interface AdminProps {
     manualTimes?: ManualTimes;
     saveAllSettings?: (newManualTimes: ManualTimes, newIslamicDate: string) => Promise<void>;
     islamicDate?: string;
-    syncIslamicDate?: () => Promise<string>;
 }
 
 const Admin: React.FC<AdminProps> = ({
     manualTimes,
     saveAllSettings,
     islamicDate = '',
-    syncIslamicDate,
 }) => {
     const [currentTime, setCurrentTime] = useState<Date>(new Date());
 
@@ -95,26 +94,27 @@ const Admin: React.FC<AdminProps> = ({
         return () => clearInterval(timer);
     }, []);
 
-    const safeManual = manualTimes || DEFAULT_TIMES;
+    const safeManual = manualTimes || {};
     const { map: todayStartEndMap } = getTodayPrayerStartEndMap(currentTime);
 
-    // Edit Mode State
+    // Edit Mode State (Desktop global edit mode)
     const [isEditing, setIsEditing] = useState<boolean>(false);
+    // Per-Card Edit Mode State (Mobile view)
+    const [editingCard, setEditingCard] = useState<PrayerName | null>(null);
+    // Mobile Islamic Date Edit State
+    const [isEditingDate, setIsEditingDate] = useState<boolean>(false);
+
     const [draftTimes, setDraftTimes] = useState<ManualTimes>(() => safeManual);
     const [draftIslamicDate, setDraftIslamicDate] = useState<string>(islamicDate);
     const [isSaving, setIsSaving] = useState<boolean>(false);
 
-    // Sync State
-    const [isSyncingDate, setIsSyncingDate] = useState<boolean>(false);
-    const [syncNotification, setSyncNotification] = useState<{ message: string; type: 'success' | 'error' } | null>(null);
-
     // Sync draftTimes when manualTimes updates and not currently editing
     useEffect(() => {
-        if (!isEditing) {
+        if (!isEditing && !editingCard && !isEditingDate) {
             setDraftTimes(safeManual);
             setDraftIslamicDate(islamicDate);
         }
-    }, [manualTimes, islamicDate, isEditing, safeManual]);
+    }, [manualTimes, islamicDate, isEditing, editingCard, isEditingDate, safeManual]);
 
     // Auth state
     const [user, setUser] = useState<User | null>(null);
@@ -138,44 +138,95 @@ const Admin: React.FC<AdminProps> = ({
         return () => unsubscribe();
     }, []);
 
-    const handleSyncIslamicDate = async (): Promise<void> => {
-        setIsSyncingDate(true);
-        setSyncNotification(null);
-        try {
-            if (typeof syncIslamicDate === 'function') {
-                const synced = await syncIslamicDate();
-                setDraftIslamicDate(synced);
-                setSyncNotification({
-                    message: `Synced with Aladhan API: "${synced}"`,
-                    type: 'success',
-                });
-                setTimeout(() => setSyncNotification(null), 5000);
-            }
-        } catch (err: any) {
-            console.error('Error syncing Islamic date:', err);
-            setSyncNotification({
-                message: 'Failed to sync Islamic date. Please try again.',
-                type: 'error',
-            });
-            setTimeout(() => setSyncNotification(null), 5000);
-        } finally {
-            setIsSyncingDate(false);
-        }
-    };
-
-    // Enter Edit Mode & snapshot draft state
+    // Enter Global Edit Mode & snapshot draft state
     const handleStartEdit = (): void => {
         setDraftTimes(JSON.parse(JSON.stringify(safeManual)) as ManualTimes);
         setDraftIslamicDate(islamicDate);
         setIsEditing(true);
+        setEditingCard(null);
+        setIsEditingDate(false);
     };
 
-    // Cancel Editing & revert
+    // Cancel Global Editing & revert
     const handleCancelEdit = (): void => {
         setIsEditing(false);
     };
 
-    // Explicit Save Button Handler with validation check
+    // Mobile Islamic Date Edit Handlers
+    const handleSaveIslamicDate = async (): Promise<void> => {
+        setIsSaving(true);
+        try {
+            if (typeof saveAllSettings === 'function') {
+                await saveAllSettings(draftTimes || safeManual, draftIslamicDate);
+            }
+            setIsEditingDate(false);
+        } catch (err) {
+            console.error('Error saving Islamic date:', err);
+        } finally {
+            setIsSaving(false);
+        }
+    };
+
+    const handleCancelEditIslamicDate = (): void => {
+        setDraftIslamicDate(islamicDate);
+        setIsEditingDate(false);
+    };
+
+    // Mobile Per-Card Edit Handlers
+    const handleStartEditCard = (prayerKey: PrayerName): void => {
+        setDraftTimes((prev) => ({
+            ...(prev || safeManual),
+            [prayerKey]: { ...(safeManual[prayerKey] || { adhan: '', jamat: '' }) },
+        }));
+        setEditingCard(prayerKey);
+    };
+
+    const handleCancelEditCard = (prayerKey: PrayerName): void => {
+        setDraftTimes((prev) => ({
+            ...(prev || safeManual),
+            [prayerKey]: { ...(safeManual[prayerKey] || { adhan: '', jamat: '' }) },
+        }));
+        setEditingCard(null);
+    };
+
+    const handleSaveCard = async (prayerKey: PrayerName): Promise<void> => {
+        setIsSaving(true);
+        try {
+            const currentDraftObj = draftTimes || safeManual;
+            const currentPrayerDraft = currentDraftObj[prayerKey] || { adhan: '', jamat: '' };
+
+            const parsedAdhan = parseStoredTimeTo12Hour(currentPrayerDraft.adhan || '');
+            const parsedJamat = parseStoredTimeTo12Hour(currentPrayerDraft.jamat || '');
+
+            const validAdhan = isValid12HourTime(parsedAdhan.time12)
+                ? currentPrayerDraft.adhan
+                : (safeManual[prayerKey]?.adhan || '');
+
+            const validJamat = isValid12HourTime(parsedJamat.time12)
+                ? currentPrayerDraft.jamat
+                : (safeManual[prayerKey]?.jamat || '');
+
+            const updatedManualTimes: ManualTimes = {
+                ...safeManual,
+                ...draftTimes,
+                [prayerKey]: {
+                    adhan: validAdhan,
+                    jamat: validJamat,
+                },
+            };
+
+            if (typeof saveAllSettings === 'function') {
+                await saveAllSettings(updatedManualTimes, draftIslamicDate || islamicDate);
+            }
+            setEditingCard(null);
+        } catch (err) {
+            console.error(`Error saving ${prayerKey}:`, err);
+        } finally {
+            setIsSaving(false);
+        }
+    };
+
+    // Explicit Save Button Handler with validation check (Desktop / Save All)
     const handleSaveAll = async (): Promise<void> => {
         setIsSaving(true);
         try {
@@ -187,12 +238,20 @@ const Admin: React.FC<AdminProps> = ({
 
                     const parsedAdhan = parseStoredTimeTo12Hour(adhanVal);
                     if (!isValid12HourTime(parsedAdhan.time12)) {
-                        validatedDraftTimes[pKey].adhan = safeManual[pKey]?.adhan || DEFAULT_TIMES[pKey].adhan;
+                        validatedDraftTimes[pKey] = {
+                            ...validatedDraftTimes[pKey],
+                            adhan: safeManual[pKey]?.adhan || '',
+                            jamat: validatedDraftTimes[pKey]?.jamat || '',
+                        };
                     }
 
                     const parsedJamat = parseStoredTimeTo12Hour(jamatVal);
                     if (!isValid12HourTime(parsedJamat.time12)) {
-                        validatedDraftTimes[pKey].jamat = safeManual[pKey]?.jamat || DEFAULT_TIMES[pKey].jamat;
+                        validatedDraftTimes[pKey] = {
+                            ...validatedDraftTimes[pKey],
+                            adhan: validatedDraftTimes[pKey]?.adhan || '',
+                            jamat: safeManual[pKey]?.jamat || '',
+                        };
                     }
                 }
             });
@@ -225,7 +284,7 @@ const Admin: React.FC<AdminProps> = ({
 
     const handleInputBlur = (prayerKey: PrayerName, type: TimeType, currentInputValue: string, period: 'AM' | 'PM'): void => {
         if (!isValid12HourTime(currentInputValue)) {
-            const oldStored = safeManual[prayerKey]?.[type] || DEFAULT_TIMES[prayerKey]?.[type] || '';
+            const oldStored = safeManual[prayerKey]?.[type] || '';
             const oldParsed = parseStoredTimeTo12Hour(oldStored);
             const revertedStored = combine12HourToStored(oldParsed.time12, oldParsed.period);
             handleDraftTimeChange(prayerKey, type, revertedStored);
@@ -273,7 +332,6 @@ const Admin: React.FC<AdminProps> = ({
         { name: 'Asr', key: 'Asr' },
         { name: 'Maghrib', key: 'Maghrib' },
         { name: 'Isha', key: 'Isha' },
-        { name: 'Jummah', key: 'Jummah' },
     ];
 
     if (authLoading) {
@@ -373,17 +431,11 @@ const Admin: React.FC<AdminProps> = ({
     return (
         <div className="admin-container section-padding">
             <div className="container" style={{ maxWidth: '900px', margin: '0 auto' }}>
-                
+
                 {/* Admin Header Bar */}
                 <div className="admin-header-bar">
                     <div>
                         <h2 className="admin-title">Admin Dashboard</h2>
-                        {user && (
-                            <p className="admin-user-badge">
-                                <span className="user-dot"></span>
-                                Logged in as <strong style={{ color: '#334155' }}>{user.email}</strong>
-                            </p>
-                        )}
                     </div>
 
                     <div className="admin-actions">
@@ -400,34 +452,12 @@ const Admin: React.FC<AdminProps> = ({
                     </div>
                 </div>
 
-                {/* Sync Notification Banner */}
-                {syncNotification && (
-                    <div
-                        style={{
-                            padding: '0.75rem 1.25rem',
-                            marginBottom: '1rem',
-                            borderRadius: '0.5rem',
-                            fontSize: '0.9rem',
-                            fontWeight: 600,
-                            display: 'flex',
-                            alignItems: 'center',
-                            gap: '0.5rem',
-                            backgroundColor: syncNotification.type === 'success' ? '#ecfdf5' : '#fef2f2',
-                            color: syncNotification.type === 'success' ? '#047857' : '#b91c1c',
-                            border: `1px solid ${syncNotification.type === 'success' ? '#a7f3d0' : '#fecaca'}`,
-                        }}
-                    >
-                        {syncNotification.type === 'success' ? <CheckCircle2 size={18} /> : <ShieldAlert size={18} />}
-                        <span>{syncNotification.message}</span>
-                    </div>
-                )}
-
                 {/* Public View Match Card */}
                 <div className="prayer-card">
                     <div className="current-time-display" style={{ position: 'relative' }}>
-                        
-                        {/* Save Button in Top-Left of Card during Edit Mode */}
-                        <div style={{ position: 'absolute', top: '1rem', left: '1rem' }}>
+
+                        {/* Save Button in Top-Left of Card during Global Edit Mode (Desktop Only) */}
+                        <div className="desktop-only-view" style={{ position: 'absolute', top: '1rem', left: '1rem' }}>
                             {isEditing && (
                                 <button
                                     onClick={handleSaveAll}
@@ -441,12 +471,12 @@ const Admin: React.FC<AdminProps> = ({
                             )}
                         </div>
 
-                        {/* Interchanging Edit (Pencil) <-> Cancel (Cross) Button in Card Top-Right */}
-                        <div style={{ position: 'absolute', top: '1rem', right: '1rem' }}>
+                        {/* Interchanging Edit (Pencil) <-> Cancel (Cross) Button in Card Top-Right (Desktop Only) */}
+                        <div className="desktop-only-view" style={{ position: 'absolute', top: '1rem', right: '1rem' }}>
                             {!isEditing ? (
                                 <button
                                     onClick={handleStartEdit}
-                                    title="Edit Prayer Times & Islamic Date"
+                                    title="Edit All Prayer Times & Islamic Date"
                                     className="btn-card-icon"
                                 >
                                     <Pencil size={18} />
@@ -462,22 +492,16 @@ const Admin: React.FC<AdminProps> = ({
                                 </button>
                             )}
                         </div>
-
-                        <Clock className="mb-2 text-gold" size={32} />
                         <div className="time">
                             {currentTime.toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit', second: '2-digit', timeZone: 'Asia/Kolkata' })}
                         </div>
                         <div className="date">
                             {currentTime.toLocaleDateString('en-IN', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', timeZone: 'Asia/Kolkata' })}
                         </div>
-                        
-                        {/* Fixed Height Wrapper with Sync Button */}
-                        <div className="islamic-date-container" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.6rem', flexWrap: 'wrap' }}>
-                            {!isEditing ? (
-                                <span className="islamic-date-display">
-                                    {islamicDate}
-                                </span>
-                            ) : (
+
+                        {/* Islamic Date Display */}
+                        <div className="islamic-date-container" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem', flexWrap: 'wrap' }}>
+                            {isEditing ? (
                                 <input
                                     type="text"
                                     value={draftIslamicDate}
@@ -485,19 +509,63 @@ const Admin: React.FC<AdminProps> = ({
                                     placeholder="e.g. 14 Rabīʿ al-awwal 1448 AH"
                                     className="islamic-date-input-inline"
                                 />
+                            ) : isEditingDate ? (
+                                <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', flexWrap: 'wrap', justifyContent: 'center' }}>
+                                    <input
+                                        type="text"
+                                        value={draftIslamicDate}
+                                        onChange={(e) => setDraftIslamicDate(e.target.value)}
+                                        placeholder="e.g. 14 Rabīʿ al-awwal 1448 AH"
+                                        className="islamic-date-input-inline"
+                                        autoFocus
+                                    />
+                                    <div className="card-action-btn-group">
+                                        <button
+                                            type="button"
+                                            className="btn-card-action-cancel"
+                                            style={{ padding: '0.25rem 0.5rem', fontSize: '0.75rem' }}
+                                            onClick={handleCancelEditIslamicDate}
+                                            disabled={isSaving}
+                                        >
+                                            <X size={13} />
+                                            <span>Cancel</span>
+                                        </button>
+                                        <button
+                                            type="button"
+                                            className="btn-card-action-save"
+                                            style={{ padding: '0.25rem 0.6rem', fontSize: '0.75rem' }}
+                                            onClick={handleSaveIslamicDate}
+                                            disabled={isSaving}
+                                        >
+                                            {isSaving ? <RefreshCw size={12} className="animate-spin" /> : <Save size={12} />}
+                                            <span>{isSaving ? 'Saving...' : 'Save'}</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            ) : (
+                                <>
+                                    <span className="islamic-date-display">
+                                        {islamicDate}
+                                    </span>
+                                    <button
+                                        type="button"
+                                        className="btn-card-action-edit mobile-only-view"
+                                        style={{ padding: '0.2rem 0.5rem', fontSize: '0.75rem', borderRadius: '0.35rem' }}
+                                        onClick={() => {
+                                            setDraftIslamicDate(islamicDate);
+                                            setIsEditingDate(true);
+                                        }}
+                                        title="Edit Islamic Date"
+                                    >
+                                        <Pencil size={12} />
+                                        <span>Edit</span>
+                                    </button>
+                                </>
                             )}
-
-                            <button
-                                type="button"
-                                onClick={handleSyncIslamicDate}
-                                disabled={isSyncingDate}
-                                title="Sync Islamic Date from Aladhan API directly into Firestore"
-                                className="btn-admin-sync"
-                            >
-                                <RefreshCw size={13} className={isSyncingDate ? 'animate-spin' : ''} />
-                                <span>{isSyncingDate ? 'Syncing...' : 'Sync Date'}</span>
-                            </button>
                         </div>
+
+                        {/* Integrated Active & Next Namaz Banner */}
+                        <CurrentNextPrayer currentTime={currentTime} manualTimes={safeManual} />
                     </div>
 
                     {/* Desktop View: Full 5-Column Table */}
@@ -519,42 +587,30 @@ const Admin: React.FC<AdminProps> = ({
                                     const isNafl = prayerKey === 'Ishraq' || prayerKey === 'Chast';
                                     const startEnd = todayStartEndMap[prayerKey] || { start: '-', end: '-' };
 
-                                    const defaultAdhan = isNafl
-                                        ? '-'
-                                        : isMaghrib
-                                        ? startEnd.start
-                                        : (DEFAULT_TIMES[prayerKey]?.adhan || '-');
-
-                                    const defaultJamat = isNafl
-                                        ? '-'
-                                        : isMaghrib
-                                        ? 'After Azaan'
-                                        : (DEFAULT_TIMES[prayerKey]?.jamat || '-');
-
                                     const activeAdhan = isNafl
                                         ? '-'
                                         : isMaghrib
-                                        ? startEnd.start
-                                        : formatTo12HourDisplay(safeManual[prayerKey]?.adhan || defaultAdhan);
+                                            ? startEnd.start
+                                            : formatTo12HourDisplay(safeManual[prayerKey]?.adhan);
 
                                     const activeJamat = isNafl
                                         ? '-'
                                         : isMaghrib
-                                        ? 'After Azaan'
-                                        : formatTo12HourDisplay(safeManual[prayerKey]?.jamat || defaultJamat);
+                                            ? 'After Azaan'
+                                            : formatTo12HourDisplay(safeManual[prayerKey]?.jamat);
 
                                     const currentDraftObj = draftTimes || safeManual;
                                     const draftAdhan = isNafl
                                         ? '-'
                                         : isMaghrib
-                                        ? startEnd.start
-                                        : (currentDraftObj[prayerKey]?.adhan !== undefined ? currentDraftObj[prayerKey].adhan : activeAdhan);
+                                            ? startEnd.start
+                                            : (currentDraftObj[prayerKey]?.adhan || '');
 
                                     const draftJamat = isNafl
                                         ? '-'
                                         : isMaghrib
-                                        ? 'After Azaan'
-                                        : (currentDraftObj[prayerKey]?.jamat !== undefined ? currentDraftObj[prayerKey].jamat : activeJamat);
+                                            ? 'After Azaan'
+                                            : (currentDraftObj[prayerKey]?.jamat || '');
 
                                     const parsedAdhan = parseStoredTimeTo12Hour(draftAdhan);
                                     const parsedJamat = parseStoredTimeTo12Hour(draftJamat);
@@ -608,7 +664,7 @@ const Admin: React.FC<AdminProps> = ({
                                             </td>
 
                                             {/* Jamaat Column */}
-                                            <td className="prayer-time font-bold text-primary">
+                                            <td className="prayer-time">
                                                 {!isEditing ? (
                                                     <div className="cell-content font-bold text-primary">{activeJamat}</div>
                                                 ) : (isMaghrib || isNafl) ? (
@@ -657,50 +713,39 @@ const Admin: React.FC<AdminProps> = ({
                         </table>
                     </div>
 
-                    {/* Mobile View: Editable Stacked Mobile Cards */}
+                    {/* Mobile View: Editable Stacked Mobile Cards with Per-Card Edit & Save */}
                     <div className="prayer-mobile-list mobile-only-view">
                         {prayers.map((prayer) => {
                             const prayerKey = prayer.key;
                             const isMaghrib = prayerKey === 'Maghrib';
                             const isNafl = prayerKey === 'Ishraq' || prayerKey === 'Chast';
                             const startEnd = todayStartEndMap[prayerKey] || { start: '-', end: '-' };
-
-                            const defaultAdhan = isNafl
-                                ? '-'
-                                : isMaghrib
-                                ? startEnd.start
-                                : (DEFAULT_TIMES[prayerKey]?.adhan || '-');
-
-                            const defaultJamat = isNafl
-                                ? '-'
-                                : isMaghrib
-                                ? 'After Azaan'
-                                : (DEFAULT_TIMES[prayerKey]?.jamat || '-');
+                            const isCardEditing = isEditing || editingCard === prayerKey;
 
                             const activeAdhan = isNafl
                                 ? '-'
                                 : isMaghrib
-                                ? startEnd.start
-                                : formatTo12HourDisplay(safeManual[prayerKey]?.adhan || defaultAdhan);
+                                    ? startEnd.start
+                                    : formatTo12HourDisplay(safeManual[prayerKey]?.adhan);
 
                             const activeJamat = isNafl
                                 ? '-'
                                 : isMaghrib
-                                ? 'After Azaan'
-                                : formatTo12HourDisplay(safeManual[prayerKey]?.jamat || defaultJamat);
+                                    ? 'After Azaan'
+                                    : formatTo12HourDisplay(safeManual[prayerKey]?.jamat);
 
                             const currentDraftObj = draftTimes || safeManual;
                             const draftAdhan = isNafl
                                 ? '-'
                                 : isMaghrib
-                                ? startEnd.start
-                                : (currentDraftObj[prayerKey]?.adhan !== undefined ? currentDraftObj[prayerKey].adhan : activeAdhan);
+                                    ? startEnd.start
+                                    : (currentDraftObj[prayerKey]?.adhan !== undefined ? currentDraftObj[prayerKey].adhan : activeAdhan);
 
                             const draftJamat = isNafl
                                 ? '-'
                                 : isMaghrib
-                                ? 'After Azaan'
-                                : (currentDraftObj[prayerKey]?.jamat !== undefined ? currentDraftObj[prayerKey].jamat : activeJamat);
+                                    ? 'After Azaan'
+                                    : (currentDraftObj[prayerKey]?.jamat !== undefined ? currentDraftObj[prayerKey].jamat : activeJamat);
 
                             const parsedAdhan = parseStoredTimeTo12Hour(draftAdhan);
                             const parsedJamat = parseStoredTimeTo12Hour(draftJamat);
@@ -708,8 +753,47 @@ const Admin: React.FC<AdminProps> = ({
                             return (
                                 <div key={prayerKey} className="prayer-mobile-card">
                                     <div className="prayer-mobile-card-top">
-                                        <span className="prayer-mobile-name">{prayer.name}</span>
-                                        {isNafl && <span className="nafl-badge">Nafl</span>}
+                                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                                            <span className="prayer-mobile-name">{prayer.name}</span>
+                                            {isNafl && <span className="nafl-badge">Nafl</span>}
+                                        </div>
+
+                                        {/* Per-Card Edit / Save Buttons for Mobile */}
+                                        {!isNafl && !isMaghrib && !isEditing && (
+                                            <div>
+                                                {editingCard !== prayerKey ? (
+                                                    <button
+                                                        type="button"
+                                                        className="btn-card-action-edit"
+                                                        onClick={() => handleStartEditCard(prayerKey)}
+                                                    >
+                                                        <Pencil size={13} />
+                                                        <span>Edit</span>
+                                                    </button>
+                                                ) : (
+                                                    <div className="card-action-btn-group">
+                                                        <button
+                                                            type="button"
+                                                            className="btn-card-action-cancel"
+                                                            onClick={() => handleCancelEditCard(prayerKey)}
+                                                            disabled={isSaving}
+                                                        >
+                                                            <X size={14} />
+                                                            <span>Cancel</span>
+                                                        </button>
+                                                        <button
+                                                            type="button"
+                                                            className="btn-card-action-save"
+                                                            onClick={() => handleSaveCard(prayerKey)}
+                                                            disabled={isSaving}
+                                                        >
+                                                            {isSaving ? <RefreshCw size={13} className="animate-spin" /> : <Save size={13} />}
+                                                            <span>{isSaving ? 'Saving...' : 'Save'}</span>
+                                                        </button>
+                                                    </div>
+                                                )}
+                                            </div>
+                                        )}
                                     </div>
 
                                     {isNafl ? (
@@ -734,7 +818,7 @@ const Admin: React.FC<AdminProps> = ({
                                                 <div className="mobile-time-chip">
                                                     <span className="chip-label">Azaan</span>
                                                     <div className="chip-value-container">
-                                                        {!isEditing ? (
+                                                        {!isCardEditing ? (
                                                             <span className="chip-value">{activeAdhan}</span>
                                                         ) : isMaghrib ? (
                                                             <input
@@ -776,7 +860,7 @@ const Admin: React.FC<AdminProps> = ({
                                                 <div className="mobile-time-chip jamat-chip">
                                                     <span className="chip-label">Jamaat</span>
                                                     <div className="chip-value-container">
-                                                        {!isEditing ? (
+                                                        {!isCardEditing ? (
                                                             <span className="chip-value">{activeJamat}</span>
                                                         ) : isMaghrib ? (
                                                             <input
@@ -826,6 +910,133 @@ const Admin: React.FC<AdminProps> = ({
                             );
                         })}
                     </div>
+
+                    {/* Dedicated Editable Jummah Section */}
+                    {(() => {
+                        const isJummahEditing = isEditing || editingCard === 'Jummah';
+                        const currentDraftObj = draftTimes || safeManual;
+                        const azaanDraftVal = currentDraftObj.Jummah?.adhan || '';
+                        const parsedAzaan = parseStoredTimeTo12Hour(azaanDraftVal);
+                        const activeAzaan = formatTo12HourDisplay(safeManual.Jummah?.adhan);
+
+                        const khutbaDraftVal = currentDraftObj.Jummah?.jamat || '';
+                        const parsedKhutba = parseStoredTimeTo12Hour(khutbaDraftVal);
+                        const activeKhutba = formatTo12HourDisplay(safeManual.Jummah?.jamat);
+
+                        return (
+                            <div className="jummah-card">
+                                <div className="jummah-header">
+                                    <span className="jummah-title">Jummah</span>
+
+                                    {/* Per-Card Edit / Save for Jummah */}
+                                    {!isEditing && (
+                                        <div>
+                                            {editingCard !== 'Jummah' ? (
+                                                <button
+                                                    type="button"
+                                                    className="btn-card-action-edit"
+                                                    onClick={() => handleStartEditCard('Jummah')}
+                                                >
+                                                    <Pencil size={13} />
+                                                    <span>Edit</span>
+                                                </button>
+                                            ) : (
+                                                <div className="card-action-btn-group">
+                                                    <button
+                                                        type="button"
+                                                        className="btn-card-action-cancel"
+                                                        onClick={() => handleCancelEditCard('Jummah')}
+                                                        disabled={isSaving}
+                                                    >
+                                                        <X size={14} />
+                                                        <span>Cancel</span>
+                                                    </button>
+                                                    <button
+                                                        type="button"
+                                                        className="btn-card-action-save"
+                                                        onClick={() => handleSaveCard('Jummah')}
+                                                        disabled={isSaving}
+                                                    >
+                                                        {isSaving ? <RefreshCw size={13} className="animate-spin" /> : <Save size={13} />}
+                                                        <span>{isSaving ? 'Saving...' : 'Save'}</span>
+                                                    </button>
+                                                </div>
+                                            )}
+                                        </div>
+                                    )}
+                                </div>
+                                <div className="jummah-times-grid">
+                                    <div className="jummah-time-item">
+                                        <span className="jummah-time-label">Azaan</span>
+                                        <div className="jummah-time-value-container">
+                                            {!isJummahEditing ? (
+                                                <span className="jummah-time-value">{activeAzaan}</span>
+                                            ) : (
+                                                <div className="time-input-group">
+                                                    <input
+                                                        type="text"
+                                                        value={parsedAzaan.time12}
+                                                        onChange={(e) => {
+                                                            const newStored = combine12HourToStored(e.target.value, parsedAzaan.period);
+                                                            handleDraftTimeChange('Jummah', 'adhan', newStored);
+                                                        }}
+                                                        onBlur={(e) => handleInputBlur('Jummah', 'adhan', e.target.value, parsedAzaan.period)}
+                                                        placeholder="01:00"
+                                                        className="time-box-12 font-bold"
+                                                    />
+                                                    <button
+                                                        type="button"
+                                                        onClick={() => {
+                                                            const nextPeriod = parsedAzaan.period === 'AM' ? 'PM' : 'AM';
+                                                            const newStored = combine12HourToStored(parsedAzaan.time12, nextPeriod);
+                                                            handleDraftTimeChange('Jummah', 'adhan', newStored);
+                                                        }}
+                                                        className="period-toggle-btn"
+                                                    >
+                                                        {parsedAzaan.period}
+                                                    </button>
+                                                </div>
+                                            )}
+                                        </div>
+                                    </div>
+
+                                    <div className="jummah-time-item highlight">
+                                        <span className="jummah-time-label">Khutba</span>
+                                        <div className="jummah-time-value-container">
+                                            {!isJummahEditing ? (
+                                                <span className="jummah-time-value font-bold text-primary">{activeKhutba}</span>
+                                            ) : (
+                                                <div className="time-input-group">
+                                                    <input
+                                                        type="text"
+                                                        value={parsedKhutba.time12}
+                                                        onChange={(e) => {
+                                                            const newStored = combine12HourToStored(e.target.value, parsedKhutba.period);
+                                                            handleDraftTimeChange('Jummah', 'jamat', newStored);
+                                                        }}
+                                                        onBlur={(e) => handleInputBlur('Jummah', 'jamat', e.target.value, parsedKhutba.period)}
+                                                        placeholder="01:30"
+                                                        className="time-box-12 font-bold"
+                                                    />
+                                                    <button
+                                                        type="button"
+                                                        onClick={() => {
+                                                            const nextPeriod = parsedKhutba.period === 'AM' ? 'PM' : 'AM';
+                                                            const newStored = combine12HourToStored(parsedKhutba.time12, nextPeriod);
+                                                            handleDraftTimeChange('Jummah', 'jamat', newStored);
+                                                        }}
+                                                        className="period-toggle-btn"
+                                                    >
+                                                        {parsedKhutba.period}
+                                                    </button>
+                                                </div>
+                                            )}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        );
+                    })()}
 
                     {/* Reserved Footer Area for Desktop / Bottom Save Button */}
                     <div className="prayer-card-footer">
