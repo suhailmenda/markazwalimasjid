@@ -45,7 +45,6 @@
   font-weight: 700;
   color: var(--color-primary-dark);
   margin-bottom: 0.25rem;
-  font-family: var(--font-serif);
 }
 
 .admin-login-subtitle {
@@ -180,7 +179,6 @@
   font-weight: 700;
   color: #0f172a;
   margin: 0;
-  font-family: var(--font-serif);
 }
 
 .admin-user-badge {

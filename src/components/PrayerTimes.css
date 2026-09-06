@@ -98,7 +98,6 @@
 
 .prayer-table th {
     padding: 1rem;
-    font-family: var(--font-serif);
     color: var(--color-primary-dark);
     font-weight: 600;
     border-bottom: 2px solid var(--color-border);
@@ -151,6 +150,7 @@
     .desktop-only-view {
         display: block !important;
     }
+
     .mobile-only-view {
         display: none !important;
     }
@@ -160,6 +160,7 @@
     .desktop-only-view {
         display: none !important;
     }
+
     .mobile-only-view {
         display: flex !important;
         flex-direction: column;
@@ -202,7 +203,6 @@
 }
 
 .prayer-mobile-name {
-    font-family: var(--font-serif);
     font-size: 1.25rem;
     font-weight: 700;
     color: var(--color-primary-dark);
@@ -285,6 +285,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    white-space: nowrap;
 }
 
 .jamat-chip .chip-value {
@@ -306,6 +307,7 @@
     display: inline-flex;
     align-items: center;
     gap: 0.35rem;
+    white-space: nowrap;
 }
 
 .prayer-mobile-sub-times strong {
@@ -338,7 +340,6 @@
 }
 
 .jummah-title {
-    font-family: var(--font-serif);
     font-size: 1.35rem;
     font-weight: 700;
     color: var(--color-primary-dark);
@@ -385,6 +386,11 @@
     font-size: 1.15rem;
     font-weight: 700;
     color: #1e293b;
+    white-space: nowrap;
+}
+
+.jummah-time-item.highlight .jummah-time-value {
+    color: var(--color-primary);
 }
 
 .jummah-time-value-container {
