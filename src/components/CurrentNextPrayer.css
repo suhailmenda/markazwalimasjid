@@ -282,118 +282,146 @@
    ============================================================ */
 @media (max-width: 640px) {
   .cnp-card {
-    padding: 0.85rem 0.9rem;
+    padding: 0.9rem 1rem;
     margin-top: 1rem;
     border-radius: 1rem;
-    gap: 0.65rem;
+    gap: 0.75rem;
   }
 
   .cnp-top-bar {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas:
+      "badge badge"
+      "start end";
+    gap: 0.55rem 0.75rem;
     align-items: center;
-    gap: 0.35rem;
+    width: 100%;
   }
 
   .cnp-active-badge {
-    padding: 0.28rem 0.55rem;
-    gap: 0.35rem;
-    white-space: nowrap;
-    min-width: 0;
+    grid-area: badge;
+    justify-self: center;
+    padding: 0.35rem 0.85rem;
+    gap: 0.45rem;
+    white-space: normal;
+    text-align: center;
+    max-width: 100%;
+    box-sizing: border-box;
   }
 
   .cnp-active-lead {
-    font-size: 0.9rem;
+    font-size: 0.85rem;
   }
 
   .cnp-active-title {
     font-size: 0.95rem;
   }
 
+  .cnp-time-endpoint.start {
+    grid-area: start;
+    align-items: flex-start;
+    text-align: left;
+  }
+
+  .cnp-time-endpoint.end {
+    grid-area: end;
+    align-items: flex-end;
+    text-align: right;
+  }
+
   .cnp-time-label {
-    font-size: 0.68rem;
+    font-size: 0.72rem;
   }
 
   .cnp-time-value {
-    font-size: 0.95rem;
-  }
-
-  .cnp-countdown-hero {
-    padding: 0.6rem 0.7rem;
-  }
-
-  .cnp-hero-same-line {
-    justify-content: space-between;
-    gap: 0.35rem;
-  }
-
-  .cnp-hero-label {
-    font-size: 0.88rem;
-  }
-
-  .cnp-hero-prayer-name {
-    font-size: 0.95rem;
-  }
-
-  .cnp-hero-timer-display {
-    gap: 0.18rem;
-  }
-
-  .cnp-digit-card {
-    padding: 0.24rem 0.36rem;
-    gap: 0.12rem;
-  }
-
-  .cnp-digit-number {
     font-size: 1.05rem;
   }
 
+  .cnp-countdown-hero {
+    padding: 0.7rem 0.85rem;
+  }
+
+  .cnp-hero-same-line {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+
+  .cnp-hero-label {
+    font-size: 0.92rem;
+    line-height: 1.3;
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+
+  .cnp-hero-prayer-name {
+    font-size: 1.05rem;
+  }
+
+  .cnp-hero-timer-display {
+    gap: 0.25rem;
+    flex-shrink: 0;
+  }
+
+  .cnp-digit-card {
+    padding: 0.3rem 0.45rem;
+  }
+
+  .cnp-digit-number {
+    font-size: 1.25rem;
+  }
+
   .cnp-digit-label {
-    font-size: 0.52rem;
+    font-size: 0.55rem;
   }
 
   .cnp-digit-separator {
-    font-size: 0.88rem;
+    font-size: 1.05rem;
   }
 }
 
 @media (max-width: 380px) {
   .cnp-card {
-    padding: 0.75rem 0.65rem;
+    padding: 0.75rem 0.75rem;
   }
 
   .cnp-active-badge {
-    padding: 0.22rem 0.4rem;
-    gap: 0.25rem;
+    padding: 0.3rem 0.65rem;
+    gap: 0.35rem;
   }
 
   .cnp-active-lead {
-    font-size: 0.8rem;
+    font-size: 0.78rem;
   }
 
   .cnp-active-title {
-    font-size: 0.85rem;
+    font-size: 0.88rem;
   }
 
   .cnp-time-label {
-    font-size: 0.62rem;
+    font-size: 0.65rem;
   }
 
   .cnp-time-value {
-    font-size: 0.85rem;
+    font-size: 0.95rem;
   }
 
   .cnp-hero-label {
-    font-size: 0.8rem;
-  }
-
-  .cnp-hero-prayer-name {
     font-size: 0.85rem;
   }
 
+  .cnp-hero-prayer-name {
+    font-size: 0.95rem;
+  }
+
   .cnp-digit-card {
-    padding: 0.2rem 0.28rem;
+    padding: 0.22rem 0.35rem;
   }
 
   .cnp-digit-number {
-    font-size: 0.95rem;
+    font-size: 1.1rem;
   }
 }

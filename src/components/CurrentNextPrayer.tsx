@@ -85,6 +85,8 @@ const getPrayerStatus = (now: Date, manualTimes: ManualTimes): PrayerStatus => {
 
   const ishaStartYesterday = parseTimeToToday(yesterdayInfo.raw.isha, yesterdayDate);
   const subahSadiqTomorrow = parseTimeToToday(tomorrowInfo.raw.subahSadiq, tomorrowDate);
+  const ishraqEndToday = parseTimeToToday(todayInfo.raw.ishraqEnd || todayInfo.raw.chashtStart || '', now);
+  const chashtStartToday = parseTimeToToday(todayInfo.raw.chashtStart || todayInfo.raw.ishraqEnd || '', now);
 
   const safeManual = manualTimes || {};
 
@@ -110,7 +112,7 @@ const getPrayerStatus = (now: Date, manualTimes: ManualTimes): PrayerStatus => {
     };
   }
 
-  // 2. Fajr (Subah Sadiq to Tulu)
+  // 1. Fajr (Subah Sadiq to Tulu)
   if (now >= subahSadiqToday && now < tuluToday) {
     return {
       isMakruh: false,
@@ -123,24 +125,24 @@ const getPrayerStatus = (now: Date, manualTimes: ManualTimes): PrayerStatus => {
         timeLeft: calculateTimeRemaining(tuluToday, now),
       },
       next: {
-        name: 'Dhuhr',
-        label: 'Next Prayer',
-        startTimeDisplay: formatTo12HourDisplay(todayInfo.raw.zawalEnd),
-        jamaatTimeDisplay: formatTo12HourDisplay(safeManual.Dhuhr?.jamat),
-        timeLeft: calculateTimeRemaining(zawalEndToday, now),
+        name: 'Makruh (After tulu)',
+        label: 'Next Phase',
+        startTimeDisplay: formatTo12HourDisplay(todayInfo.raw.tulu),
+        jamaatTimeDisplay: '',
+        timeLeft: calculateTimeRemaining(tuluToday, now),
       },
     };
   }
 
-  // 3. MAKRUH 1: Sunrise / Tulu (Tulu to Ishraq Start)
+  // 2. Makruh (After tulu) (Tulu to Ishraq Start)
   if (now >= tuluToday && now < ishraqStartToday) {
     return {
       isMakruh: true,
-      makruhTitle: 'Sunrise (Tulu) — Makruh Time',
+      makruhTitle: 'Makruh (After tulu)',
       makruhDescription: 'Prohibited to offer Salah or Sajdah until Ishraq begins.',
       progressPercent: calcProgress(tuluToday, ishraqStartToday, now),
       current: {
-        name: 'Sunrise (Tulu)',
+        name: 'Makruh (After tulu)',
         label: 'Makruh Time',
         startTimeDisplay: formatTo12HourDisplay(todayInfo.raw.tulu),
         endTimeDisplay: formatTo12HourDisplay(todayInfo.raw.ishraqStart),
@@ -156,37 +158,59 @@ const getPrayerStatus = (now: Date, manualTimes: ManualTimes): PrayerStatus => {
     };
   }
 
-  // 4. Ishraq & Chasht (Ishraq Start to Zawal Start)
-  if (now >= ishraqStartToday && now < zawalStartToday) {
+  // 3. Ishraq (Ishraq Start to Ishraq End / Chasht Start)
+  if (now >= ishraqStartToday && now < ishraqEndToday) {
     return {
       isMakruh: false,
-      progressPercent: calcProgress(ishraqStartToday, zawalStartToday, now),
+      progressPercent: calcProgress(ishraqStartToday, ishraqEndToday, now),
       current: {
-        name: 'Chasht / Ishraq',
+        name: 'Ishraq',
         label: 'Nafl Window',
         startTimeDisplay: formatTo12HourDisplay(todayInfo.raw.ishraqStart),
-        endTimeDisplay: formatTo12HourDisplay(todayInfo.raw.zawalStart),
-        timeLeft: calculateTimeRemaining(zawalStartToday, now),
+        endTimeDisplay: formatTo12HourDisplay(todayInfo.raw.ishraqEnd || todayInfo.raw.chashtStart),
+        timeLeft: calculateTimeRemaining(ishraqEndToday, now),
       },
       next: {
-        name: 'Dhuhr',
+        name: 'Chast',
         label: 'Next Prayer',
-        startTimeDisplay: formatTo12HourDisplay(todayInfo.raw.zawalEnd),
-        jamaatTimeDisplay: formatTo12HourDisplay(safeManual.Dhuhr?.jamat),
-        timeLeft: calculateTimeRemaining(zawalEndToday, now),
+        startTimeDisplay: formatTo12HourDisplay(todayInfo.raw.chashtStart || todayInfo.raw.ishraqEnd),
+        jamaatTimeDisplay: '',
+        timeLeft: calculateTimeRemaining(ishraqEndToday, now),
       },
     };
   }
 
-  // 5. MAKRUH 2: Zawal Zenith (Zawal Start to Zawal End)
+  // 4. Chast (Chasht Start to Zawal Start)
+  if (now >= ishraqEndToday && now < zawalStartToday) {
+    return {
+      isMakruh: false,
+      progressPercent: calcProgress(ishraqEndToday, zawalStartToday, now),
+      current: {
+        name: 'Chast',
+        label: 'Nafl Window',
+        startTimeDisplay: formatTo12HourDisplay(todayInfo.raw.chashtStart || todayInfo.raw.ishraqEnd),
+        endTimeDisplay: formatTo12HourDisplay(todayInfo.raw.zawalStart),
+        timeLeft: calculateTimeRemaining(zawalStartToday, now),
+      },
+      next: {
+        name: 'Makruh (Zawal)',
+        label: 'Next Phase',
+        startTimeDisplay: formatTo12HourDisplay(todayInfo.raw.zawalStart),
+        jamaatTimeDisplay: '',
+        timeLeft: calculateTimeRemaining(zawalStartToday, now),
+      },
+    };
+  }
+
+  // 5. Makruh (Zawal) (Zawal Start to Zawal End)
   if (now >= zawalStartToday && now < zawalEndToday) {
     return {
       isMakruh: true,
-      makruhTitle: 'Zawal (Zenith) — Makruh Time',
+      makruhTitle: 'Makruh (Zawal)',
       makruhDescription: 'Sun is at meridian (Nisf an-Nahar). Salah is prohibited until Dhuhr starts.',
       progressPercent: calcProgress(zawalStartToday, zawalEndToday, now),
       current: {
-        name: 'Zawal Time',
+        name: 'Makruh (Zawal)',
         label: 'Makruh Time',
         startTimeDisplay: formatTo12HourDisplay(todayInfo.raw.zawalStart),
         endTimeDisplay: formatTo12HourDisplay(todayInfo.raw.zawalEnd),
@@ -237,24 +261,24 @@ const getPrayerStatus = (now: Date, manualTimes: ManualTimes): PrayerStatus => {
         timeLeft: calculateTimeRemaining(asrEndToday, now),
       },
       next: {
-        name: 'Maghrib',
-        label: 'Next Prayer',
-        startTimeDisplay: formatTo12HourDisplay(todayInfo.raw.maghrib),
-        jamaatTimeDisplay: 'After Azaan',
-        timeLeft: calculateTimeRemaining(maghribStartToday, now),
+        name: 'Makruh (Before Gurub)',
+        label: 'Next Phase',
+        startTimeDisplay: formatTo12HourDisplay(todayInfo.raw.asrEnd),
+        jamaatTimeDisplay: '',
+        timeLeft: calculateTimeRemaining(asrEndToday, now),
       },
     };
   }
 
-  // 8. MAKRUH 3: Setting Sun (Asr End to Maghrib Start)
+  // 8. Makruh (Before Gurub) (Asr End to Maghrib Start)
   if (now >= asrEndToday && now < maghribStartToday) {
     return {
       isMakruh: true,
-      makruhTitle: 'Setting Sun — Makruh Time',
+      makruhTitle: 'Makruh (Before Gurub)',
       makruhDescription: 'Asr time has expired. Voluntary prayers prohibited until Maghrib.',
       progressPercent: calcProgress(asrEndToday, maghribStartToday, now),
       current: {
-        name: 'Pre-Maghrib',
+        name: 'Makruh (Before Gurub)',
         label: 'Makruh Time',
         startTimeDisplay: formatTo12HourDisplay(todayInfo.raw.asrEnd),
         endTimeDisplay: formatTo12HourDisplay(todayInfo.raw.maghrib),
