@@ -15,10 +15,6 @@ export interface TimeParts {
     period: 'AM' | 'PM';
 }
 
-export const formatDisplayTime = (stored?: string): string => {
-    if (!stored || stored === '-' || stored === 'After Azaan') return stored || '-';
-    return stored.trim().replace(/^(\d):/, '0$1:');
-};
 
 export const splitTimeAndPeriod = (stored = '', defaultPeriod: 'AM' | 'PM' = 'AM'): TimeParts => {
     if (!stored || stored === 'After Azaan' || stored === '-') {
@@ -596,13 +592,13 @@ const Admin: React.FC<AdminProps> = ({
                                         ? '-'
                                         : isMaghrib
                                             ? startEnd.start
-                                            : formatDisplayTime(safeManual[prayerKey]?.adhan);
+                                            : (safeManual[prayerKey]?.adhan || '-');
 
                                     const activeJamat = isNafl
                                         ? '-'
                                         : isMaghrib
                                             ? 'After Azaan'
-                                            : formatDisplayTime(safeManual[prayerKey]?.jamat);
+                                            : (safeManual[prayerKey]?.jamat || '-');
 
                                     const currentDraftObj = draftTimes || safeManual;
                                     const draftAdhan = isNafl
@@ -734,13 +730,13 @@ const Admin: React.FC<AdminProps> = ({
                                 ? '-'
                                 : isMaghrib
                                     ? startEnd.start
-                                    : formatDisplayTime(safeManual[prayerKey]?.adhan);
+                                    : (safeManual[prayerKey]?.adhan || '-');
 
                             const activeJamat = isNafl
                                 ? '-'
                                 : isMaghrib
                                     ? 'After Azaan'
-                                    : formatDisplayTime(safeManual[prayerKey]?.jamat);
+                                    : (safeManual[prayerKey]?.jamat || '-');
 
                             const currentDraftObj = draftTimes || safeManual;
                             const draftAdhan = isNafl
@@ -928,11 +924,11 @@ const Admin: React.FC<AdminProps> = ({
                         const currentDraftObj = draftTimes || safeManual;
                         const azaanDraftVal = currentDraftObj.Jummah?.adhan || '';
                         const parsedAzaan = splitTimeAndPeriod(azaanDraftVal, 'PM');
-                        const activeAzaan = formatDisplayTime(safeManual.Jummah?.adhan);
+                        const activeAzaan = safeManual.Jummah?.adhan || '-';
 
                         const khutbaDraftVal = currentDraftObj.Jummah?.jamat || '';
                         const parsedKhutba = splitTimeAndPeriod(khutbaDraftVal, 'PM');
-                        const activeKhutba = formatDisplayTime(safeManual.Jummah?.jamat);
+                        const activeKhutba = safeManual.Jummah?.jamat || '-';
 
                         return (
                             <div className="jummah-card">

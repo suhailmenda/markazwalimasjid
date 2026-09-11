@@ -1,6 +1,5 @@
 import prayerTimesDataJson from '../assets/prayer_times.json';
 import type { PrayerName } from '../types/prayer';
-import { formatTo12HourDisplay } from './timeFormat';
 
 export interface DayJsonEntry {
   sehriEnd: string;
@@ -40,32 +39,32 @@ export const getTodayPrayerStartEndMap = (date: Date = new Date()): { map: Praye
 
   const map: PrayerStartEndMap = {
     Fajr: {
-      start: formatTo12HourDisplay(entry.subahSadiq),
-      end: formatTo12HourDisplay(entry.tulu),
+      start: entry.subahSadiq,
+      end: entry.tulu,
     },
     Ishraq: {
-      start: formatTo12HourDisplay(entry.ishraqStart),
-      end: formatTo12HourDisplay(entry.ishraqEnd),
+      start: entry.ishraqStart,
+      end: entry.ishraqEnd,
     },
     Chast: {
-      start: formatTo12HourDisplay(entry.chashtStart),
-      end: formatTo12HourDisplay(entry.zawalStart),
+      start: entry.chashtStart,
+      end: entry.zawalStart,
     },
     Dhuhr: {
-      start: formatTo12HourDisplay(entry.zawalEnd),
-      end: formatTo12HourDisplay(entry.asr),
+      start: entry.zawalEnd,
+      end: entry.asr,
     },
     Asr: {
-      start: formatTo12HourDisplay(entry.asr),
-      end: formatTo12HourDisplay(entry.asrEnd),
+      start: entry.asr,
+      end: entry.asrEnd,
     },
     Maghrib: {
-      start: formatTo12HourDisplay(entry.maghrib),
-      end: formatTo12HourDisplay(entry.isha),
+      start: entry.maghrib,
+      end: entry.isha,
     },
     Isha: {
-      start: formatTo12HourDisplay(entry.isha),
-      end: formatTo12HourDisplay(entry.subahSadiq),
+      start: entry.isha,
+      end: entry.subahSadiq,
     },
     Jummah: {
       start: '-',

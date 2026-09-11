@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { MapPin } from 'lucide-react';
 import type { ManualTimes, PrayerName } from '../types/prayer';
 import { getTodayPrayerStartEndMap } from '../utils/prayerStartEnd';
-import { formatTo12HourDisplay } from '../utils/timeFormat';
 import CurrentNextPrayer from './CurrentNextPrayer';
 import './PrayerTimes.css';
 
@@ -88,13 +87,13 @@ const PrayerTimes: React.FC<PrayerTimesProps> = ({
                                             ? '-'
                                             : prayer.key === 'Maghrib'
                                                 ? startEnd.start
-                                                : formatTo12HourDisplay(manualTimes[prayer.key]?.adhan);
+                                                : (manualTimes[prayer.key]?.adhan || '-');
 
                                         const jamatTime = isNafl
                                             ? '-'
                                             : prayer.key === 'Maghrib'
                                                 ? 'After Azaan'
-                                                : formatTo12HourDisplay(manualTimes[prayer.key]?.jamat);
+                                                : (manualTimes[prayer.key]?.jamat || '-');
 
                                         return (
                                             <tr key={prayer.key} className="prayer-row">
@@ -140,13 +139,13 @@ const PrayerTimes: React.FC<PrayerTimesProps> = ({
                                     ? '-'
                                     : prayer.key === 'Maghrib'
                                         ? startEnd.start
-                                        : formatTo12HourDisplay(manualTimes[prayer.key]?.adhan);
+                                        : (manualTimes[prayer.key]?.adhan || '-');
 
                                 const jamatTime = isNafl
                                     ? '-'
                                     : prayer.key === 'Maghrib'
                                         ? 'After Azaan'
-                                        : formatTo12HourDisplay(manualTimes[prayer.key]?.jamat);
+                                        : (manualTimes[prayer.key]?.jamat || '-');
 
                                 return (
                                     <div key={prayer.key} className="prayer-mobile-card">
@@ -211,11 +210,11 @@ const PrayerTimes: React.FC<PrayerTimesProps> = ({
                         <div className="jummah-times-grid">
                             <div className="jummah-time-item">
                                 <span className="jummah-time-label">Azaan</span>
-                                <span className="jummah-time-value">{formatTo12HourDisplay(manualTimes.Jummah?.adhan)}</span>
+                                <span className="jummah-time-value">{manualTimes.Jummah?.adhan || '-'}</span>
                             </div>
                             <div className="jummah-time-item highlight">
                                 <span className="jummah-time-label">Khutba</span>
-                                <span className="jummah-time-value text-primary font-bold">{formatTo12HourDisplay(manualTimes.Jummah?.jamat)}</span>
+                                <span className="jummah-time-value text-primary font-bold">{manualTimes.Jummah?.jamat || '-'}</span>
                             </div>
                         </div>
                     </div>

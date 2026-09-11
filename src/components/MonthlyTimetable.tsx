@@ -1,7 +1,6 @@
 import React, { useState, useMemo, useEffect, useRef } from 'react';
 import { Calendar, ChevronDown, ChevronLeft, ChevronRight } from 'lucide-react';
 import prayerTimesDataJson from '../assets/prayer_times.json';
-import { formatTo12HourDisplay } from '../utils/timeFormat';
 import './MonthlyTimetable.css';
 
 interface DayPrayerTiming {
@@ -26,7 +25,7 @@ type PrayerTimesData = Record<string, DayPrayerTiming>;
 const prayerTimesData = prayerTimesDataJson as PrayerTimesData;
 
 const formatZawalDisplay = (timings: DayPrayerTiming): string => {
-  return `${formatTo12HourDisplay(timings.zawalStart)} - ${formatTo12HourDisplay(timings.zawalEnd)}`;
+  return `${timings.zawalStart} - ${timings.zawalEnd}`;
 };
 
 interface MonthOption {
@@ -251,17 +250,17 @@ const MonthlyTimetable: React.FC = () => {
                           {isToday && <span className="today-badge">Today</span>}
                         </div>
                       </td>
-                      <td>{formatTo12HourDisplay(timings.sehriEnd)}</td>
-                      <td>{formatTo12HourDisplay(timings.subahSadiq)}</td>
-                      <td className="font-semibold text-primary">{formatTo12HourDisplay(timings.fajr)}</td>
-                      <td>{formatTo12HourDisplay(timings.tulu)}</td>
-                      <td>{formatTo12HourDisplay(timings.ishraqStart)}</td>
-                      <td>{formatTo12HourDisplay(timings.chashtStart)}</td>
+                      <td>{timings.sehriEnd}</td>
+                      <td>{timings.subahSadiq}</td>
+                      <td className="font-semibold text-primary">{timings.fajr}</td>
+                      <td>{timings.tulu}</td>
+                      <td>{timings.ishraqStart}</td>
+                      <td>{timings.chashtStart}</td>
                       <td className="td-zawal">{formatZawalDisplay(timings)}</td>
-                      <td>{formatTo12HourDisplay(timings.asr)}</td>
-                      <td>{formatTo12HourDisplay(timings.sunset)}</td>
-                      <td className="font-semibold text-primary">{formatTo12HourDisplay(timings.maghrib)}</td>
-                      <td className="font-semibold text-primary">{formatTo12HourDisplay(timings.isha)}</td>
+                      <td>{timings.asr}</td>
+                      <td>{timings.sunset}</td>
+                      <td className="font-semibold text-primary">{timings.maghrib}</td>
+                      <td className="font-semibold text-primary">{timings.isha}</td>
                     </tr>
                   );
                 })}
@@ -354,7 +353,7 @@ const MonthlyTimetable: React.FC = () => {
                 <div className="day-card-grid-primary">
                   <div className="day-grid-item highlight-item">
                     <span className="grid-item-label">Fajr</span>
-                    <span className="grid-item-val font-bold text-primary">{formatTo12HourDisplay(activeDayData.timings.fajr)}</span>
+                    <span className="grid-item-val font-bold text-primary">{activeDayData.timings.fajr}</span>
                   </div>
                   <div className="day-grid-item">
                     <span className="grid-item-label">Zawal</span>
@@ -362,27 +361,27 @@ const MonthlyTimetable: React.FC = () => {
                   </div>
                   <div className="day-grid-item">
                     <span className="grid-item-label">Asr</span>
-                    <span className="grid-item-val">{formatTo12HourDisplay(activeDayData.timings.asr)}</span>
+                    <span className="grid-item-val">{activeDayData.timings.asr}</span>
                   </div>
                   <div className="day-grid-item highlight-item">
                     <span className="grid-item-label">Maghrib</span>
-                    <span className="grid-item-val font-bold text-primary">{formatTo12HourDisplay(activeDayData.timings.maghrib)}</span>
+                    <span className="grid-item-val font-bold text-primary">{activeDayData.timings.maghrib}</span>
                   </div>
                   <div className="day-grid-item highlight-item">
                     <span className="grid-item-label">Isha</span>
-                    <span className="grid-item-val font-bold text-primary">{formatTo12HourDisplay(activeDayData.timings.isha)}</span>
+                    <span className="grid-item-val font-bold text-primary">{activeDayData.timings.isha}</span>
                   </div>
                   <div className="day-grid-item">
                     <span className="grid-item-label">Sehri End</span>
-                    <span className="grid-item-val">{formatTo12HourDisplay(activeDayData.timings.sehriEnd)}</span>
+                    <span className="grid-item-val">{activeDayData.timings.sehriEnd}</span>
                   </div>
                   <div className="day-grid-item">
                     <span className="grid-item-label">Sunrise</span>
-                    <span className="grid-item-val">{formatTo12HourDisplay(activeDayData.timings.tulu)}</span>
+                    <span className="grid-item-val">{activeDayData.timings.tulu}</span>
                   </div>
                   <div className="day-grid-item">
                     <span className="grid-item-label">Ishraq</span>
-                    <span className="grid-item-val">{formatTo12HourDisplay(activeDayData.timings.ishraqStart)}</span>
+                    <span className="grid-item-val">{activeDayData.timings.ishraqStart}</span>
                   </div>
                 </div>
 

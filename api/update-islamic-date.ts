@@ -161,7 +161,17 @@ export default async function handler(req: RequestWithBody, res: ResponseWithJso
     }
 
     // 5. Calculate next Maghrib timestamp for self-scheduling
-    const [magHour, magMin] = todayMaghrib.split(':').map(Number);
+    const parseTime = (timeStr: string): [number, number] => {
+      const isPM = timeStr.toLowerCase().includes('pm');
+      const match = timeStr.match(/^(\d{1,2}):(\d{2})/);
+      if (!match) return [18, 45];
+      let h = parseInt(match[1], 10);
+      const m = parseInt(match[2], 10);
+      if (isPM && h < 12) h += 12;
+      return [h, m];
+    };
+
+    const [magHour, magMin] = parseTime(todayMaghrib);
     const todayMaghribDate = new Date(kolkataNow);
     todayMaghribDate.setHours(magHour, magMin, 0, 0);
     const isAfterMaghrib = kolkataNow >= todayMaghribDate;
@@ -173,7 +183,7 @@ export default async function handler(req: RequestWithBody, res: ResponseWithJso
     const nextDayKey = `${nextTargetDate.getDate().toString().padStart(2, '0')}-${MONTH_NAMES[nextTargetDate.getMonth()]}`;
     const nextEntry = prayerTimesMap[nextDayKey];
     const nextMaghribTime = nextEntry.maghrib;
-    const [nextH, nextM] = nextMaghribTime.split(':').map(Number);
+    const [nextH, nextM] = parseTime(nextMaghribTime);
 
     // Convert next Maghrib in Kolkata (UTC+5:30) to UTC epoch seconds
     const nextKolkataTimestamp = Date.UTC(
