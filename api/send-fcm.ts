@@ -1,6 +1,22 @@
 import crypto from 'crypto';
+import type { IncomingMessage, ServerResponse } from 'http';
 
-export default async function handler(req, res) {
+interface RequestWithBody extends IncomingMessage {
+  method?: string;
+  body?: any;
+}
+
+interface ResponseWithJson extends ServerResponse {
+  status: (statusCode: number) => ResponseWithJson;
+  json: (data: any) => void;
+}
+
+interface ServiceAccountCredentials {
+  clientEmail: string;
+  privateKey: string;
+}
+
+export default async function handler(req: RequestWithBody, res: ResponseWithJson) {
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method Not Allowed' });
   }
@@ -45,13 +61,13 @@ export default async function handler(req, res) {
 
     const data = await response.json();
     return res.status(response.status).json(data);
-  } catch (error) {
+  } catch (error: any) {
     console.error('Error in send-fcm API:', error);
     return res.status(500).json({ error: error.message });
   }
 }
 
-function getFormattedPrivateKey(key) {
+function getFormattedPrivateKey(key: string): string {
   if (!key) return '';
   let formatted = key.replace(/\\n/g, '\n');
   if (formatted.startsWith('"') && formatted.endsWith('"')) {
@@ -60,7 +76,7 @@ function getFormattedPrivateKey(key) {
   return formatted;
 }
 
-function createJwt({ clientEmail, privateKey }) {
+function createJwt({ clientEmail, privateKey }: ServiceAccountCredentials): string {
   const header = { alg: 'RS256', typ: 'JWT' };
   const now = Math.floor(Date.now() / 1000);
   const claimSet = {
@@ -71,7 +87,7 @@ function createJwt({ clientEmail, privateKey }) {
     iat: now,
   };
 
-  const encodeBase64Url = (obj) =>
+  const encodeBase64Url = (obj: object) =>
     Buffer.from(JSON.stringify(obj))
       .toString('base64')
       .replace(/=/g, '')
@@ -92,7 +108,7 @@ function createJwt({ clientEmail, privateKey }) {
   return `${unsignedToken}.${signature}`;
 }
 
-async function getAccessToken(creds) {
+async function getAccessToken(creds: ServiceAccountCredentials): Promise<string> {
   const jwt = createJwt(creds);
   const postData = `grant_type=urn%3Aietf%3Aparams%3Aoauth%3Agrant-type%3Ajwt-bearer&assertion=${jwt}`;
 

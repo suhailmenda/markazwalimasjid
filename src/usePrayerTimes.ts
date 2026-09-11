@@ -3,17 +3,13 @@ import { db, isFirebaseConfigured } from './firebase';
 import { doc, onSnapshot, setDoc, type Unsubscribe } from 'firebase/firestore';
 import type { ManualTimes, UsePrayerTimesReturn } from './types/prayer';
 import { getTodayPrayerStartEndMap } from './utils/prayerStartEnd';
-import { calculateIslamicDate, type IslamicDateCache } from './utils/islamicDate';
+import { parseIslamicDateString, type IslamicDateCache } from './utils/islamicDate';
 import { sendFcmBulkNotification } from './utils/sendFcmNotification';
 
 export const usePrayerTimes = (): UsePrayerTimesReturn => {
   const [loading, setLoading] = useState<boolean>(true);
   const [manualTimes, setManualTimes] = useState<ManualTimes>({});
-  const [islamicDate, setIslamicDate] = useState<string>(() => {
-    const todayJsonInfo = getTodayPrayerStartEndMap();
-    const maghribTime = todayJsonInfo.map.Maghrib.start;
-    return calculateIslamicDate(new Date(), maghribTime);
-  });
+  const [islamicDate, setIslamicDate] = useState<string>('23 Ramadan 1447 AH');
 
   // Firestore Realtime Listeners
   useEffect(() => {
@@ -117,9 +113,10 @@ export const usePrayerTimes = (): UsePrayerTimesReturn => {
         const dd = new Date().getDate().toString().padStart(2, '0');
         const mm = (new Date().getMonth() + 1).toString().padStart(2, '0');
         const yyyy = new Date().getFullYear();
+        const { day, month, year } = parseIslamicDateString(val);
         await setDoc(
           doc(db, 'settings', 'islamicDateCache'),
-          { date: `${dd}-${mm}-${yyyy}`, time: jsonMaghribTime, islamicDate: val },
+          { date: `${dd}-${mm}-${yyyy}`, time: jsonMaghribTime, day, month, year, islamicDate: val },
           { merge: true },
         );
       }

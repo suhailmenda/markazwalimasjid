@@ -6,6 +6,7 @@ import { signInWithEmailAndPassword, onAuthStateChanged, type User } from 'fireb
 import { type ManualTimes, type PrayerName, type TimeType } from '../types/prayer';
 import { getTodayPrayerStartEndMap } from '../utils/prayerStartEnd';
 import { formatTo12HourDisplay } from '../utils/timeFormat';
+import { HIJRI_MONTHS, parseIslamicDateString } from '../utils/islamicDate';
 import CurrentNextPrayer from './CurrentNextPrayer';
 import './Admin.css';
 import './PrayerTimes.css';
@@ -106,13 +107,42 @@ const Admin: React.FC<AdminProps> = ({
 
     const [draftTimes, setDraftTimes] = useState<ManualTimes>(() => safeManual);
     const [draftIslamicDate, setDraftIslamicDate] = useState<string>(islamicDate);
+
+    const initialParsedDate = parseIslamicDateString(islamicDate);
+    const [draftIslamicDay, setDraftIslamicDay] = useState<number>(initialParsedDate.day);
+    const [draftIslamicMonth, setDraftIslamicMonth] = useState<string>(initialParsedDate.month);
+    const [draftIslamicYear, setDraftIslamicYear] = useState<number>(initialParsedDate.year);
+
     const [isSaving, setIsSaving] = useState<boolean>(false);
+
+    const syncDateDropdowns = (dateStr: string) => {
+        const parsed = parseIslamicDateString(dateStr);
+        setDraftIslamicDay(parsed.day);
+        setDraftIslamicMonth(parsed.month);
+        setDraftIslamicYear(parsed.year);
+        setDraftIslamicDate(dateStr);
+    };
+
+    const handleIslamicDayChange = (day: number) => {
+        setDraftIslamicDay(day);
+        setDraftIslamicDate(`${day} ${draftIslamicMonth} ${draftIslamicYear} AH`);
+    };
+
+    const handleIslamicMonthChange = (month: string) => {
+        setDraftIslamicMonth(month);
+        setDraftIslamicDate(`${draftIslamicDay} ${month} ${draftIslamicYear} AH`);
+    };
+
+    const handleIslamicYearChange = (year: number) => {
+        setDraftIslamicYear(year);
+        setDraftIslamicDate(`${draftIslamicDay} ${draftIslamicMonth} ${year} AH`);
+    };
 
     // Sync draftTimes when manualTimes updates and not currently editing
     useEffect(() => {
         if (!isEditing && !editingCard && !isEditingDate) {
             setDraftTimes(safeManual);
-            setDraftIslamicDate(islamicDate);
+            syncDateDropdowns(islamicDate);
         }
     }, [manualTimes, islamicDate, isEditing, editingCard, isEditingDate, safeManual]);
 
@@ -141,7 +171,7 @@ const Admin: React.FC<AdminProps> = ({
     // Enter Global Edit Mode & snapshot draft state
     const handleStartEdit = (): void => {
         setDraftTimes(JSON.parse(JSON.stringify(safeManual)) as ManualTimes);
-        setDraftIslamicDate(islamicDate);
+        syncDateDropdowns(islamicDate);
         setIsEditing(true);
         setEditingCard(null);
         setIsEditingDate(false);
@@ -149,6 +179,7 @@ const Admin: React.FC<AdminProps> = ({
 
     // Cancel Global Editing & revert
     const handleCancelEdit = (): void => {
+        syncDateDropdowns(islamicDate);
         setIsEditing(false);
     };
 
@@ -168,7 +199,7 @@ const Admin: React.FC<AdminProps> = ({
     };
 
     const handleCancelEditIslamicDate = (): void => {
-        setDraftIslamicDate(islamicDate);
+        syncDateDropdowns(islamicDate);
         setIsEditingDate(false);
     };
 
@@ -420,7 +451,7 @@ const Admin: React.FC<AdminProps> = ({
 
                     <div className="admin-login-footer">
                         <Link to="/" className="admin-link-back">
-                            <ArrowLeft size={16} /> Return to Public Site
+                            <ArrowLeft size={16} /> Return to Site
                         </Link>
                     </div>
                 </div>
@@ -440,7 +471,7 @@ const Admin: React.FC<AdminProps> = ({
 
                     <div className="admin-actions">
                         <Link to="/" className="btn-admin btn-admin-outline">
-                            <ArrowLeft size={16} /> Public Site
+                            <ArrowLeft size={16} /> Site
                         </Link>
                     </div>
                 </div>
@@ -499,26 +530,87 @@ const Admin: React.FC<AdminProps> = ({
                             {currentTime.toLocaleDateString('en-IN', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', timeZone: 'Asia/Kolkata' })}
                         </div>
 
-                        {/* Islamic Date Display */}
+                        {/* Islamic Date Display & Dropdowns */}
                         <div className="islamic-date-container" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem', flexWrap: 'wrap' }}>
                             {isEditing ? (
-                                <input
-                                    type="text"
-                                    value={draftIslamicDate}
-                                    onChange={(e) => setDraftIslamicDate(e.target.value)}
-                                    placeholder="e.g. 14 Rabīʿ al-awwal 1448 AH"
-                                    className="islamic-date-input-inline"
-                                />
+                                <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.35rem', flexWrap: 'wrap', justifyContent: 'center' }}>
+                                    <select
+                                        value={draftIslamicDay}
+                                        onChange={(e) => handleIslamicDayChange(Number(e.target.value))}
+                                        className="islamic-date-select"
+                                        style={{ padding: '0.3rem 0.5rem', borderRadius: '0.4rem', border: '1px solid rgba(255,255,255,0.3)', background: 'rgba(0,0,0,0.4)', color: '#fff', fontSize: '0.9rem', fontWeight: 'bold' }}
+                                    >
+                                        {Array.from({ length: 30 }, (_, i) => i + 1).map((d) => (
+                                            <option key={d} value={d} style={{ background: '#1e3a2f', color: '#fff' }}>
+                                                {d}
+                                            </option>
+                                        ))}
+                                    </select>
+                                    <select
+                                        value={draftIslamicMonth}
+                                        onChange={(e) => handleIslamicMonthChange(e.target.value)}
+                                        className="islamic-date-select"
+                                        style={{ padding: '0.3rem 0.5rem', borderRadius: '0.4rem', border: '1px solid rgba(255,255,255,0.3)', background: 'rgba(0,0,0,0.4)', color: '#fff', fontSize: '0.9rem', fontWeight: 'bold' }}
+                                    >
+                                        {HIJRI_MONTHS.map((m) => (
+                                            <option key={m} value={m} style={{ background: '#1e3a2f', color: '#fff' }}>
+                                                {m}
+                                            </option>
+                                        ))}
+                                    </select>
+                                    <select
+                                        value={draftIslamicYear}
+                                        onChange={(e) => handleIslamicYearChange(Number(e.target.value))}
+                                        className="islamic-date-select"
+                                        style={{ padding: '0.3rem 0.5rem', borderRadius: '0.4rem', border: '1px solid rgba(255,255,255,0.3)', background: 'rgba(0,0,0,0.4)', color: '#fff', fontSize: '0.9rem', fontWeight: 'bold' }}
+                                    >
+                                        {Array.from({ length: 56 }, (_, i) => 1445 + i).map((y) => (
+                                            <option key={y} value={y} style={{ background: '#1e3a2f', color: '#fff' }}>
+                                                {y} AH
+                                            </option>
+                                        ))}
+                                    </select>
+                                </div>
                             ) : isEditingDate ? (
                                 <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', flexWrap: 'wrap', justifyContent: 'center' }}>
-                                    <input
-                                        type="text"
-                                        value={draftIslamicDate}
-                                        onChange={(e) => setDraftIslamicDate(e.target.value)}
-                                        placeholder="e.g. 14 Rabīʿ al-awwal 1448 AH"
-                                        className="islamic-date-input-inline"
-                                        autoFocus
-                                    />
+                                    <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.35rem', flexWrap: 'wrap', justifyContent: 'center' }}>
+                                        <select
+                                            value={draftIslamicDay}
+                                            onChange={(e) => handleIslamicDayChange(Number(e.target.value))}
+                                            className="islamic-date-select"
+                                            style={{ padding: '0.3rem 0.5rem', borderRadius: '0.4rem', border: '1px solid rgba(255,255,255,0.3)', background: 'rgba(0,0,0,0.4)', color: '#fff', fontSize: '0.85rem', fontWeight: 'bold' }}
+                                        >
+                                            {Array.from({ length: 30 }, (_, i) => i + 1).map((d) => (
+                                                <option key={d} value={d} style={{ background: '#1e3a2f', color: '#fff' }}>
+                                                    {d}
+                                                </option>
+                                            ))}
+                                        </select>
+                                        <select
+                                            value={draftIslamicMonth}
+                                            onChange={(e) => handleIslamicMonthChange(e.target.value)}
+                                            className="islamic-date-select"
+                                            style={{ padding: '0.3rem 0.5rem', borderRadius: '0.4rem', border: '1px solid rgba(255,255,255,0.3)', background: 'rgba(0,0,0,0.4)', color: '#fff', fontSize: '0.85rem', fontWeight: 'bold' }}
+                                        >
+                                            {HIJRI_MONTHS.map((m) => (
+                                                <option key={m} value={m} style={{ background: '#1e3a2f', color: '#fff' }}>
+                                                    {m}
+                                                </option>
+                                            ))}
+                                        </select>
+                                        <select
+                                            value={draftIslamicYear}
+                                            onChange={(e) => handleIslamicYearChange(Number(e.target.value))}
+                                            className="islamic-date-select"
+                                            style={{ padding: '0.3rem 0.5rem', borderRadius: '0.4rem', border: '1px solid rgba(255,255,255,0.3)', background: 'rgba(0,0,0,0.4)', color: '#fff', fontSize: '0.85rem', fontWeight: 'bold' }}
+                                        >
+                                            {Array.from({ length: 56 }, (_, i) => 1445 + i).map((y) => (
+                                                <option key={y} value={y} style={{ background: '#1e3a2f', color: '#fff' }}>
+                                                    {y} AH
+                                                </option>
+                                            ))}
+                                        </select>
+                                    </div>
                                     <div className="card-action-btn-group">
                                         <button
                                             type="button"
@@ -552,7 +644,7 @@ const Admin: React.FC<AdminProps> = ({
                                         className="btn-card-action-edit mobile-only-view"
                                         style={{ padding: '0.2rem 0.5rem', fontSize: '0.75rem', borderRadius: '0.35rem' }}
                                         onClick={() => {
-                                            setDraftIslamicDate(islamicDate);
+                                            syncDateDropdowns(islamicDate);
                                             setIsEditingDate(true);
                                         }}
                                         title="Edit Islamic Date"
@@ -639,9 +731,13 @@ const Admin: React.FC<AdminProps> = ({
                                                     <div className="time-input-group">
                                                         <input
                                                             type="text"
+                                                            inputMode="numeric"
+                                                            pattern="[0-9:]*"
+                                                            maxLength={5}
                                                             value={parsedAdhan.time12}
                                                             onChange={(e) => {
-                                                                const newStored = combine12HourToStored(e.target.value, parsedAdhan.period);
+                                                                const numericOnly = e.target.value.replace(/[^0-9:]/g, '');
+                                                                const newStored = combine12HourToStored(numericOnly, parsedAdhan.period);
                                                                 handleDraftTimeChange(prayerKey, 'adhan', newStored);
                                                             }}
                                                             onBlur={(e) => handleInputBlur(prayerKey, 'adhan', e.target.value, parsedAdhan.period)}
@@ -678,9 +774,13 @@ const Admin: React.FC<AdminProps> = ({
                                                     <div className="time-input-group">
                                                         <input
                                                             type="text"
+                                                            inputMode="numeric"
+                                                            pattern="[0-9:]*"
+                                                            maxLength={5}
                                                             value={parsedJamat.time12}
                                                             onChange={(e) => {
-                                                                const newStored = combine12HourToStored(e.target.value, parsedJamat.period);
+                                                                const numericOnly = e.target.value.replace(/[^0-9:]/g, '');
+                                                                const newStored = combine12HourToStored(numericOnly, parsedJamat.period);
                                                                 handleDraftTimeChange(prayerKey, 'jamat', newStored);
                                                             }}
                                                             onBlur={(e) => handleInputBlur(prayerKey, 'jamat', e.target.value, parsedJamat.period)}
@@ -832,9 +932,13 @@ const Admin: React.FC<AdminProps> = ({
                                                             <div className="time-input-group">
                                                                 <input
                                                                     type="text"
+                                                                    inputMode="numeric"
+                                                                    pattern="[0-9:]*"
+                                                                    maxLength={5}
                                                                     value={parsedAdhan.time12}
                                                                     onChange={(e) => {
-                                                                        const newStored = combine12HourToStored(e.target.value, parsedAdhan.period);
+                                                                        const numericOnly = e.target.value.replace(/[^0-9:]/g, '');
+                                                                        const newStored = combine12HourToStored(numericOnly, parsedAdhan.period);
                                                                         handleDraftTimeChange(prayerKey, 'adhan', newStored);
                                                                     }}
                                                                     onBlur={(e) => handleInputBlur(prayerKey, 'adhan', e.target.value, parsedAdhan.period)}
@@ -874,9 +978,13 @@ const Admin: React.FC<AdminProps> = ({
                                                             <div className="time-input-group">
                                                                 <input
                                                                     type="text"
+                                                                    inputMode="numeric"
+                                                                    pattern="[0-9:]*"
+                                                                    maxLength={5}
                                                                     value={parsedJamat.time12}
                                                                     onChange={(e) => {
-                                                                        const newStored = combine12HourToStored(e.target.value, parsedJamat.period);
+                                                                        const numericOnly = e.target.value.replace(/[^0-9:]/g, '');
+                                                                        const newStored = combine12HourToStored(numericOnly, parsedJamat.period);
                                                                         handleDraftTimeChange(prayerKey, 'jamat', newStored);
                                                                     }}
                                                                     onBlur={(e) => handleInputBlur(prayerKey, 'jamat', e.target.value, parsedJamat.period)}
@@ -975,9 +1083,13 @@ const Admin: React.FC<AdminProps> = ({
                                                 <div className="time-input-group">
                                                     <input
                                                         type="text"
+                                                        inputMode="numeric"
+                                                        pattern="[0-9:]*"
+                                                        maxLength={5}
                                                         value={parsedAzaan.time12}
                                                         onChange={(e) => {
-                                                            const newStored = combine12HourToStored(e.target.value, parsedAzaan.period);
+                                                            const numericOnly = e.target.value.replace(/[^0-9:]/g, '');
+                                                            const newStored = combine12HourToStored(numericOnly, parsedAzaan.period);
                                                             handleDraftTimeChange('Jummah', 'adhan', newStored);
                                                         }}
                                                         onBlur={(e) => handleInputBlur('Jummah', 'adhan', e.target.value, parsedAzaan.period)}
@@ -1009,9 +1121,13 @@ const Admin: React.FC<AdminProps> = ({
                                                 <div className="time-input-group">
                                                     <input
                                                         type="text"
+                                                        inputMode="numeric"
+                                                        pattern="[0-9:]*"
+                                                        maxLength={5}
                                                         value={parsedKhutba.time12}
                                                         onChange={(e) => {
-                                                            const newStored = combine12HourToStored(e.target.value, parsedKhutba.period);
+                                                            const numericOnly = e.target.value.replace(/[^0-9:]/g, '');
+                                                            const newStored = combine12HourToStored(numericOnly, parsedKhutba.period);
                                                             handleDraftTimeChange('Jummah', 'jamat', newStored);
                                                         }}
                                                         onBlur={(e) => handleInputBlur('Jummah', 'jamat', e.target.value, parsedKhutba.period)}

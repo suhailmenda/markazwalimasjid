@@ -1,12 +1,13 @@
-import { parseTimeToToday } from './timeFormat';
-
 export interface IslamicDateCache {
-  date: string;
-  time: string;
+  date?: string;
+  time?: string;
+  day?: number;
+  month?: string;
+  year?: number;
   islamicDate: string;
 }
 
-const HIJRI_MONTHS = [
+export const HIJRI_MONTHS = [
   'Muharram',
   'Safar',
   "Rabi' al-Awwal",
@@ -21,33 +22,48 @@ const HIJRI_MONTHS = [
   'Dhu al-Hijjah',
 ];
 
-/**
- * Computes the Islamic (Hijri) date completely offline using standard ECMAScript Intl API.
- * In the Islamic calendar, a new day begins at Sunset (Maghrib).
- * If currentTime >= Maghrib time today, the date advances by +1 day.
- */
-export const calculateIslamicDate = (
-  currentTime: Date,
-  maghribTimeStr: string
-): string => {
-  const targetDate = new Date(currentTime);
-  const maghribDate = parseTimeToToday(maghribTimeStr, currentTime);
+export const parseIslamicDateString = (
+  str: string
+): { day: number; month: string; year: number } => {
+  if (!str) return { day: 1, month: HIJRI_MONTHS[0], year: 1448 };
+  const dayMatch = str.match(/^(\d{1,2})/);
+  const day = dayMatch ? Math.min(30, Math.max(1, parseInt(dayMatch[1], 10))) : 1;
 
-  if (maghribDate && currentTime >= maghribDate) {
-    targetDate.setDate(targetDate.getDate() + 1);
+  const yearMatch = str.match(/(\d{4})/);
+  const year = yearMatch ? parseInt(yearMatch[1], 10) : 1448;
+
+  const foundMonth = HIJRI_MONTHS.find((m) => str.includes(m)) || HIJRI_MONTHS[0];
+  return { day, month: foundMonth, year };
+};
+
+export const formatIslamicDate = (day: number, month: string, year: number): string => {
+  return `${day} ${month} ${year} AH`;
+};
+
+export const advanceIslamicDate = (
+  day: number,
+  month: string,
+  year: number
+): { day: number; month: string; year: number; islamicDate: string } => {
+  let nextDay = day + 1;
+  let nextMonth = month;
+  let nextYear = year;
+
+  if (nextDay > 30) {
+    nextDay = 1;
+    const currentMonthIdx = HIJRI_MONTHS.indexOf(month);
+    const nextMonthIdx = currentMonthIdx >= 0 ? (currentMonthIdx + 1) % 12 : 0;
+    nextMonth = HIJRI_MONTHS[nextMonthIdx];
+    if (nextMonthIdx === 0) {
+      nextYear += 1;
+    }
   }
 
-  const formatter = new Intl.DateTimeFormat('en-u-ca-islamic-umalqura', {
-    day: 'numeric',
-    month: 'numeric',
-    year: 'numeric',
-  });
-
-  const parts = formatter.formatToParts(targetDate);
-  const day = parts.find((p) => p.type === 'day')?.value || '1';
-  const monthNum = parseInt(parts.find((p) => p.type === 'month')?.value || '1', 10);
-  const year = parts.find((p) => p.type === 'year')?.value || '1448';
-
-  const monthName = HIJRI_MONTHS[monthNum - 1] || 'Muharram';
-  return `${day} ${monthName} ${year} AH`;
+  return {
+    day: nextDay,
+    month: nextMonth,
+    year: nextYear,
+    islamicDate: formatIslamicDate(nextDay, nextMonth, nextYear),
+  };
 };
+
