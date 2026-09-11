@@ -14,8 +14,6 @@ interface TimeRemaining {
   hours: number;
   minutes: number;
   seconds: number;
-  formattedText: string;
-  totalSeconds: number;
 }
 
 interface PrayerStatus {
@@ -25,14 +23,12 @@ interface PrayerStatus {
   progressPercent: number;
   current: {
     name: string;
-    label: string;
     startTimeDisplay: string;
     endTimeDisplay: string;
     timeLeft: TimeRemaining;
   };
   next: {
     name: PrayerName | string;
-    label: string;
     startTimeDisplay: string;
     jamaatTimeDisplay: string;
     timeLeft: TimeRemaining;
@@ -47,16 +43,7 @@ const calculateTimeRemaining = (targetDate: Date, now: Date): TimeRemaining => {
   const minutes = Math.floor((totalSec % 3600) / 60);
   const seconds = totalSec % 60;
 
-  let formattedText = '';
-  if (hours > 0) {
-    formattedText = `${hours}h ${minutes.toString().padStart(2, '0')}m ${seconds.toString().padStart(2, '0')}s`;
-  } else if (minutes > 0) {
-    formattedText = `${minutes}m ${seconds.toString().padStart(2, '0')}s`;
-  } else {
-    formattedText = `${seconds}s`;
-  }
-
-  return { hours, minutes, seconds, formattedText, totalSeconds: totalSec };
+  return { hours, minutes, seconds };
 };
 
 const calcProgress = (startTime: Date, endTime: Date, now: Date): number => {
@@ -75,7 +62,7 @@ const getPrayerStatus = (now: Date, manualTimes: ManualTimes): PrayerStatus => {
 
   const subahSadiqToday = parseTimeToToday(todayInfo.raw.subahSadiq, now);
   const tuluToday = parseTimeToToday(todayInfo.raw.tulu, now);
-  const ishraqStartToday = parseTimeToToday(todayInfo.raw.ishraqStart || '', now);
+  const ishraqStartToday = parseTimeToToday(todayInfo.raw.ishraqStart, now);
   const zawalStartToday = parseTimeToToday(todayInfo.raw.zawalStart, now);
   const zawalEndToday = parseTimeToToday(todayInfo.raw.zawalEnd, now);
   const asrStartToday = parseTimeToToday(todayInfo.raw.asr, now);
@@ -85,8 +72,8 @@ const getPrayerStatus = (now: Date, manualTimes: ManualTimes): PrayerStatus => {
 
   const ishaStartYesterday = parseTimeToToday(yesterdayInfo.raw.isha, yesterdayDate);
   const subahSadiqTomorrow = parseTimeToToday(tomorrowInfo.raw.subahSadiq, tomorrowDate);
-  const ishraqEndToday = parseTimeToToday(todayInfo.raw.ishraqEnd || todayInfo.raw.chashtStart || '', now);
-  const chashtStartToday = parseTimeToToday(todayInfo.raw.chashtStart || todayInfo.raw.ishraqEnd || '', now);
+  const ishraqEndToday = parseTimeToToday(todayInfo.raw.ishraqEnd, now);
+  const chashtStartToday = parseTimeToToday(todayInfo.raw.chashtStart, now);
 
   const safeManual = manualTimes || {};
 
@@ -97,14 +84,12 @@ const getPrayerStatus = (now: Date, manualTimes: ManualTimes): PrayerStatus => {
       progressPercent: calcProgress(ishaStartYesterday, subahSadiqToday, now),
       current: {
         name: 'Isha',
-        label: 'Active Prayer',
         startTimeDisplay: formatTo12HourDisplay(yesterdayInfo.raw.isha),
         endTimeDisplay: formatTo12HourDisplay(todayInfo.raw.subahSadiq),
         timeLeft: calculateTimeRemaining(subahSadiqToday, now),
       },
       next: {
         name: 'Fajr',
-        label: 'Next Prayer',
         startTimeDisplay: formatTo12HourDisplay(todayInfo.raw.subahSadiq),
         jamaatTimeDisplay: formatTo12HourDisplay(safeManual.Fajr?.jamat),
         timeLeft: calculateTimeRemaining(subahSadiqToday, now),
@@ -119,14 +104,12 @@ const getPrayerStatus = (now: Date, manualTimes: ManualTimes): PrayerStatus => {
       progressPercent: calcProgress(subahSadiqToday, tuluToday, now),
       current: {
         name: 'Fajr',
-        label: 'Active Prayer',
         startTimeDisplay: formatTo12HourDisplay(todayInfo.raw.subahSadiq),
         endTimeDisplay: formatTo12HourDisplay(todayInfo.raw.tulu),
         timeLeft: calculateTimeRemaining(tuluToday, now),
       },
       next: {
         name: 'Makruh (After tulu)',
-        label: 'Next Phase',
         startTimeDisplay: formatTo12HourDisplay(todayInfo.raw.tulu),
         jamaatTimeDisplay: '',
         timeLeft: calculateTimeRemaining(tuluToday, now),
@@ -143,14 +126,12 @@ const getPrayerStatus = (now: Date, manualTimes: ManualTimes): PrayerStatus => {
       progressPercent: calcProgress(tuluToday, ishraqStartToday, now),
       current: {
         name: 'Makruh (After tulu)',
-        label: 'Makruh Time',
         startTimeDisplay: formatTo12HourDisplay(todayInfo.raw.tulu),
         endTimeDisplay: formatTo12HourDisplay(todayInfo.raw.ishraqStart),
         timeLeft: calculateTimeRemaining(ishraqStartToday, now),
       },
       next: {
         name: 'Ishraq',
-        label: 'Next Prayer',
         startTimeDisplay: formatTo12HourDisplay(todayInfo.raw.ishraqStart),
         jamaatTimeDisplay: '',
         timeLeft: calculateTimeRemaining(ishraqStartToday, now),
@@ -165,15 +146,13 @@ const getPrayerStatus = (now: Date, manualTimes: ManualTimes): PrayerStatus => {
       progressPercent: calcProgress(ishraqStartToday, ishraqEndToday, now),
       current: {
         name: 'Ishraq',
-        label: 'Nafl Window',
         startTimeDisplay: formatTo12HourDisplay(todayInfo.raw.ishraqStart),
-        endTimeDisplay: formatTo12HourDisplay(todayInfo.raw.ishraqEnd || todayInfo.raw.chashtStart),
+        endTimeDisplay: formatTo12HourDisplay(todayInfo.raw.ishraqEnd),
         timeLeft: calculateTimeRemaining(ishraqEndToday, now),
       },
       next: {
         name: 'Chast',
-        label: 'Next Prayer',
-        startTimeDisplay: formatTo12HourDisplay(todayInfo.raw.chashtStart || todayInfo.raw.ishraqEnd),
+        startTimeDisplay: formatTo12HourDisplay(todayInfo.raw.chashtStart),
         jamaatTimeDisplay: '',
         timeLeft: calculateTimeRemaining(ishraqEndToday, now),
       },
@@ -187,14 +166,12 @@ const getPrayerStatus = (now: Date, manualTimes: ManualTimes): PrayerStatus => {
       progressPercent: calcProgress(ishraqEndToday, zawalStartToday, now),
       current: {
         name: 'Chast',
-        label: 'Nafl Window',
-        startTimeDisplay: formatTo12HourDisplay(todayInfo.raw.chashtStart || todayInfo.raw.ishraqEnd),
+        startTimeDisplay: formatTo12HourDisplay(todayInfo.raw.chashtStart),
         endTimeDisplay: formatTo12HourDisplay(todayInfo.raw.zawalStart),
         timeLeft: calculateTimeRemaining(zawalStartToday, now),
       },
       next: {
         name: 'Makruh (Zawal)',
-        label: 'Next Phase',
         startTimeDisplay: formatTo12HourDisplay(todayInfo.raw.zawalStart),
         jamaatTimeDisplay: '',
         timeLeft: calculateTimeRemaining(zawalStartToday, now),
@@ -211,14 +188,12 @@ const getPrayerStatus = (now: Date, manualTimes: ManualTimes): PrayerStatus => {
       progressPercent: calcProgress(zawalStartToday, zawalEndToday, now),
       current: {
         name: 'Makruh (Zawal)',
-        label: 'Makruh Time',
         startTimeDisplay: formatTo12HourDisplay(todayInfo.raw.zawalStart),
         endTimeDisplay: formatTo12HourDisplay(todayInfo.raw.zawalEnd),
         timeLeft: calculateTimeRemaining(zawalEndToday, now),
       },
       next: {
         name: 'Dhuhr',
-        label: 'Next Prayer',
         startTimeDisplay: formatTo12HourDisplay(todayInfo.raw.zawalEnd),
         jamaatTimeDisplay: formatTo12HourDisplay(safeManual.Dhuhr?.jamat),
         timeLeft: calculateTimeRemaining(zawalEndToday, now),
@@ -233,14 +208,12 @@ const getPrayerStatus = (now: Date, manualTimes: ManualTimes): PrayerStatus => {
       progressPercent: calcProgress(zawalEndToday, asrStartToday, now),
       current: {
         name: 'Dhuhr',
-        label: 'Active Prayer',
         startTimeDisplay: formatTo12HourDisplay(todayInfo.raw.zawalEnd),
         endTimeDisplay: formatTo12HourDisplay(todayInfo.raw.asr),
         timeLeft: calculateTimeRemaining(asrStartToday, now),
       },
       next: {
         name: 'Asr',
-        label: 'Next Prayer',
         startTimeDisplay: formatTo12HourDisplay(todayInfo.raw.asr),
         jamaatTimeDisplay: formatTo12HourDisplay(safeManual.Asr?.jamat),
         timeLeft: calculateTimeRemaining(asrStartToday, now),
@@ -255,14 +228,12 @@ const getPrayerStatus = (now: Date, manualTimes: ManualTimes): PrayerStatus => {
       progressPercent: calcProgress(asrStartToday, asrEndToday, now),
       current: {
         name: 'Asr',
-        label: 'Active Prayer',
         startTimeDisplay: formatTo12HourDisplay(todayInfo.raw.asr),
         endTimeDisplay: formatTo12HourDisplay(todayInfo.raw.asrEnd),
         timeLeft: calculateTimeRemaining(asrEndToday, now),
       },
       next: {
         name: 'Makruh (Before Gurub)',
-        label: 'Next Phase',
         startTimeDisplay: formatTo12HourDisplay(todayInfo.raw.asrEnd),
         jamaatTimeDisplay: '',
         timeLeft: calculateTimeRemaining(asrEndToday, now),
@@ -279,14 +250,12 @@ const getPrayerStatus = (now: Date, manualTimes: ManualTimes): PrayerStatus => {
       progressPercent: calcProgress(asrEndToday, maghribStartToday, now),
       current: {
         name: 'Makruh (Before Gurub)',
-        label: 'Makruh Time',
         startTimeDisplay: formatTo12HourDisplay(todayInfo.raw.asrEnd),
         endTimeDisplay: formatTo12HourDisplay(todayInfo.raw.maghrib),
         timeLeft: calculateTimeRemaining(maghribStartToday, now),
       },
       next: {
         name: 'Maghrib',
-        label: 'Next Prayer',
         startTimeDisplay: formatTo12HourDisplay(todayInfo.raw.maghrib),
         jamaatTimeDisplay: 'After Azaan',
         timeLeft: calculateTimeRemaining(maghribStartToday, now),
@@ -301,14 +270,12 @@ const getPrayerStatus = (now: Date, manualTimes: ManualTimes): PrayerStatus => {
       progressPercent: calcProgress(maghribStartToday, ishaStartToday, now),
       current: {
         name: 'Maghrib',
-        label: 'Active Prayer',
         startTimeDisplay: formatTo12HourDisplay(todayInfo.raw.maghrib),
         endTimeDisplay: formatTo12HourDisplay(todayInfo.raw.isha),
         timeLeft: calculateTimeRemaining(ishaStartToday, now),
       },
       next: {
         name: 'Isha',
-        label: 'Next Prayer',
         startTimeDisplay: formatTo12HourDisplay(todayInfo.raw.isha),
         jamaatTimeDisplay: formatTo12HourDisplay(safeManual.Isha?.jamat),
         timeLeft: calculateTimeRemaining(ishaStartToday, now),
@@ -322,14 +289,12 @@ const getPrayerStatus = (now: Date, manualTimes: ManualTimes): PrayerStatus => {
     progressPercent: calcProgress(ishaStartToday, subahSadiqTomorrow, now),
     current: {
       name: 'Isha',
-      label: 'Active Prayer',
       startTimeDisplay: formatTo12HourDisplay(todayInfo.raw.isha),
       endTimeDisplay: formatTo12HourDisplay(tomorrowInfo.raw.subahSadiq),
       timeLeft: calculateTimeRemaining(subahSadiqTomorrow, now),
     },
     next: {
       name: 'Fajr',
-      label: 'Next Prayer',
       startTimeDisplay: formatTo12HourDisplay(tomorrowInfo.raw.subahSadiq),
       jamaatTimeDisplay: formatTo12HourDisplay(safeManual.Fajr?.jamat),
       timeLeft: calculateTimeRemaining(subahSadiqTomorrow, now),

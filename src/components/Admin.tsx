@@ -5,76 +5,38 @@ import { auth, isFirebaseConfigured } from '../firebase';
 import { signInWithEmailAndPassword, onAuthStateChanged, type User } from 'firebase/auth';
 import { type ManualTimes, type PrayerName, type TimeType } from '../types/prayer';
 import { getTodayPrayerStartEndMap } from '../utils/prayerStartEnd';
-import { formatTo12HourDisplay } from '../utils/timeFormat';
 import { HIJRI_MONTHS, parseIslamicDateString } from '../utils/islamicDate';
 import CurrentNextPrayer from './CurrentNextPrayer';
 import './Admin.css';
 import './PrayerTimes.css';
 
-export interface Time12Parts {
-    time12: string; // e.g. "05:15"
+export interface TimeParts {
+    time: string;
     period: 'AM' | 'PM';
 }
 
-export const isValid12HourTime = (timeStr: string): boolean => {
-    if (!timeStr) return false;
-    const clean = timeStr.trim();
-    const match = clean.match(/^(\d{1,2}):(\d{2})$/);
-    if (!match) return false;
-
-    const hours = parseInt(match[1], 10);
-    const minutes = parseInt(match[2], 10);
-
-    if (hours < 1 || hours > 12) return false;
-    if (minutes < 0 || minutes > 59) return false;
-
-    return true;
+export const formatDisplayTime = (stored?: string): string => {
+    if (!stored || stored === '-' || stored === 'After Azaan') return stored || '-';
+    return stored.trim().replace(/^(\d):/, '0$1:');
 };
 
-export const parseStoredTimeTo12Hour = (storedStr: string): Time12Parts => {
-    if (!storedStr || storedStr === 'After Azaan' || storedStr === '-') {
-        return { time12: storedStr, period: 'AM' };
+export const splitTimeAndPeriod = (stored = '', defaultPeriod: 'AM' | 'PM' = 'AM'): TimeParts => {
+    if (!stored || stored === 'After Azaan' || stored === '-') {
+        return { time: stored, period: defaultPeriod };
     }
-
-    const clean = storedStr.trim();
-    if (clean.toUpperCase().includes('AM')) {
-        const timeVal = clean.toUpperCase().replace('AM', '').trim();
-        return { time12: timeVal, period: 'AM' };
-    }
-    if (clean.toUpperCase().includes('PM')) {
-        const timeVal = clean.toUpperCase().replace('PM', '').trim();
-        return { time12: timeVal, period: 'PM' };
-    }
-
-    const match = clean.match(/^(\d{1,2}):(\d{2})/);
-    if (!match) return { time12: storedStr, period: 'AM' };
-
-    let hours = parseInt(match[1], 10);
-    const minutes = match[2];
-    const period: 'AM' | 'PM' = hours >= 12 ? 'PM' : 'AM';
-
-    if (hours === 0) {
-        hours = 12;
-    } else if (hours > 12) {
-        hours = hours - 12;
-    }
-
-    const formattedHours = hours.toString().padStart(2, '0');
-    return { time12: `${formattedHours}:${minutes}`, period };
+    const isPM = stored.toLowerCase().includes('pm');
+    const isAM = stored.toLowerCase().includes('am');
+    const period: 'AM' | 'PM' = isPM ? 'PM' : isAM ? 'AM' : defaultPeriod;
+    const time = stored.replace(/[^0-9:]/g, '').trim().replace(/^(\d):/, '0$1:');
+    return { time, period };
 };
 
-export const combine12HourToStored = (time12: string, period: 'AM' | 'PM'): string => {
-    if (!time12 || time12 === 'After Azaan' || time12 === '-') return time12;
-
-    const match = time12.trim().match(/^(\d{1,2}):(\d{2})/);
-    if (!match) return time12;
-
-    let hours = parseInt(match[1], 10);
-    const minutes = match[2];
-
-    const periodLower = period.toLowerCase();
-    const formattedHours = hours.toString().padStart(2, '0');
-    return `${formattedHours}:${minutes} ${periodLower}`;
+export const joinTimeAndPeriod = (time: string, period: 'AM' | 'PM'): string => {
+    if (!time || time === 'After Azaan' || time === '-') return time;
+    const clean = time.trim();
+    const parts = clean.split(':');
+    const padded = parts.length === 2 && parts[0].length === 1 ? `0${parts[0]}:${parts[1]}` : clean;
+    return `${padded} ${period.toLowerCase()}`;
 };
 
 interface AdminProps {
@@ -226,23 +188,12 @@ const Admin: React.FC<AdminProps> = ({
             const currentDraftObj = draftTimes || safeManual;
             const currentPrayerDraft = currentDraftObj[prayerKey] || { adhan: '', jamat: '' };
 
-            const parsedAdhan = parseStoredTimeTo12Hour(currentPrayerDraft.adhan || '');
-            const parsedJamat = parseStoredTimeTo12Hour(currentPrayerDraft.jamat || '');
-
-            const validAdhan = isValid12HourTime(parsedAdhan.time12)
-                ? currentPrayerDraft.adhan
-                : (safeManual[prayerKey]?.adhan || '');
-
-            const validJamat = isValid12HourTime(parsedJamat.time12)
-                ? currentPrayerDraft.jamat
-                : (safeManual[prayerKey]?.jamat || '');
-
             const updatedManualTimes: ManualTimes = {
                 ...safeManual,
                 ...draftTimes,
                 [prayerKey]: {
-                    adhan: validAdhan,
-                    jamat: validJamat,
+                    adhan: currentPrayerDraft.adhan || safeManual[prayerKey]?.adhan || '',
+                    jamat: currentPrayerDraft.jamat || safeManual[prayerKey]?.jamat || '',
                 },
             };
 
@@ -257,38 +208,12 @@ const Admin: React.FC<AdminProps> = ({
         }
     };
 
-    // Explicit Save Button Handler with validation check (Desktop / Save All)
+    // Explicit Save Button Handler (Desktop / Save All)
     const handleSaveAll = async (): Promise<void> => {
         setIsSaving(true);
         try {
-            const validatedDraftTimes: ManualTimes = { ...draftTimes };
-            (Object.keys(validatedDraftTimes) as PrayerName[]).forEach((pKey) => {
-                if (pKey !== 'Maghrib' && pKey !== 'Ishraq' && pKey !== 'Chast') {
-                    const adhanVal = validatedDraftTimes[pKey]?.adhan || '';
-                    const jamatVal = validatedDraftTimes[pKey]?.jamat || '';
-
-                    const parsedAdhan = parseStoredTimeTo12Hour(adhanVal);
-                    if (!isValid12HourTime(parsedAdhan.time12)) {
-                        validatedDraftTimes[pKey] = {
-                            ...validatedDraftTimes[pKey],
-                            adhan: safeManual[pKey]?.adhan || '',
-                            jamat: validatedDraftTimes[pKey]?.jamat || '',
-                        };
-                    }
-
-                    const parsedJamat = parseStoredTimeTo12Hour(jamatVal);
-                    if (!isValid12HourTime(parsedJamat.time12)) {
-                        validatedDraftTimes[pKey] = {
-                            ...validatedDraftTimes[pKey],
-                            adhan: validatedDraftTimes[pKey]?.adhan || '',
-                            jamat: safeManual[pKey]?.jamat || '',
-                        };
-                    }
-                }
-            });
-
             if (typeof saveAllSettings === 'function') {
-                await saveAllSettings(validatedDraftTimes, draftIslamicDate);
+                await saveAllSettings(draftTimes || safeManual, draftIslamicDate);
             }
             setIsEditing(false);
         } catch (err) {
@@ -311,18 +236,6 @@ const Admin: React.FC<AdminProps> = ({
                 },
             };
         });
-    };
-
-    const handleInputBlur = (prayerKey: PrayerName, type: TimeType, currentInputValue: string, period: 'AM' | 'PM'): void => {
-        if (!isValid12HourTime(currentInputValue)) {
-            const oldStored = safeManual[prayerKey]?.[type] || '';
-            const oldParsed = parseStoredTimeTo12Hour(oldStored);
-            const revertedStored = combine12HourToStored(oldParsed.time12, oldParsed.period);
-            handleDraftTimeChange(prayerKey, type, revertedStored);
-        } else {
-            const validStored = combine12HourToStored(currentInputValue, period);
-            handleDraftTimeChange(prayerKey, type, validStored);
-        }
     };
 
     const handleLogin = async (e: React.FormEvent): Promise<void> => {
@@ -677,19 +590,19 @@ const Admin: React.FC<AdminProps> = ({
                                     const prayerKey = prayer.key;
                                     const isMaghrib = prayerKey === 'Maghrib';
                                     const isNafl = prayerKey === 'Ishraq' || prayerKey === 'Chast';
-                                    const startEnd = todayStartEndMap[prayerKey] || { start: '-', end: '-' };
+                                    const startEnd = todayStartEndMap[prayerKey];
 
                                     const activeAdhan = isNafl
                                         ? '-'
                                         : isMaghrib
                                             ? startEnd.start
-                                            : formatTo12HourDisplay(safeManual[prayerKey]?.adhan);
+                                            : formatDisplayTime(safeManual[prayerKey]?.adhan);
 
                                     const activeJamat = isNafl
                                         ? '-'
                                         : isMaghrib
                                             ? 'After Azaan'
-                                            : formatTo12HourDisplay(safeManual[prayerKey]?.jamat);
+                                            : formatDisplayTime(safeManual[prayerKey]?.jamat);
 
                                     const currentDraftObj = draftTimes || safeManual;
                                     const draftAdhan = isNafl
@@ -704,8 +617,9 @@ const Admin: React.FC<AdminProps> = ({
                                             ? 'After Azaan'
                                             : (currentDraftObj[prayerKey]?.jamat || '');
 
-                                    const parsedAdhan = parseStoredTimeTo12Hour(draftAdhan);
-                                    const parsedJamat = parseStoredTimeTo12Hour(draftJamat);
+                                    const defaultPeriod = prayerKey === 'Fajr' ? 'AM' : 'PM';
+                                    const parsedAdhan = splitTimeAndPeriod(draftAdhan, defaultPeriod);
+                                    const parsedJamat = splitTimeAndPeriod(draftJamat, defaultPeriod);
 
                                     return (
                                         <tr key={prayerKey} className="prayer-row">
@@ -734,13 +648,11 @@ const Admin: React.FC<AdminProps> = ({
                                                             inputMode="numeric"
                                                             pattern="[0-9:]*"
                                                             maxLength={5}
-                                                            value={parsedAdhan.time12}
+                                                            value={parsedAdhan.time}
                                                             onChange={(e) => {
                                                                 const numericOnly = e.target.value.replace(/[^0-9:]/g, '');
-                                                                const newStored = combine12HourToStored(numericOnly, parsedAdhan.period);
-                                                                handleDraftTimeChange(prayerKey, 'adhan', newStored);
+                                                                handleDraftTimeChange(prayerKey, 'adhan', joinTimeAndPeriod(numericOnly, parsedAdhan.period));
                                                             }}
-                                                            onBlur={(e) => handleInputBlur(prayerKey, 'adhan', e.target.value, parsedAdhan.period)}
                                                             placeholder="05:15"
                                                             className="time-box-12"
                                                         />
@@ -748,8 +660,7 @@ const Admin: React.FC<AdminProps> = ({
                                                             type="button"
                                                             onClick={() => {
                                                                 const nextPeriod = parsedAdhan.period === 'AM' ? 'PM' : 'AM';
-                                                                const newStored = combine12HourToStored(parsedAdhan.time12, nextPeriod);
-                                                                handleDraftTimeChange(prayerKey, 'adhan', newStored);
+                                                                handleDraftTimeChange(prayerKey, 'adhan', joinTimeAndPeriod(parsedAdhan.time, nextPeriod));
                                                             }}
                                                             className="period-toggle-btn"
                                                         >
@@ -777,13 +688,11 @@ const Admin: React.FC<AdminProps> = ({
                                                             inputMode="numeric"
                                                             pattern="[0-9:]*"
                                                             maxLength={5}
-                                                            value={parsedJamat.time12}
+                                                            value={parsedJamat.time}
                                                             onChange={(e) => {
                                                                 const numericOnly = e.target.value.replace(/[^0-9:]/g, '');
-                                                                const newStored = combine12HourToStored(numericOnly, parsedJamat.period);
-                                                                handleDraftTimeChange(prayerKey, 'jamat', newStored);
+                                                                handleDraftTimeChange(prayerKey, 'jamat', joinTimeAndPeriod(numericOnly, parsedJamat.period));
                                                             }}
-                                                            onBlur={(e) => handleInputBlur(prayerKey, 'jamat', e.target.value, parsedJamat.period)}
                                                             placeholder="05:45"
                                                             className="time-box-12 font-bold"
                                                         />
@@ -791,8 +700,7 @@ const Admin: React.FC<AdminProps> = ({
                                                             type="button"
                                                             onClick={() => {
                                                                 const nextPeriod = parsedJamat.period === 'AM' ? 'PM' : 'AM';
-                                                                const newStored = combine12HourToStored(parsedJamat.time12, nextPeriod);
-                                                                handleDraftTimeChange(prayerKey, 'jamat', newStored);
+                                                                handleDraftTimeChange(prayerKey, 'jamat', joinTimeAndPeriod(parsedJamat.time, nextPeriod));
                                                             }}
                                                             className="period-toggle-btn"
                                                         >
@@ -819,20 +727,20 @@ const Admin: React.FC<AdminProps> = ({
                             const prayerKey = prayer.key;
                             const isMaghrib = prayerKey === 'Maghrib';
                             const isNafl = prayerKey === 'Ishraq' || prayerKey === 'Chast';
-                            const startEnd = todayStartEndMap[prayerKey] || { start: '-', end: '-' };
+                            const startEnd = todayStartEndMap[prayerKey];
                             const isCardEditing = isEditing || editingCard === prayerKey;
 
                             const activeAdhan = isNafl
                                 ? '-'
                                 : isMaghrib
                                     ? startEnd.start
-                                    : formatTo12HourDisplay(safeManual[prayerKey]?.adhan);
+                                    : formatDisplayTime(safeManual[prayerKey]?.adhan);
 
                             const activeJamat = isNafl
                                 ? '-'
                                 : isMaghrib
                                     ? 'After Azaan'
-                                    : formatTo12HourDisplay(safeManual[prayerKey]?.jamat);
+                                    : formatDisplayTime(safeManual[prayerKey]?.jamat);
 
                             const currentDraftObj = draftTimes || safeManual;
                             const draftAdhan = isNafl
@@ -847,8 +755,9 @@ const Admin: React.FC<AdminProps> = ({
                                     ? 'After Azaan'
                                     : (currentDraftObj[prayerKey]?.jamat !== undefined ? currentDraftObj[prayerKey].jamat : activeJamat);
 
-                            const parsedAdhan = parseStoredTimeTo12Hour(draftAdhan);
-                            const parsedJamat = parseStoredTimeTo12Hour(draftJamat);
+                            const defaultPeriod = prayerKey === 'Fajr' ? 'AM' : 'PM';
+                            const parsedAdhan = splitTimeAndPeriod(draftAdhan, defaultPeriod);
+                            const parsedJamat = splitTimeAndPeriod(draftJamat, defaultPeriod);
 
                             return (
                                 <div key={prayerKey} className="prayer-mobile-card">
@@ -935,13 +844,11 @@ const Admin: React.FC<AdminProps> = ({
                                                                     inputMode="numeric"
                                                                     pattern="[0-9:]*"
                                                                     maxLength={5}
-                                                                    value={parsedAdhan.time12}
+                                                                    value={parsedAdhan.time}
                                                                     onChange={(e) => {
                                                                         const numericOnly = e.target.value.replace(/[^0-9:]/g, '');
-                                                                        const newStored = combine12HourToStored(numericOnly, parsedAdhan.period);
-                                                                        handleDraftTimeChange(prayerKey, 'adhan', newStored);
+                                                                        handleDraftTimeChange(prayerKey, 'adhan', joinTimeAndPeriod(numericOnly, parsedAdhan.period));
                                                                     }}
-                                                                    onBlur={(e) => handleInputBlur(prayerKey, 'adhan', e.target.value, parsedAdhan.period)}
                                                                     placeholder="05:15"
                                                                     className="time-box-12"
                                                                 />
@@ -949,8 +856,7 @@ const Admin: React.FC<AdminProps> = ({
                                                                     type="button"
                                                                     onClick={() => {
                                                                         const nextPeriod = parsedAdhan.period === 'AM' ? 'PM' : 'AM';
-                                                                        const newStored = combine12HourToStored(parsedAdhan.time12, nextPeriod);
-                                                                        handleDraftTimeChange(prayerKey, 'adhan', newStored);
+                                                                        handleDraftTimeChange(prayerKey, 'adhan', joinTimeAndPeriod(parsedAdhan.time, nextPeriod));
                                                                     }}
                                                                     className="period-toggle-btn"
                                                                 >
@@ -981,13 +887,11 @@ const Admin: React.FC<AdminProps> = ({
                                                                     inputMode="numeric"
                                                                     pattern="[0-9:]*"
                                                                     maxLength={5}
-                                                                    value={parsedJamat.time12}
+                                                                    value={parsedJamat.time}
                                                                     onChange={(e) => {
                                                                         const numericOnly = e.target.value.replace(/[^0-9:]/g, '');
-                                                                        const newStored = combine12HourToStored(numericOnly, parsedJamat.period);
-                                                                        handleDraftTimeChange(prayerKey, 'jamat', newStored);
+                                                                        handleDraftTimeChange(prayerKey, 'jamat', joinTimeAndPeriod(numericOnly, parsedJamat.period));
                                                                     }}
-                                                                    onBlur={(e) => handleInputBlur(prayerKey, 'jamat', e.target.value, parsedJamat.period)}
                                                                     placeholder="05:45"
                                                                     className="time-box-12 font-bold"
                                                                 />
@@ -995,8 +899,7 @@ const Admin: React.FC<AdminProps> = ({
                                                                     type="button"
                                                                     onClick={() => {
                                                                         const nextPeriod = parsedJamat.period === 'AM' ? 'PM' : 'AM';
-                                                                        const newStored = combine12HourToStored(parsedJamat.time12, nextPeriod);
-                                                                        handleDraftTimeChange(prayerKey, 'jamat', newStored);
+                                                                        handleDraftTimeChange(prayerKey, 'jamat', joinTimeAndPeriod(parsedJamat.time, nextPeriod));
                                                                     }}
                                                                     className="period-toggle-btn"
                                                                 >
@@ -1024,12 +927,12 @@ const Admin: React.FC<AdminProps> = ({
                         const isJummahEditing = isEditing || editingCard === 'Jummah';
                         const currentDraftObj = draftTimes || safeManual;
                         const azaanDraftVal = currentDraftObj.Jummah?.adhan || '';
-                        const parsedAzaan = parseStoredTimeTo12Hour(azaanDraftVal);
-                        const activeAzaan = formatTo12HourDisplay(safeManual.Jummah?.adhan);
+                        const parsedAzaan = splitTimeAndPeriod(azaanDraftVal, 'PM');
+                        const activeAzaan = formatDisplayTime(safeManual.Jummah?.adhan);
 
                         const khutbaDraftVal = currentDraftObj.Jummah?.jamat || '';
-                        const parsedKhutba = parseStoredTimeTo12Hour(khutbaDraftVal);
-                        const activeKhutba = formatTo12HourDisplay(safeManual.Jummah?.jamat);
+                        const parsedKhutba = splitTimeAndPeriod(khutbaDraftVal, 'PM');
+                        const activeKhutba = formatDisplayTime(safeManual.Jummah?.jamat);
 
                         return (
                             <div className="jummah-card">
@@ -1086,13 +989,11 @@ const Admin: React.FC<AdminProps> = ({
                                                         inputMode="numeric"
                                                         pattern="[0-9:]*"
                                                         maxLength={5}
-                                                        value={parsedAzaan.time12}
+                                                        value={parsedAzaan.time}
                                                         onChange={(e) => {
                                                             const numericOnly = e.target.value.replace(/[^0-9:]/g, '');
-                                                            const newStored = combine12HourToStored(numericOnly, parsedAzaan.period);
-                                                            handleDraftTimeChange('Jummah', 'adhan', newStored);
+                                                            handleDraftTimeChange('Jummah', 'adhan', joinTimeAndPeriod(numericOnly, parsedAzaan.period));
                                                         }}
-                                                        onBlur={(e) => handleInputBlur('Jummah', 'adhan', e.target.value, parsedAzaan.period)}
                                                         placeholder="01:00"
                                                         className="time-box-12 font-bold"
                                                     />
@@ -1100,8 +1001,7 @@ const Admin: React.FC<AdminProps> = ({
                                                         type="button"
                                                         onClick={() => {
                                                             const nextPeriod = parsedAzaan.period === 'AM' ? 'PM' : 'AM';
-                                                            const newStored = combine12HourToStored(parsedAzaan.time12, nextPeriod);
-                                                            handleDraftTimeChange('Jummah', 'adhan', newStored);
+                                                            handleDraftTimeChange('Jummah', 'adhan', joinTimeAndPeriod(parsedAzaan.time, nextPeriod));
                                                         }}
                                                         className="period-toggle-btn"
                                                     >
@@ -1124,13 +1024,11 @@ const Admin: React.FC<AdminProps> = ({
                                                         inputMode="numeric"
                                                         pattern="[0-9:]*"
                                                         maxLength={5}
-                                                        value={parsedKhutba.time12}
+                                                        value={parsedKhutba.time}
                                                         onChange={(e) => {
                                                             const numericOnly = e.target.value.replace(/[^0-9:]/g, '');
-                                                            const newStored = combine12HourToStored(numericOnly, parsedKhutba.period);
-                                                            handleDraftTimeChange('Jummah', 'jamat', newStored);
+                                                            handleDraftTimeChange('Jummah', 'jamat', joinTimeAndPeriod(numericOnly, parsedKhutba.period));
                                                         }}
-                                                        onBlur={(e) => handleInputBlur('Jummah', 'jamat', e.target.value, parsedKhutba.period)}
                                                         placeholder="01:30"
                                                         className="time-box-12 font-bold"
                                                     />
@@ -1138,8 +1036,7 @@ const Admin: React.FC<AdminProps> = ({
                                                         type="button"
                                                         onClick={() => {
                                                             const nextPeriod = parsedKhutba.period === 'AM' ? 'PM' : 'AM';
-                                                            const newStored = combine12HourToStored(parsedKhutba.time12, nextPeriod);
-                                                            handleDraftTimeChange('Jummah', 'jamat', newStored);
+                                                            handleDraftTimeChange('Jummah', 'jamat', joinTimeAndPeriod(parsedKhutba.time, nextPeriod));
                                                         }}
                                                         className="period-toggle-btn"
                                                     >

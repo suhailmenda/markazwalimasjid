@@ -14,9 +14,9 @@ export interface DayJsonEntry {
   sunset: string;
   maghrib: string;
   isha: string;
-  ishraqStart?: string;
-  ishraqEnd?: string;
-  chashtStart?: string;
+  ishraqStart: string;
+  ishraqEnd: string;
+  chashtStart: string;
 }
 
 type PrayerTimesData = Record<string, DayJsonEntry>;

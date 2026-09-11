@@ -6,7 +6,8 @@ export const formatTo12HourDisplay = (timeStr?: string): string => {
 
   const amPmMatch = timeStr.match(/^(\d{1,2}):(\d{2})(?::\d{2})?\s*(AM|PM|am|pm)$/i);
   if (amPmMatch) {
-    return `${parseInt(amPmMatch[1], 10)}:${amPmMatch[2]} ${amPmMatch[3].toLowerCase()}`;
+    const hours = amPmMatch[1].padStart(2, '0');
+    return `${hours}:${amPmMatch[2]} ${amPmMatch[3].toLowerCase()}`;
   }
 
   const match = timeStr.match(/^(\d{1,2}):(\d{2})/);
@@ -17,7 +18,7 @@ export const formatTo12HourDisplay = (timeStr?: string): string => {
   const period = hours >= 12 ? 'pm' : 'am';
   hours = hours % 12 || 12;
 
-  return `${hours}:${minutes} ${period}`;
+  return `${hours.toString().padStart(2, '0')}:${minutes} ${period}`;
 };
 
 /**

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Mail, MapPin } from 'lucide-react';
+import { MapPin } from 'lucide-react';
 import './Footer.css';
 
 const Footer: React.FC = () => {

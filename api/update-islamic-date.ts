@@ -52,7 +52,7 @@ export default async function handler(req: RequestWithBody, res: ResponseWithJso
 
     const dayKey = `${kolkataNow.getDate().toString().padStart(2, '0')}-${MONTH_NAMES[kolkataNow.getMonth()]}`;
     const todayEntry = prayerTimesMap[dayKey];
-    const todayMaghrib = todayEntry?.maghrib || '18:45';
+    const todayMaghrib = todayEntry.maghrib;
 
     // 2. Fetch current Islamic Date from Firestore settings/islamicDateCache
     const projectId = process.env.FIREBASE_PROJECT_ID;
@@ -171,8 +171,8 @@ export default async function handler(req: RequestWithBody, res: ResponseWithJso
       nextTargetDate.setDate(nextTargetDate.getDate() + 1);
     }
     const nextDayKey = `${nextTargetDate.getDate().toString().padStart(2, '0')}-${MONTH_NAMES[nextTargetDate.getMonth()]}`;
-    const nextEntry = prayerTimesMap[nextDayKey] || todayEntry;
-    const nextMaghribTime = nextEntry?.maghrib || '18:45';
+    const nextEntry = prayerTimesMap[nextDayKey];
+    const nextMaghribTime = nextEntry.maghrib;
     const [nextH, nextM] = nextMaghribTime.split(':').map(Number);
 
     // Convert next Maghrib in Kolkata (UTC+5:30) to UTC epoch seconds

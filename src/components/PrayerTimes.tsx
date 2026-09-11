@@ -82,7 +82,7 @@ const PrayerTimes: React.FC<PrayerTimesProps> = ({
                                 ) : (
                                     prayers.map((prayer) => {
                                         const isNafl = prayer.key === 'Ishraq' || prayer.key === 'Chast';
-                                        const startEnd = todayStartEndMap[prayer.key] || { start: '-', end: '-' };
+                                        const startEnd = todayStartEndMap[prayer.key];
 
                                         const adhanTime = isNafl
                                             ? '-'
@@ -134,7 +134,7 @@ const PrayerTimes: React.FC<PrayerTimesProps> = ({
                         ) : (
                             prayers.map((prayer) => {
                                 const isNafl = prayer.key === 'Ishraq' || prayer.key === 'Chast';
-                                const startEnd = todayStartEndMap[prayer.key] || { start: '-', end: '-' };
+                                const startEnd = todayStartEndMap[prayer.key];
 
                                 const adhanTime = isNafl
                                     ? '-'
