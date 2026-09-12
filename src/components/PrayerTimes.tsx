@@ -55,9 +55,11 @@ const PrayerTimes: React.FC<PrayerTimesProps> = ({
                         <div className="date">
                             {currentTime.toLocaleDateString('en-IN', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', timeZone: 'Asia/Kolkata' })}
                         </div>
-                        <div className="islamic-date-container">
-                            <span className="islamic-date-display">{islamicDate}</span>
-                        </div>
+                        {islamicDate ? (
+                            <div className="islamic-date-container">
+                                <span className="islamic-date-display">{islamicDate}</span>
+                            </div>
+                        ) : null}
 
                         {/* Integrated Active & Next Namaz Banner */}
                         <CurrentNextPrayer currentTime={currentTime} manualTimes={manualTimes} />

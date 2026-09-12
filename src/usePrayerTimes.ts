@@ -9,7 +9,7 @@ import { sendFcmBulkNotification } from './utils/sendFcmNotification';
 export const usePrayerTimes = (): UsePrayerTimesReturn => {
   const [loading, setLoading] = useState<boolean>(true);
   const [manualTimes, setManualTimes] = useState<ManualTimes>({});
-  const [islamicDate, setIslamicDate] = useState<string>('23 Ramadan 1447 AH');
+  const [islamicDate, setIslamicDate] = useState<string>('');
 
   // Firestore Realtime Listeners
   useEffect(() => {

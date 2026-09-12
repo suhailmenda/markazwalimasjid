@@ -59,9 +59,9 @@ export default async function handler(req: RequestWithBody, res: ResponseWithJso
     const clientEmail = process.env.FIREBASE_CLIENT_EMAIL;
     const rawPrivateKey = process.env.FIREBASE_PRIVATE_KEY;
 
-    let currentDay = 23;
-    let currentMonth = 'Ramadan';
-    let currentYear = 1447;
+    let currentDay: number | null = null;
+    let currentMonth: string | null = null;
+    let currentYear: number | null = null;
     let firestoreUpdated = false;
     let accessToken: string | null = null;
 
@@ -110,29 +110,36 @@ export default async function handler(req: RequestWithBody, res: ResponseWithJso
           }
         }
       } catch (readErr) {
-        console.warn('Could not read existing islamicDateCache from Firestore, using baseline:', readErr);
+        console.warn('Could not read existing islamicDateCache from Firestore:', readErr);
       }
     }
 
-    // 3. Advance Islamic Date manually by +1 day (No external calculation library)
-    let nextDay = currentDay + 1;
-    let nextMonth = currentMonth;
-    let nextYear = currentYear;
+    // 3. Advance Islamic Date manually by +1 day if existing date was found
+    let nextDay: number | null = null;
+    let nextMonth: string | null = null;
+    let nextYear: number | null = null;
+    let calculatedIslamicDate: string | null = null;
 
-    if (nextDay > 30) {
-      nextDay = 1;
-      const currentMonthIdx = HIJRI_MONTHS.indexOf(currentMonth);
-      const nextMonthIdx = currentMonthIdx >= 0 ? (currentMonthIdx + 1) % 12 : 0;
-      nextMonth = HIJRI_MONTHS[nextMonthIdx];
-      if (nextMonthIdx === 0) {
-        nextYear += 1;
+    if (currentDay !== null && currentMonth !== null && currentYear !== null) {
+      nextDay = currentDay + 1;
+      nextMonth = currentMonth;
+      nextYear = currentYear;
+
+      if (nextDay > 30) {
+        nextDay = 1;
+        const currentMonthIdx = HIJRI_MONTHS.indexOf(currentMonth);
+        const nextMonthIdx = currentMonthIdx >= 0 ? (currentMonthIdx + 1) % 12 : 0;
+        nextMonth = HIJRI_MONTHS[nextMonthIdx];
+        if (nextMonthIdx === 0) {
+          nextYear += 1;
+        }
       }
-    }
 
-    const calculatedIslamicDate = `${nextDay} ${nextMonth} ${nextYear} AH`;
+      calculatedIslamicDate = `${nextDay} ${nextMonth} ${nextYear} AH`;
+    }
 
     // 4. Write updated { day, month, year, islamicDate } to Firestore
-    if (projectId && accessToken) {
+    if (projectId && accessToken && calculatedIslamicDate && nextDay !== null && nextMonth !== null && nextYear !== null) {
       const dd = kolkataNow.getDate().toString().padStart(2, '0');
       const mm = (kolkataNow.getMonth() + 1).toString().padStart(2, '0');
       const yyyy = kolkataNow.getFullYear();
