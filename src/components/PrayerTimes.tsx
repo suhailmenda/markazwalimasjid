@@ -2,24 +2,26 @@ import React, { useState, useEffect } from 'react';
 import { MapPin } from 'lucide-react';
 import type { ManualTimes, PrayerName } from '../types/prayer';
 import { getTodayPrayerStartEndMap } from '../utils/prayerStartEnd';
-import CurrentNextPrayer from './CurrentNextPrayer';
+import CurrentNextPrayer, { getPrayerStatus } from './CurrentNextPrayer';
 import './PrayerTimes.css';
 
 interface PrayerTimesProps {
     manualTimes: ManualTimes;
-    loading: boolean;
     islamicDate?: string;
+    loading: boolean;
 }
 
 const PrayerTimes: React.FC<PrayerTimesProps> = ({
     manualTimes,
-    loading,
     islamicDate = '',
+    loading,
 }) => {
     const [currentTime, setCurrentTime] = useState<Date>(new Date());
 
     useEffect(() => {
-        const timer = setInterval(() => setCurrentTime(new Date()), 1000);
+        const timer = setInterval(() => {
+            setCurrentTime(new Date());
+        }, 1000);
         return () => clearInterval(timer);
     }, []);
 
@@ -34,11 +36,13 @@ const PrayerTimes: React.FC<PrayerTimesProps> = ({
     ];
 
     const { map: todayStartEndMap } = getTodayPrayerStartEndMap(currentTime);
+    const prayerStatus = getPrayerStatus(currentTime, manualTimes);
+    const isMakruh = prayerStatus.isMakruh;
 
     return (
-        <section id="prayer-times" className="section-padding prayer-section">
+        <section id="prayer-times" className="section prayer-section">
             <div className="container">
-                <div className="section-header text-center">
+                <div className="section-header">
                     <h2 className="section-title">Prayer Times</h2>
                     <div className="location-badge">
                         <MapPin size={16} />
@@ -48,7 +52,7 @@ const PrayerTimes: React.FC<PrayerTimesProps> = ({
 
                 <div className="prayer-card">
                     {/* Unified Header Card Display */}
-                    <div className="current-time-display">
+                    <div className={`current-time-display ${isMakruh ? 'makruh-active' : ''}`}>
                         <div className="time">
                             {currentTime.toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit', second: '2-digit', timeZone: 'Asia/Kolkata' })}
                         </div>

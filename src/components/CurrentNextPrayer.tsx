@@ -53,7 +53,7 @@ const calcProgress = (startTime: Date, endTime: Date, now: Date): number => {
   return Math.min(100, Math.max(0, Math.round((current / total) * 100)));
 };
 
-const getPrayerStatus = (now: Date, manualTimes: ManualTimes): PrayerStatus => {
+export const getPrayerStatus = (now: Date, manualTimes: ManualTimes): PrayerStatus => {
   const todayInfo = getTodayPrayerStartEndMap(now);
   const tomorrowDate = new Date(now.getTime() + 24 * 60 * 60 * 1000);
   const tomorrowInfo = getTodayPrayerStartEndMap(tomorrowDate);
