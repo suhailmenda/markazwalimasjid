@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { db, isFirebaseConfigured } from './firebase';
 import { doc, onSnapshot, setDoc, type Unsubscribe } from 'firebase/firestore';
-import type { ManualTimes, UsePrayerTimesReturn } from './types/prayer';
+import type { ManualTimes, PrayerName, UsePrayerTimesReturn } from './types/prayer';
 import { getTodayPrayerStartEndMap } from './utils/prayerStartEnd';
 import { parseIslamicDateString, type IslamicDateCache } from './utils/islamicDate';
 import { sendFcmBulkNotification } from './utils/sendFcmNotification';
@@ -98,7 +98,11 @@ export const usePrayerTimes = (): UsePrayerTimesReturn => {
       Chast: { adhan: '-', jamat: '-' },
     };
 
-    const timesHaveChanged = JSON.stringify(manualTimes) !== JSON.stringify(sanitizedTimes);
+    const changedPrayers = (Object.keys(sanitizedTimes) as PrayerName[]).filter((key) => {
+      const prev = manualTimes[key];
+      const next = sanitizedTimes[key];
+      return prev?.adhan !== next?.adhan || prev?.jamat !== next?.jamat;
+    });
 
     setManualTimes(sanitizedTimes);
     if (val) setIslamicDate(val);
@@ -121,10 +125,17 @@ export const usePrayerTimes = (): UsePrayerTimesReturn => {
         );
       }
 
-      // Send FCM bulk push notification ONLY if prayer times changed
-      if (timesHaveChanged) {
+      // Send individual FCM bulk push notification for each changed prayer
+      if (changedPrayers.length > 0) {
         try {
-          await sendFcmBulkNotification();
+          await Promise.all(
+            changedPrayers.map((prayer) =>
+              sendFcmBulkNotification({
+                title: `🕌 ${prayer} Time Updated`,
+                body: `${prayer} namaz time has been updated.`,
+              })
+            )
+          );
         } catch (err) {
           console.error('Failed to trigger FCM bulk push notification:', err);
         }

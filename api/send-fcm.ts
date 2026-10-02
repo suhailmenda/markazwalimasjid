@@ -34,12 +34,16 @@ export default async function handler(req: RequestWithBody, res: ResponseWithJso
   try {
     const accessToken = await getAccessToken({ clientEmail, privateKey: rawPrivateKey });
 
+    const payload = typeof req.body === 'string' ? JSON.parse(req.body || '{}') : (req.body || {});
+    const title = payload.title || '🕌 Prayer Times Updated';
+    const body = payload.body || 'Namaz time is updated';
+
     const messagePayload = JSON.stringify({
       message: {
         topic: 'prayer_updates',
         notification: {
-          title: '🕌 Prayer Times Updated',
-          body: 'Namaz time is updated',
+          title,
+          body,
         },
         data: {
           type: 'PRAYER_TIME_CHANGE',
