@@ -2,7 +2,9 @@
  * Calls the Vercel API endpoint (/api/send-fcm) to broadcast a bulk push notification
  * to all mobile app users whenever prayer times are updated in the Web Admin panel.
  */
-export const sendFcmBulkNotification = async (payload?: { title?: string; body?: string }): Promise<boolean> => {
+import type { ManualTimes } from '../types/prayer';
+
+export const sendFcmBulkNotification = async (payload?: { title?: string; body?: string; manualTimes?: ManualTimes }): Promise<boolean> => {
   try {
     const response = await fetch('/api/send-fcm', {
       method: 'POST',

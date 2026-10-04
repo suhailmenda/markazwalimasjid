@@ -133,6 +133,7 @@ export const usePrayerTimes = (): UsePrayerTimesReturn => {
               sendFcmBulkNotification({
                 title: `🕌 ${prayer} Time Updated`,
                 body: `${prayer} namaz time has been updated.`,
+                manualTimes: sanitizedTimes,
               })
             )
           );

@@ -45,8 +45,22 @@ export default async function handler(req: RequestWithBody, res: ResponseWithJso
           title,
           body,
         },
+        android: {
+          priority: 'high',
+        },
+        apns: {
+          headers: {
+            'apns-priority': '10',
+          },
+          payload: {
+            aps: {
+              'content-available': 1,
+            },
+          },
+        },
         data: {
           type: 'PRAYER_TIME_CHANGE',
+          manualTimes: JSON.stringify(payload.manualTimes || {}),
         },
       },
     });
