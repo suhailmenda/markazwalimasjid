@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Pencil, Save, X, ArrowLeft, LogIn, Lock, Mail, ShieldAlert, RefreshCw, MapPin } from 'lucide-react';
+import { Pencil, Save, X, ArrowLeft, LogIn, Lock, Mail, ShieldAlert, RefreshCw, MapPin, Check } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { auth, isFirebaseConfigured } from '../firebase';
 import { signInWithEmailAndPassword, onAuthStateChanged, type User } from 'firebase/auth';
@@ -33,6 +33,61 @@ export const joinTimeAndPeriod = (time: string, period: 'AM' | 'PM'): string => 
     const parts = clean.split(':');
     const padded = parts.length === 2 && parts[0].length === 1 ? `0${parts[0]}:${parts[1]}` : clean;
     return `${padded} ${period.toLowerCase()}`;
+};
+
+const HOURS = Array.from({ length: 12 }, (_, i) => String(i + 1).padStart(2, '0'));
+const MINUTES = Array.from({ length: 60 }, (_, i) => String(i).padStart(2, '0'));
+
+interface TimeDropdownPickerProps {
+    time: string;
+    period: 'AM' | 'PM';
+    onChange: (fullTime: string) => void;
+    bold?: boolean;
+}
+
+const TimeDropdownPicker: React.FC<TimeDropdownPickerProps> = ({ time, period, onChange, bold }) => {
+    const parts = (time && time.includes(':')) ? time.split(':') : [time || '12', '00'];
+    const currentHour = (parts[0] || '12').padStart(2, '0');
+    const currentMinute = (parts[1] || '00').padStart(2, '0');
+
+    return (
+        <div className="time-input-group">
+            <div className={`time-box-group ${bold ? 'font-bold' : ''}`}>
+                <select
+                    value={currentHour}
+                    onChange={(e) => onChange(joinTimeAndPeriod(`${e.target.value}:${currentMinute}`, period))}
+                    className="time-select-bare"
+                    title="Select Hour"
+                >
+                    {HOURS.map((h) => (
+                        <option key={h} value={h}>{h}</option>
+                    ))}
+                </select>
+                <span className="time-colon">:</span>
+                <select
+                    value={currentMinute}
+                    onChange={(e) => onChange(joinTimeAndPeriod(`${currentHour}:${e.target.value}`, period))}
+                    className="time-select-bare"
+                    title="Select Minute"
+                >
+                    {MINUTES.map((m) => (
+                        <option key={m} value={m}>{m}</option>
+                    ))}
+                </select>
+            </div>
+            <button
+                type="button"
+                onClick={() => {
+                    const nextPeriod = period === 'AM' ? 'PM' : 'AM';
+                    onChange(joinTimeAndPeriod(`${currentHour}:${currentMinute}`, nextPeriod));
+                }}
+                className="period-toggle-btn"
+                title="Toggle AM/PM"
+            >
+                {period}
+            </button>
+        </div>
+    );
 };
 
 interface AdminProps {
@@ -440,9 +495,9 @@ const Admin: React.FC<AdminProps> = ({
                         </div>
 
                         {/* Islamic Date Display & Dropdowns */}
-                        <div className="islamic-date-container" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem', flexWrap: 'wrap' }}>
+                        <div className="islamic-date-container" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.35rem' }}>
                             {isEditing ? (
-                                <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.35rem', flexWrap: 'wrap', justifyContent: 'center' }}>
+                                <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.35rem', flexWrap: 'nowrap', justifyContent: 'center' }}>
                                     <select
                                         value={draftIslamicDay}
                                         onChange={(e) => handleIslamicDayChange(Number(e.target.value))}
@@ -481,67 +536,85 @@ const Admin: React.FC<AdminProps> = ({
                                     </select>
                                 </div>
                             ) : isEditingDate ? (
-                                <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', flexWrap: 'wrap', justifyContent: 'center' }}>
-                                    <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.35rem', flexWrap: 'wrap', justifyContent: 'center' }}>
-                                        <select
-                                            value={draftIslamicDay}
-                                            onChange={(e) => handleIslamicDayChange(Number(e.target.value))}
-                                            className="islamic-date-select"
-                                            style={{ padding: '0.3rem 0.5rem', borderRadius: '0.4rem', border: '1px solid rgba(255,255,255,0.3)', background: 'rgba(0,0,0,0.4)', color: '#fff', fontSize: '0.85rem', fontWeight: 'bold' }}
-                                        >
-                                            {Array.from({ length: 30 }, (_, i) => i + 1).map((d) => (
-                                                <option key={d} value={d} style={{ background: '#1e3a2f', color: '#fff' }}>
-                                                    {d}
-                                                </option>
-                                            ))}
-                                        </select>
-                                        <select
-                                            value={draftIslamicMonth}
-                                            onChange={(e) => handleIslamicMonthChange(e.target.value)}
-                                            className="islamic-date-select"
-                                            style={{ padding: '0.3rem 0.5rem', borderRadius: '0.4rem', border: '1px solid rgba(255,255,255,0.3)', background: 'rgba(0,0,0,0.4)', color: '#fff', fontSize: '0.85rem', fontWeight: 'bold' }}
-                                        >
-                                            {HIJRI_MONTHS.map((m) => (
-                                                <option key={m} value={m} style={{ background: '#1e3a2f', color: '#fff' }}>
-                                                    {m}
-                                                </option>
-                                            ))}
-                                        </select>
-                                        <select
-                                            value={draftIslamicYear}
-                                            onChange={(e) => handleIslamicYearChange(Number(e.target.value))}
-                                            className="islamic-date-select"
-                                            style={{ padding: '0.3rem 0.5rem', borderRadius: '0.4rem', border: '1px solid rgba(255,255,255,0.3)', background: 'rgba(0,0,0,0.4)', color: '#fff', fontSize: '0.85rem', fontWeight: 'bold' }}
-                                        >
-                                            {Array.from({ length: 56 }, (_, i) => 1445 + i).map((y) => (
-                                                <option key={y} value={y} style={{ background: '#1e3a2f', color: '#fff' }}>
-                                                    {y} AH
-                                                </option>
-                                            ))}
-                                        </select>
-                                    </div>
-                                    <div className="card-action-btn-group">
-                                        <button
-                                            type="button"
-                                            className="btn-card-action-cancel"
-                                            style={{ padding: '0.25rem 0.5rem', fontSize: '0.75rem' }}
-                                            onClick={handleCancelEditIslamicDate}
-                                            disabled={isSaving}
-                                        >
-                                            <X size={13} />
-                                            <span>Cancel</span>
-                                        </button>
-                                        <button
-                                            type="button"
-                                            className="btn-card-action-save"
-                                            style={{ padding: '0.25rem 0.6rem', fontSize: '0.75rem' }}
-                                            onClick={handleSaveIslamicDate}
-                                            disabled={isSaving}
-                                        >
-                                            {isSaving ? <RefreshCw size={12} className="animate-spin" /> : <Save size={12} />}
-                                            <span>{isSaving ? 'Saving...' : 'Save'}</span>
-                                        </button>
-                                    </div>
+                                <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.25rem', justifyContent: 'center' }}>
+                                    <select
+                                        value={draftIslamicDay}
+                                        onChange={(e) => handleIslamicDayChange(Number(e.target.value))}
+                                        style={{
+                                            padding: '0.15rem 0.25rem',
+                                            borderRadius: '0.3rem',
+                                            border: '1px solid rgba(255,255,255,0.3)',
+                                            background: 'rgba(0,0,0,0.3)',
+                                            color: 'var(--color-secondary-light)',
+                                            fontSize: '0.95rem',
+                                            fontWeight: 600,
+                                        }}
+                                    >
+                                        {Array.from({ length: 30 }, (_, i) => i + 1).map((d) => (
+                                            <option key={d} value={d} style={{ background: '#1e3a2f', color: '#fff' }}>
+                                                {d}
+                                            </option>
+                                        ))}
+                                    </select>
+                                    <select
+                                        value={draftIslamicMonth}
+                                        onChange={(e) => handleIslamicMonthChange(e.target.value)}
+                                        style={{
+                                            padding: '0.15rem 0.25rem',
+                                            borderRadius: '0.3rem',
+                                            border: '1px solid rgba(255,255,255,0.3)',
+                                            background: 'rgba(0,0,0,0.3)',
+                                            color: 'var(--color-secondary-light)',
+                                            fontSize: '0.95rem',
+                                            fontWeight: 600,
+                                            maxWidth: '120px',
+                                        }}
+                                    >
+                                        {HIJRI_MONTHS.map((m) => (
+                                            <option key={m} value={m} style={{ background: '#1e3a2f', color: '#fff' }}>
+                                                {m}
+                                            </option>
+                                        ))}
+                                    </select>
+                                    <select
+                                        value={draftIslamicYear}
+                                        onChange={(e) => handleIslamicYearChange(Number(e.target.value))}
+                                        style={{
+                                            padding: '0.15rem 0.25rem',
+                                            borderRadius: '0.3rem',
+                                            border: '1px solid rgba(255,255,255,0.3)',
+                                            background: 'rgba(0,0,0,0.3)',
+                                            color: 'var(--color-secondary-light)',
+                                            fontSize: '0.95rem',
+                                            fontWeight: 600,
+                                        }}
+                                    >
+                                        {Array.from({ length: 56 }, (_, i) => 1445 + i).map((y) => (
+                                            <option key={y} value={y} style={{ background: '#1e3a2f', color: '#fff' }}>
+                                                {y} AH
+                                            </option>
+                                        ))}
+                                    </select>
+                                    <button
+                                        type="button"
+                                        className="btn-card-action-save"
+                                        style={{ padding: '0.25rem 0.4rem', borderRadius: '0.35rem', marginLeft: '0.2rem' }}
+                                        onClick={handleSaveIslamicDate}
+                                        disabled={isSaving}
+                                        title="Save"
+                                    >
+                                        {isSaving ? <RefreshCw size={13} className="animate-spin" /> : <Check size={13} />}
+                                    </button>
+                                    <button
+                                        type="button"
+                                        className="btn-card-action-cancel"
+                                        style={{ padding: '0.25rem 0.4rem', borderRadius: '0.35rem' }}
+                                        onClick={handleCancelEditIslamicDate}
+                                        disabled={isSaving}
+                                        title="Cancel"
+                                    >
+                                        <X size={13} />
+                                    </button>
                                 </div>
                             ) : (
                                 <>
@@ -551,15 +624,14 @@ const Admin: React.FC<AdminProps> = ({
                                     <button
                                         type="button"
                                         className="btn-card-action-edit mobile-only-view"
-                                        style={{ padding: '0.2rem 0.5rem', fontSize: '0.75rem', borderRadius: '0.35rem' }}
+                                        style={{ padding: '0.25rem 0.35rem', borderRadius: '0.35rem' }}
                                         onClick={() => {
                                             syncDateDropdowns(islamicDate);
                                             setIsEditingDate(true);
                                         }}
                                         title="Edit Islamic Date"
                                     >
-                                        <Pencil size={12} />
-                                        <span>Edit</span>
+                                        <Pencil size={13} />
                                     </button>
                                 </>
                             )}
@@ -638,31 +710,11 @@ const Admin: React.FC<AdminProps> = ({
                                                         className="admin-table-input admin-table-input-disabled"
                                                     />
                                                 ) : (
-                                                    <div className="time-input-group">
-                                                        <input
-                                                            type="text"
-                                                            inputMode="numeric"
-                                                            pattern="[0-9:]*"
-                                                            maxLength={5}
-                                                            value={parsedAdhan.time}
-                                                            onChange={(e) => {
-                                                                const numericOnly = e.target.value.replace(/[^0-9:]/g, '');
-                                                                handleDraftTimeChange(prayerKey, 'adhan', joinTimeAndPeriod(numericOnly, parsedAdhan.period));
-                                                            }}
-                                                            placeholder="05:15"
-                                                            className="time-box-12"
-                                                        />
-                                                        <button
-                                                            type="button"
-                                                            onClick={() => {
-                                                                const nextPeriod = parsedAdhan.period === 'AM' ? 'PM' : 'AM';
-                                                                handleDraftTimeChange(prayerKey, 'adhan', joinTimeAndPeriod(parsedAdhan.time, nextPeriod));
-                                                            }}
-                                                            className="period-toggle-btn"
-                                                        >
-                                                            {parsedAdhan.period}
-                                                        </button>
-                                                    </div>
+                                                    <TimeDropdownPicker
+                                                        time={parsedAdhan.time}
+                                                        period={parsedAdhan.period}
+                                                        onChange={(val) => handleDraftTimeChange(prayerKey, 'adhan', val)}
+                                                    />
                                                 )}
                                             </td>
 
@@ -678,31 +730,12 @@ const Admin: React.FC<AdminProps> = ({
                                                         className="admin-table-input font-bold text-primary admin-table-input-disabled"
                                                     />
                                                 ) : (
-                                                    <div className="time-input-group">
-                                                        <input
-                                                            type="text"
-                                                            inputMode="numeric"
-                                                            pattern="[0-9:]*"
-                                                            maxLength={5}
-                                                            value={parsedJamat.time}
-                                                            onChange={(e) => {
-                                                                const numericOnly = e.target.value.replace(/[^0-9:]/g, '');
-                                                                handleDraftTimeChange(prayerKey, 'jamat', joinTimeAndPeriod(numericOnly, parsedJamat.period));
-                                                            }}
-                                                            placeholder="05:45"
-                                                            className="time-box-12 font-bold"
-                                                        />
-                                                        <button
-                                                            type="button"
-                                                            onClick={() => {
-                                                                const nextPeriod = parsedJamat.period === 'AM' ? 'PM' : 'AM';
-                                                                handleDraftTimeChange(prayerKey, 'jamat', joinTimeAndPeriod(parsedJamat.time, nextPeriod));
-                                                            }}
-                                                            className="period-toggle-btn"
-                                                        >
-                                                            {parsedJamat.period}
-                                                        </button>
-                                                    </div>
+                                                    <TimeDropdownPicker
+                                                        time={parsedJamat.time}
+                                                        period={parsedJamat.period}
+                                                        bold
+                                                        onChange={(val) => handleDraftTimeChange(prayerKey, 'jamat', val)}
+                                                    />
                                                 )}
                                             </td>
 
@@ -771,9 +804,9 @@ const Admin: React.FC<AdminProps> = ({
                                                         type="button"
                                                         className="btn-card-action-edit"
                                                         onClick={() => handleStartEditCard(prayerKey)}
+                                                        title={`Edit ${prayer.name}`}
                                                     >
                                                         <Pencil size={13} />
-                                                        <span>Edit</span>
                                                     </button>
                                                 ) : (
                                                     <div className="card-action-btn-group">
@@ -834,31 +867,11 @@ const Admin: React.FC<AdminProps> = ({
                                                                 style={{ height: '2.25rem', fontSize: '0.9rem', width: '100%', margin: 0 }}
                                                             />
                                                         ) : (
-                                                            <div className="time-input-group">
-                                                                <input
-                                                                    type="text"
-                                                                    inputMode="numeric"
-                                                                    pattern="[0-9:]*"
-                                                                    maxLength={5}
-                                                                    value={parsedAdhan.time}
-                                                                    onChange={(e) => {
-                                                                        const numericOnly = e.target.value.replace(/[^0-9:]/g, '');
-                                                                        handleDraftTimeChange(prayerKey, 'adhan', joinTimeAndPeriod(numericOnly, parsedAdhan.period));
-                                                                    }}
-                                                                    placeholder="05:15"
-                                                                    className="time-box-12"
-                                                                />
-                                                                <button
-                                                                    type="button"
-                                                                    onClick={() => {
-                                                                        const nextPeriod = parsedAdhan.period === 'AM' ? 'PM' : 'AM';
-                                                                        handleDraftTimeChange(prayerKey, 'adhan', joinTimeAndPeriod(parsedAdhan.time, nextPeriod));
-                                                                    }}
-                                                                    className="period-toggle-btn"
-                                                                >
-                                                                    {parsedAdhan.period}
-                                                                </button>
-                                                            </div>
+                                                            <TimeDropdownPicker
+                                                                time={parsedAdhan.time}
+                                                                period={parsedAdhan.period}
+                                                                onChange={(val) => handleDraftTimeChange(prayerKey, 'adhan', val)}
+                                                            />
                                                         )}
                                                     </div>
                                                 </div>
@@ -866,7 +879,7 @@ const Admin: React.FC<AdminProps> = ({
                                                 <div className="mobile-time-chip jamat-chip">
                                                     <span className="chip-label">Jamaat</span>
                                                     <div className="chip-value-container">
-                                                        {!isCardEditing ? (
+                                                         {!isCardEditing ? (
                                                             <span className="chip-value">{activeJamat}</span>
                                                         ) : isMaghrib ? (
                                                             <input
@@ -877,31 +890,12 @@ const Admin: React.FC<AdminProps> = ({
                                                                 style={{ height: '2.25rem', fontSize: '0.85rem', width: '100%', margin: 0 }}
                                                             />
                                                         ) : (
-                                                            <div className="time-input-group">
-                                                                <input
-                                                                    type="text"
-                                                                    inputMode="numeric"
-                                                                    pattern="[0-9:]*"
-                                                                    maxLength={5}
-                                                                    value={parsedJamat.time}
-                                                                    onChange={(e) => {
-                                                                        const numericOnly = e.target.value.replace(/[^0-9:]/g, '');
-                                                                        handleDraftTimeChange(prayerKey, 'jamat', joinTimeAndPeriod(numericOnly, parsedJamat.period));
-                                                                    }}
-                                                                    placeholder="05:45"
-                                                                    className="time-box-12 font-bold"
-                                                                />
-                                                                <button
-                                                                    type="button"
-                                                                    onClick={() => {
-                                                                        const nextPeriod = parsedJamat.period === 'AM' ? 'PM' : 'AM';
-                                                                        handleDraftTimeChange(prayerKey, 'jamat', joinTimeAndPeriod(parsedJamat.time, nextPeriod));
-                                                                    }}
-                                                                    className="period-toggle-btn"
-                                                                >
-                                                                    {parsedJamat.period}
-                                                                </button>
-                                                            </div>
+                                                            <TimeDropdownPicker
+                                                                time={parsedJamat.time}
+                                                                period={parsedJamat.period}
+                                                                bold
+                                                                onChange={(val) => handleDraftTimeChange(prayerKey, 'jamat', val)}
+                                                            />
                                                         )}
                                                     </div>
                                                 </div>
@@ -943,9 +937,9 @@ const Admin: React.FC<AdminProps> = ({
                                                     type="button"
                                                     className="btn-card-action-edit"
                                                     onClick={() => handleStartEditCard('Jummah')}
+                                                    title="Edit Jummah"
                                                 >
                                                     <Pencil size={13} />
-                                                    <span>Edit</span>
                                                 </button>
                                             ) : (
                                                 <div className="card-action-btn-group">
@@ -979,31 +973,12 @@ const Admin: React.FC<AdminProps> = ({
                                             {!isJummahEditing ? (
                                                 <span className="jummah-time-value">{activeAzaan}</span>
                                             ) : (
-                                                <div className="time-input-group">
-                                                    <input
-                                                        type="text"
-                                                        inputMode="numeric"
-                                                        pattern="[0-9:]*"
-                                                        maxLength={5}
-                                                        value={parsedAzaan.time}
-                                                        onChange={(e) => {
-                                                            const numericOnly = e.target.value.replace(/[^0-9:]/g, '');
-                                                            handleDraftTimeChange('Jummah', 'adhan', joinTimeAndPeriod(numericOnly, parsedAzaan.period));
-                                                        }}
-                                                        placeholder="01:00"
-                                                        className="time-box-12 font-bold"
-                                                    />
-                                                    <button
-                                                        type="button"
-                                                        onClick={() => {
-                                                            const nextPeriod = parsedAzaan.period === 'AM' ? 'PM' : 'AM';
-                                                            handleDraftTimeChange('Jummah', 'adhan', joinTimeAndPeriod(parsedAzaan.time, nextPeriod));
-                                                        }}
-                                                        className="period-toggle-btn"
-                                                    >
-                                                        {parsedAzaan.period}
-                                                    </button>
-                                                </div>
+                                                <TimeDropdownPicker
+                                                    time={parsedAzaan.time}
+                                                    period={parsedAzaan.period}
+                                                    bold
+                                                    onChange={(val) => handleDraftTimeChange('Jummah', 'adhan', val)}
+                                                />
                                             )}
                                         </div>
                                     </div>
@@ -1014,31 +989,12 @@ const Admin: React.FC<AdminProps> = ({
                                             {!isJummahEditing ? (
                                                 <span className="jummah-time-value font-bold text-primary">{activeKhutba}</span>
                                             ) : (
-                                                <div className="time-input-group">
-                                                    <input
-                                                        type="text"
-                                                        inputMode="numeric"
-                                                        pattern="[0-9:]*"
-                                                        maxLength={5}
-                                                        value={parsedKhutba.time}
-                                                        onChange={(e) => {
-                                                            const numericOnly = e.target.value.replace(/[^0-9:]/g, '');
-                                                            handleDraftTimeChange('Jummah', 'jamat', joinTimeAndPeriod(numericOnly, parsedKhutba.period));
-                                                        }}
-                                                        placeholder="01:30"
-                                                        className="time-box-12 font-bold"
-                                                    />
-                                                    <button
-                                                        type="button"
-                                                        onClick={() => {
-                                                            const nextPeriod = parsedKhutba.period === 'AM' ? 'PM' : 'AM';
-                                                            handleDraftTimeChange('Jummah', 'jamat', joinTimeAndPeriod(parsedKhutba.time, nextPeriod));
-                                                        }}
-                                                        className="period-toggle-btn"
-                                                    >
-                                                        {parsedKhutba.period}
-                                                    </button>
-                                                </div>
+                                                <TimeDropdownPicker
+                                                    time={parsedKhutba.time}
+                                                    period={parsedKhutba.period}
+                                                    bold
+                                                    onChange={(val) => handleDraftTimeChange('Jummah', 'jamat', val)}
+                                                />
                                             )}
                                         </div>
                                     </div>
