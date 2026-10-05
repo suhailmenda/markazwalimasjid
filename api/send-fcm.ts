@@ -16,69 +16,106 @@ interface ServiceAccountCredentials {
   privateKey: string;
 }
 
-export default async function handler(req: RequestWithBody, res: ResponseWithJson) {
-  if (req.method !== 'POST') {
-    return res.status(405).json({ error: 'Method Not Allowed' });
-  }
+export interface FcmMessageOptions {
+  title: string;
+  body: string;
+  data?: Record<string, string>;
+}
 
+export async function sendFcmTopicMessage(options: FcmMessageOptions): Promise<{ status: number; data: any }> {
   const projectId = process.env.FIREBASE_PROJECT_ID;
   const clientEmail = process.env.FIREBASE_CLIENT_EMAIL;
   const rawPrivateKey = process.env.FIREBASE_PRIVATE_KEY;
 
   if (!projectId || !clientEmail || !rawPrivateKey) {
-    return res.status(500).json({
-      error: 'Missing required FCM environment variables: FIREBASE_PROJECT_ID, FIREBASE_CLIENT_EMAIL, or FIREBASE_PRIVATE_KEY.'
-    });
+    return {
+      status: 500,
+      data: {
+        error: 'Missing required FCM environment variables: FIREBASE_PROJECT_ID, FIREBASE_CLIENT_EMAIL, or FIREBASE_PRIVATE_KEY.',
+      },
+    };
+  }
+
+  const accessToken = await getAccessToken({ clientEmail, privateKey: rawPrivateKey });
+  const expirationEpoch = Math.floor(Date.now() / 1000) + 172800; // 48 hours
+
+  const messagePayload = JSON.stringify({
+    message: {
+      topic: 'prayer_updates',
+      notification: {
+        title: options.title,
+        body: options.body,
+      },
+      android: {
+        priority: 'high',
+        collapse_key: 'prayer_updates',
+        ttl: '172800s',
+        notification: {
+          channel_id: 'prayer_azaan_channel_id',
+          sound: 'default',
+          priority: 'high',
+          default_sound: true,
+          default_vibrate_timings: true,
+        },
+      },
+      apns: {
+        headers: {
+          'apns-priority': '10',
+          'apns-expiration': `${expirationEpoch}`,
+          'apns-collapse-id': 'prayer_updates',
+        },
+        payload: {
+          aps: {
+            alert: {
+              title: options.title,
+              body: options.body,
+            },
+            sound: 'default',
+            badge: 1,
+            'content-available': 1,
+          },
+        },
+      },
+      data: options.data || {},
+    },
+  });
+
+  const response = await fetch(
+    `https://fcm.googleapis.com/v1/projects/${projectId}/messages:send`,
+    {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${accessToken}`,
+        'Content-Type': 'application/json',
+      },
+      body: messagePayload,
+    }
+  );
+
+  const data = await response.json();
+  return { status: response.status, data };
+}
+
+export default async function handler(req: RequestWithBody, res: ResponseWithJson) {
+  if (req.method !== 'POST') {
+    return res.status(405).json({ error: 'Method Not Allowed' });
   }
 
   try {
-    const accessToken = await getAccessToken({ clientEmail, privateKey: rawPrivateKey });
-
     const payload = typeof req.body === 'string' ? JSON.parse(req.body || '{}') : (req.body || {});
     const title = payload.title || '🕌 Prayer Times Updated';
     const body = payload.body || 'Namaz time is updated';
 
-    const messagePayload = JSON.stringify({
-      message: {
-        topic: 'prayer_updates',
-        notification: {
-          title,
-          body,
-        },
-        android: {
-          priority: 'high',
-        },
-        apns: {
-          headers: {
-            'apns-priority': '10',
-          },
-          payload: {
-            aps: {
-              'content-available': 1,
-            },
-          },
-        },
-        data: {
-          type: 'PRAYER_TIME_CHANGE',
-          manualTimes: JSON.stringify(payload.manualTimes || {}),
-        },
+    const result = await sendFcmTopicMessage({
+      title,
+      body,
+      data: {
+        type: 'PRAYER_TIME_CHANGE',
+        manualTimes: JSON.stringify(payload.manualTimes || {}),
       },
     });
 
-    const response = await fetch(
-      `https://fcm.googleapis.com/v1/projects/${projectId}/messages:send`,
-      {
-        method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${accessToken}`,
-          'Content-Type': 'application/json',
-        },
-        body: messagePayload,
-      }
-    );
-
-    const data = await response.json();
-    return res.status(response.status).json(data);
+    return res.status(result.status).json(result.data);
   } catch (error: any) {
     console.error('Error in send-fcm API:', error);
     return res.status(500).json({ error: error.message });
