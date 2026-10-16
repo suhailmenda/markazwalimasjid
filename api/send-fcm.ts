@@ -53,7 +53,6 @@ export async function sendFcmTopicMessage(options: FcmMessageOptions): Promise<{
         notification: {
           channel_id: 'prayer_azaan_channel_id',
           sound: 'default',
-          priority: 'high',
           default_sound: true,
           default_vibrate_timings: true,
         },
