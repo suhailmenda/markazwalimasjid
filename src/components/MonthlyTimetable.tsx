@@ -1,6 +1,7 @@
 import React, { useState, useMemo, useEffect, useRef } from 'react';
 import { Calendar, ChevronDown, ChevronLeft, ChevronRight } from 'lucide-react';
-import prayerTimesDataJson from '../assets/prayer_times.json';
+import prayerTimesDataJson from '../assets/prayer_times.json' with { type: 'json' };
+import { getISTDate } from '../utils/timeFormat';
 import './MonthlyTimetable.css';
 
 interface DayPrayerTiming {
@@ -49,16 +50,18 @@ const MONTHS: MonthOption[] = [
 ];
 
 const getCurrentMonthCode = (): string => {
-  const currentMonthIndex = new Date().getMonth(); // 0 - 11
+  const istDate = getISTDate();
+  const currentMonthIndex = istDate.getUTCMonth(); // 0 - 11 in IST
   return MONTHS[currentMonthIndex]?.code || 'Jan';
 };
 
 const MonthlyTimetable: React.FC = () => {
   const [selectedMonthCode, setSelectedMonthCode] = useState<string>(getCurrentMonthCode());
 
-  const todayDate = new Date();
-  const currentMonthIndex = todayDate.getMonth();
-  const currentDayNum = todayDate.getDate();
+  const istDate = getISTDate();
+  const currentMonthIndex = istDate.getUTCMonth();
+  const currentDayNum = istDate.getUTCDate();
+  const currentYear = istDate.getUTCFullYear();
   const isCurrentMonth = MONTHS[currentMonthIndex]?.code === selectedMonthCode;
 
   // Selected Day number state for mobile day view (defaults to today or day 1)
@@ -147,7 +150,6 @@ const MonthlyTimetable: React.FC = () => {
 
   // Convert currently selected month & day to "YYYY-MM-DD" for HTML5 Date Input
   const selectedMonthIndex = MONTHS.findIndex((m) => m.code === selectedMonthCode);
-  const currentYear = todayDate.getFullYear();
   const currentIsoDateString = `${currentYear}-${(selectedMonthIndex + 1).toString().padStart(2, '0')}-${selectedDayNumber.toString().padStart(2, '0')}`;
 
   const handleCalendarDateChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
@@ -252,15 +254,15 @@ const MonthlyTimetable: React.FC = () => {
                       </td>
                       <td>{timings.sehriEnd}</td>
                       <td>{timings.subahSadiq}</td>
-                      <td className="font-semibold text-primary">{timings.fajr}</td>
+                      <td>{timings.fajr}</td>
                       <td>{timings.tulu}</td>
                       <td>{timings.ishraqStart}</td>
                       <td>{timings.chashtStart}</td>
                       <td className="td-zawal">{formatZawalDisplay(timings)}</td>
                       <td>{timings.asr}</td>
                       <td>{timings.sunset}</td>
-                      <td className="font-semibold text-primary">{timings.maghrib}</td>
-                      <td className="font-semibold text-primary">{timings.isha}</td>
+                      <td>{timings.maghrib}</td>
+                      <td>{timings.isha}</td>
                     </tr>
                   );
                 })}
@@ -285,7 +287,7 @@ const MonthlyTimetable: React.FC = () => {
                   </span>
                 </div>
                 <div className="mobile-calendar-btn-right">
-                  <ChevronDown size={18} className="text-gray-400" />
+                  <ChevronDown size={18} />
                 </div>
               </div>
 
@@ -353,7 +355,7 @@ const MonthlyTimetable: React.FC = () => {
                 <div className="day-card-grid-primary">
                   <div className="day-grid-item highlight-item">
                     <span className="grid-item-label">Fajr</span>
-                    <span className="grid-item-val font-bold text-primary">{activeDayData.timings.fajr}</span>
+                    <span className="grid-item-val">{activeDayData.timings.fajr}</span>
                   </div>
                   <div className="day-grid-item">
                     <span className="grid-item-label">Zawal</span>
@@ -365,11 +367,11 @@ const MonthlyTimetable: React.FC = () => {
                   </div>
                   <div className="day-grid-item highlight-item">
                     <span className="grid-item-label">Maghrib</span>
-                    <span className="grid-item-val font-bold text-primary">{activeDayData.timings.maghrib}</span>
+                    <span className="grid-item-val">{activeDayData.timings.maghrib}</span>
                   </div>
                   <div className="day-grid-item highlight-item">
                     <span className="grid-item-label">Isha</span>
-                    <span className="grid-item-val font-bold text-primary">{activeDayData.timings.isha}</span>
+                    <span className="grid-item-val">{activeDayData.timings.isha}</span>
                   </div>
                   <div className="day-grid-item">
                     <span className="grid-item-label">Sehri End</span>

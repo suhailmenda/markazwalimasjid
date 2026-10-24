@@ -19,12 +19,15 @@ const Navbar: React.FC = () => {
     const isHomePage = location.pathname === '/';
 
     useEffect(() => {
-        const handleScroll = (): void => {
+        let ticking = false;
+
+        const updateScroll = (): void => {
             setIsScrolled(window.scrollY > 20);
 
             if (isHomePage) {
                 if (window.scrollY < 200) {
                     setActiveSection('home');
+                    ticking = false;
                     return;
                 }
                 const sections = ['prayer-times', 'monthly-schedule', 'about', 'contact'];
@@ -39,9 +42,17 @@ const Navbar: React.FC = () => {
                     }
                 }
             }
+            ticking = false;
         };
 
-        window.addEventListener('scroll', handleScroll);
+        const handleScroll = (): void => {
+            if (!ticking) {
+                ticking = true;
+                window.requestAnimationFrame(updateScroll);
+            }
+        };
+
+        window.addEventListener('scroll', handleScroll, { passive: true });
         return () => window.removeEventListener('scroll', handleScroll);
     }, [isHomePage]);
 

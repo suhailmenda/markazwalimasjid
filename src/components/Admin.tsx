@@ -332,9 +332,9 @@ const Admin: React.FC<AdminProps> = ({
     if (authLoading) {
         return (
             <div className="admin-login-container">
-                <div className="text-center p-8">
-                    <RefreshCw className="animate-spin text-primary mx-auto mb-4" size={32} />
-                    <p className="text-gray-600 font-serif">Checking authentication status...</p>
+                <div className="text-center">
+                    <RefreshCw size={32} />
+                    <p>Checking authentication status...</p>
                 </div>
             </div>
         );
@@ -401,7 +401,7 @@ const Admin: React.FC<AdminProps> = ({
                         >
                             {isLoggingIn ? (
                                 <>
-                                    <RefreshCw className="animate-spin" size={18} />
+                                    <RefreshCw size={18} />
                                     <span>Signing in...</span>
                                 </>
                             ) : (
@@ -440,7 +440,7 @@ const Admin: React.FC<AdminProps> = ({
                     </div>
                 </div>
 
-                <div className="section-header text-center mb-6">
+                <div className="section-header text-center">
                     <div className="location-badge">
                         <MapPin size={16} />
                         <span>Silvassa, India</span>
@@ -460,7 +460,7 @@ const Admin: React.FC<AdminProps> = ({
                                     title="Save Changes"
                                     className="btn-card-save-top"
                                 >
-                                    {isSaving ? <RefreshCw size={16} className="animate-spin" /> : <Save size={16} />}
+                                    {isSaving ? <RefreshCw size={16} /> : <Save size={16} />}
                                     <span>Save</span>
                                 </button>
                             )}
@@ -603,7 +603,7 @@ const Admin: React.FC<AdminProps> = ({
                                         disabled={isSaving}
                                         title="Save"
                                     >
-                                        {isSaving ? <RefreshCw size={13} className="animate-spin" /> : <Check size={13} />}
+                                        {isSaving ? <RefreshCw size={13} /> : <Check size={13} />}
                                     </button>
                                     <button
                                         type="button"
@@ -695,7 +695,7 @@ const Admin: React.FC<AdminProps> = ({
 
                                             {/* Start Time Column */}
                                             <td className="prayer-time">
-                                                <div className="cell-content text-gray-500">{startEnd.start}</div>
+                                                <div className="cell-content">{startEnd.start}</div>
                                             </td>
 
                                             {/* Azaan Column */}
@@ -721,13 +721,13 @@ const Admin: React.FC<AdminProps> = ({
                                             {/* Jamaat Column */}
                                             <td className="prayer-time">
                                                 {!isEditing ? (
-                                                    <div className="cell-content font-bold text-primary">{activeJamat}</div>
+                                                    <div className="cell-content">{activeJamat}</div>
                                                 ) : (isMaghrib || isNafl) ? (
                                                     <input
                                                         type="text"
                                                         value={draftJamat}
                                                         disabled
-                                                        className="admin-table-input font-bold text-primary admin-table-input-disabled"
+                                                        className="admin-table-input font-bold admin-table-input-disabled"
                                                     />
                                                 ) : (
                                                     <TimeDropdownPicker
@@ -741,7 +741,7 @@ const Admin: React.FC<AdminProps> = ({
 
                                             {/* End Time Column */}
                                             <td className="prayer-time">
-                                                <div className="cell-content text-gray-500">{startEnd.end}</div>
+                                                <div className="cell-content">{startEnd.end}</div>
                                             </td>
                                         </tr>
                                     );
@@ -825,7 +825,7 @@ const Admin: React.FC<AdminProps> = ({
                                                             onClick={() => handleSaveCard(prayerKey)}
                                                             disabled={isSaving}
                                                         >
-                                                            {isSaving ? <RefreshCw size={13} className="animate-spin" /> : <Save size={13} />}
+                                                            {isSaving ? <RefreshCw size={13} /> : <Save size={13} />}
                                                             <span>{isSaving ? 'Saving...' : 'Save'}</span>
                                                         </button>
                                                     </div>
@@ -886,7 +886,7 @@ const Admin: React.FC<AdminProps> = ({
                                                                 type="text"
                                                                 value="After Azaan"
                                                                 disabled
-                                                                className="admin-table-input font-bold text-primary admin-table-input-disabled"
+                                                                className="admin-table-input font-bold admin-table-input-disabled"
                                                                 style={{ height: '2.25rem', fontSize: '0.85rem', width: '100%', margin: 0 }}
                                                             />
                                                         ) : (
@@ -958,7 +958,7 @@ const Admin: React.FC<AdminProps> = ({
                                                         onClick={() => handleSaveCard('Jummah')}
                                                         disabled={isSaving}
                                                     >
-                                                        {isSaving ? <RefreshCw size={13} className="animate-spin" /> : <Save size={13} />}
+                                                        {isSaving ? <RefreshCw size={13} /> : <Save size={13} />}
                                                         <span>{isSaving ? 'Saving...' : 'Save'}</span>
                                                     </button>
                                                 </div>
@@ -987,7 +987,7 @@ const Admin: React.FC<AdminProps> = ({
                                         <span className="jummah-time-label">Khutba</span>
                                         <div className="jummah-time-value-container">
                                             {!isJummahEditing ? (
-                                                <span className="jummah-time-value font-bold text-primary">{activeKhutba}</span>
+                                                <span className="jummah-time-value">{activeKhutba}</span>
                                             ) : (
                                                 <TimeDropdownPicker
                                                     time={parsedKhutba.time}
@@ -1017,7 +1017,7 @@ const Admin: React.FC<AdminProps> = ({
                                 className="btn-admin btn-admin-save"
                                 style={{ padding: '0.65rem 1.5rem', fontSize: '0.95rem', borderRadius: '0.5rem' }}
                             >
-                                {isSaving ? <RefreshCw size={16} className="animate-spin" /> : <Save size={16} />}
+                                {isSaving ? <RefreshCw size={16} /> : <Save size={16} />}
                                 <span>Save Changes</span>
                             </button>
                         </div>

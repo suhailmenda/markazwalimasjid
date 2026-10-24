@@ -1,5 +1,6 @@
 import React from 'react';
 import { MapPin } from 'lucide-react';
+import { getISTDate } from '../utils/timeFormat';
 import './Footer.css';
 
 const Footer: React.FC = () => {
@@ -43,7 +44,7 @@ const Footer: React.FC = () => {
                 </div>
 
                 <div className="footer-bottom">
-                    <p>&copy; {new Date().getFullYear()} Markaz wali Masjid. All rights reserved.</p>
+                    <p>&copy; {getISTDate().getUTCFullYear()} Markaz wali Masjid. All rights reserved.</p>
                 </div>
             </div>
         </footer>

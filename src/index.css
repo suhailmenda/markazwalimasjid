@@ -1,18 +1,25 @@
 @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap');
 
 :root {
-  --color-primary: #047857; /* Emerald 700 */
-  --color-primary-dark: #064e3b; /* Emerald 900 */
-  --color-secondary: #d4af37; /* Gold */
-  --color-secondary-light: #f3e5ab; /* Light Gold */
-  --color-bg: #f8fafc; /* Slate 50 */
-  --color-text: #1e293b; /* Slate 800 */
-  --color-text-light: #64748b; /* Slate 500 */
+  --color-primary: #047857;
+  /* Emerald 700 */
+  --color-primary-dark: #064e3b;
+  /* Emerald 900 */
+  --color-secondary: #d4af37;
+  /* Gold */
+  --color-secondary-light: #f3e5ab;
+  /* Light Gold */
+  --color-bg: #f8fafc;
+  /* Slate 50 */
+  --color-text: #1e293b;
+  /* Slate 800 */
+  --color-text-light: #64748b;
+  /* Slate 500 */
   --color-white: #ffffff;
-  
+
   --font-sans: 'Outfit', sans-serif;
   --font-serif: 'Playfair Display', serif;
-  
+
   --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
   --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
   --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
@@ -36,7 +43,12 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   font-family: var(--font-serif);
   color: var(--color-primary-dark);
 }
@@ -81,11 +93,36 @@ button {
   padding: 4rem 0;
 }
 
+.my-4 {
+  margin-top: 4rem;
+  margin-bottom: 4rem;
+}
+
 /* Utilities */
-.text-center { text-align: center; }
-.flex { display: flex; }
-.items-center { align-items: center; }
-.justify-between { justify-content: space-between; }
-.justify-center { justify-content: center; }
-.gap-4 { gap: 1rem; }
-.text-gold { color: var(--color-secondary); }
+.text-center {
+  text-align: center;
+}
+
+.flex {
+  display: flex;
+}
+
+.items-center {
+  align-items: center;
+}
+
+.justify-between {
+  justify-content: space-between;
+}
+
+.justify-center {
+  justify-content: center;
+}
+
+.gap-4 {
+  gap: 1rem;
+}
+
+.text-gold {
+  color: var(--color-secondary);
+}

@@ -5,6 +5,7 @@ import type { ManualTimes, PrayerName, UsePrayerTimesReturn } from './types/pray
 import { getTodayPrayerStartEndMap } from './utils/prayerStartEnd';
 import { parseIslamicDateString, type IslamicDateCache } from './utils/islamicDate';
 import { sendFcmBulkNotification } from './utils/sendFcmNotification';
+import { getISTDate } from './utils/timeFormat';
 
 export const usePrayerTimes = (): UsePrayerTimesReturn => {
   const [loading, setLoading] = useState<boolean>(true);
@@ -114,9 +115,10 @@ export const usePrayerTimes = (): UsePrayerTimesReturn => {
         { merge: true },
       );
       if (val) {
-        const dd = new Date().getDate().toString().padStart(2, '0');
-        const mm = (new Date().getMonth() + 1).toString().padStart(2, '0');
-        const yyyy = new Date().getFullYear();
+        const istDate = getISTDate();
+        const dd = istDate.getUTCDate().toString().padStart(2, '0');
+        const mm = (istDate.getUTCMonth() + 1).toString().padStart(2, '0');
+        const yyyy = istDate.getUTCFullYear();
         const { day, month, year } = parseIslamicDateString(val);
         await setDoc(
           doc(db, 'settings', 'islamicDateCache'),

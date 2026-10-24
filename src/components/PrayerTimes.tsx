@@ -42,7 +42,7 @@ const PrayerTimes: React.FC<PrayerTimesProps> = ({
     return (
         <section id="prayer-times" className="section prayer-section">
             <div className="container">
-                <div className="section-header">
+                <div className="section-header text-center my-4">
                     <h2 className="section-title">Prayer Times</h2>
                     <div className="location-badge">
                         <MapPin size={16} />
@@ -83,7 +83,7 @@ const PrayerTimes: React.FC<PrayerTimesProps> = ({
                             </thead>
                             <tbody>
                                 {loading ? (
-                                    <tr><td colSpan={5} className="text-center p-4">Loading prayer times...</td></tr>
+                                    <tr><td colSpan={5} className="text-center">Loading prayer times...</td></tr>
                                 ) : (
                                     prayers.map((prayer) => {
                                         const isNafl = prayer.key === 'Ishraq' || prayer.key === 'Chast';
@@ -116,8 +116,8 @@ const PrayerTimes: React.FC<PrayerTimesProps> = ({
                                                 </td>
 
                                                 {/* Jamaat Column */}
-                                                <td className="prayer-time font-bold text-primary">
-                                                    <div className="cell-content font-bold text-primary">{jamatTime}</div>
+                                                <td className="prayer-time">
+                                                    <div className="cell-content">{jamatTime}</div>
                                                 </td>
 
                                                 {/* End Column */}
@@ -135,7 +135,7 @@ const PrayerTimes: React.FC<PrayerTimesProps> = ({
                     {/* Mobile View: Sleek Stacked Prayer Cards */}
                     <div className="prayer-mobile-list mobile-only-view">
                         {loading ? (
-                            <div className="text-center p-4 text-gray-500">Loading prayer times...</div>
+                            <div className="text-center">Loading prayer times...</div>
                         ) : (
                             prayers.map((prayer) => {
                                 const isNafl = prayer.key === 'Ishraq' || prayer.key === 'Chast';
@@ -220,7 +220,7 @@ const PrayerTimes: React.FC<PrayerTimesProps> = ({
                             </div>
                             <div className="jummah-time-item highlight">
                                 <span className="jummah-time-label">Khutba</span>
-                                <span className="jummah-time-value text-primary font-bold">{manualTimes.Jummah?.jamat || '-'}</span>
+                                <span className="jummah-time-value">{manualTimes.Jummah?.jamat || '-'}</span>
                             </div>
                         </div>
                     </div>

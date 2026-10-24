@@ -1,5 +1,6 @@
-import prayerTimesDataJson from '../assets/prayer_times.json';
+import prayerTimesDataJson from '../assets/prayer_times.json' with { type: 'json' };
 import type { PrayerName } from '../types/prayer';
+import { getISTDate } from './timeFormat.ts';
 
 export interface DayJsonEntry {
   sehriEnd: string;
@@ -30,9 +31,10 @@ export interface PrayerStartEnd {
 export type PrayerStartEndMap = Record<PrayerName, PrayerStartEnd>;
 
 export const getTodayPrayerStartEndMap = (date: Date = new Date()): { map: PrayerStartEndMap; raw: DayJsonEntry } => {
-  const day = date.getDate().toString().padStart(2, '0');
+  const istDate = getISTDate(date);
+  const day = istDate.getUTCDate().toString().padStart(2, '0');
   const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-  const month = months[date.getMonth()];
+  const month = months[istDate.getUTCMonth()];
   const key = `${day}-${month}`; // e.g. "26-Aug"
 
   const entry = prayerTimesData[key];

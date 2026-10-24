@@ -4,8 +4,9 @@
     left: 0;
     right: 0;
     z-index: 1000;
-    transition: all 0.3s ease;
-    padding: 1.5rem 0;
+    transform: translateZ(0);
+    transition: background-color 0.25s ease, box-shadow 0.25s ease, color 0.25s ease;
+    padding: 1rem 0;
     background-color: transparent;
     color: var(--color-white);
 }
@@ -13,7 +14,6 @@
 .navbar.scrolled {
     background-color: var(--color-white);
     color: var(--color-text);
-    padding: 1rem 0;
     box-shadow: var(--shadow-md);
 }
 
